@@ -45,6 +45,16 @@
     button + button {
       margin-top: 0.8em;
     }
+    #btn {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #btn { animation: none; }
+    }
     p {
       font-size: clamp(1rem, 3vw, 1.5rem);
       margin: 1em 0 0;
