@@ -72,6 +72,10 @@
       background: transparent;
       color: #fff;
     }
+    #btn, #btn2, #btn3 {
+      box-sizing: border-box;
+      width: min(19.6rem, 100%); /* wszystkie pastylki tej samej szerokości */
+    }
     #btn2, #btn3 {
       margin-top: 1.6em;
     }
@@ -101,12 +105,19 @@
       display: flex;
       gap: 0.5em;
       margin-top: 1.6em;
+      width: min(19.6rem, 100%); /* tak samo szeroko jak przyciski */
+    }
+    #pin-form button {
+      width: auto;
+      padding: 0.8em 1.4em;
     }
     #pin-form[hidden] {
       display: none;
     }
     #pin {
-      width: 6em;
+      flex: 1;
+      min-width: 0;
+      box-sizing: border-box;
       background: transparent;
       color: #fff;
       border: 1px solid #fff;
