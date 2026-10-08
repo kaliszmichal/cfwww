@@ -236,7 +236,6 @@
     <div id="progress-fill"></div>
   </div>
   <button id="btn2" type="button">DRUGI PRZYCISK</button>
-  <p id="msg" hidden> :) Działa!</p>
   <div id="moon" hidden aria-label="Księżyc" role="img">🌙</div>
   <button id="btn3" type="button">KLIK</button>
   <form id="pin-form" hidden autocomplete="off">
@@ -312,10 +311,10 @@
     })();
 
     const btn = document.getElementById('btn');
-    const msg = document.getElementById('msg');
 
     const progress = document.getElementById('progress');
     const fill = document.getElementById('progress-fill');
+    const BTN_LABEL = btn.textContent;
     const LOAD_MS = 2500;
     let loading = false;
 
@@ -323,9 +322,8 @@
       if (loading) return;
       loading = true;
       btn.classList.remove('done');
+      btn.textContent = BTN_LABEL;
       progress.classList.remove('done');
-      msg.classList.remove('visible');
-      msg.hidden = true;
       progress.hidden = false;
       fill.style.width = '0%';
       progress.setAttribute('aria-valuenow', '0');
@@ -341,8 +339,7 @@
           // 100% - zapal się na zielono
           btn.classList.add('done');
           progress.classList.add('done');
-          msg.hidden = false;
-          requestAnimationFrame(() => msg.classList.add('visible'));
+          btn.textContent = 'OK';
           loading = false;
         }
       }
