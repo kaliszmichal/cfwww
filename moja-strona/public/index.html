@@ -39,6 +39,8 @@
       pointer-events: none;
     }
     body {
+      height: auto;
+      min-height: 100%; /* gdy treści jest więcej niż ekranu, strona się przewija */
       background: transparent;
       color: #fff;
       display: flex;
@@ -46,7 +48,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 0 1rem;
+      padding: 1.5rem 1rem;
       box-sizing: border-box;
       font-family: "Exo 2",-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
@@ -72,12 +74,50 @@
       background: transparent;
       color: #fff;
     }
-    #btn, #btn2, #btn3 {
+    #btn, #btn2, #btn3, #btn4 {
       box-sizing: border-box;
       width: min(19.6rem, 100%); /* wszystkie pastylki tej samej szerokości */
     }
-    #btn2, #btn3 {
+    #btn2, #btn3, #btn4 {
       margin-top: 1.6em;
+    }
+    #menu {
+      width: min(19.6rem, 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s, margin-top 0.4s, visibility 0s 0.4s;
+    }
+    #menu.open {
+      max-height: 16rem;
+      margin-top: 0.9rem;
+      opacity: 1;
+      visibility: visible;
+      transition: max-height 0.4s ease, opacity 0.3s, margin-top 0.4s, visibility 0s;
+    }
+    #menu button {
+      box-sizing: border-box;
+      width: 100%;
+      background: transparent;
+      color: #fff;
+      font-size: 1.15rem;
+      padding: 0.7em 1.5em;
+    }
+    #menu button:hover {
+      background: #fff;
+      color: #000;
+    }
+    #btn4::after {
+      content: " ▾";
+      display: inline-block;
+      transition: transform 0.3s;
+    }
+    #btn4[aria-expanded="true"]::after {
+      transform: rotate(180deg);
     }
     #btn {
       animation: float 3s ease-in-out infinite;
@@ -172,6 +212,12 @@
     <button type="submit">OK</button>
   </form>
   <p id="secret" hidden aria-live="polite"></p>
+  <button id="btn4" type="button" aria-expanded="false" aria-controls="menu">MENU</button>
+  <div id="menu" role="group" aria-label="Menu">
+    <button type="button">Wybór 1</button>
+    <button type="button">Wybór 2</button>
+    <button type="button">Wybór 3</button>
+  </div>
 
   <script>
     // Gwiazdy w tle: trzy warstwy (paralaksa), powolny dryf i delikatne mruganie.
@@ -271,6 +317,14 @@
       const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(SECRET.i) }, key, b64(SECRET.c));
       return new TextDecoder().decode(plain);
     }
+
+    const btn4 = document.getElementById('btn4');
+    const menu = document.getElementById('menu');
+
+    btn4.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      btn4.setAttribute('aria-expanded', String(open));
+    });
 
     const btn3 = document.getElementById('btn3');
     const pinForm = document.getElementById('pin-form');
