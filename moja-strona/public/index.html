@@ -117,6 +117,39 @@
     }
     #btn {
       animation: float 3s ease-in-out infinite;
+      transition: background 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s;
+    }
+    #btn.done {
+      background: #2ecc71;
+      border-color: #2ecc71;
+      color: #04210f;
+      box-shadow: 0 0 28px rgba(46, 204, 113, 0.75);
+    }
+    #progress {
+      box-sizing: border-box;
+      width: min(19.6rem, 100%);
+      height: 10px;
+      margin-top: 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+      transition: box-shadow 0.4s;
+    }
+    #progress[hidden] {
+      display: none;
+    }
+    #progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: 999px;
+      background: #fff;
+      transition: background 0.4s;
+    }
+    #progress.done {
+      box-shadow: 0 0 18px rgba(46, 204, 113, 0.75);
+    }
+    #progress.done #progress-fill {
+      background: #2ecc71;
     }
     @keyframes float {
       0%, 100% { transform: translateY(0); }
@@ -199,6 +232,9 @@
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
   <button id="btn" type="button">KLIKNIJ MNIE</button>
+  <div id="progress" role="progressbar" aria-label="Ładowanie" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden>
+    <div id="progress-fill"></div>
+  </div>
   <button id="btn2" type="button">DRUGI PRZYCISK</button>
   <p id="msg" hidden> :) Działa!</p>
   <div id="moon" hidden aria-label="Księżyc" role="img">🌙</div>
@@ -278,11 +314,39 @@
     const btn = document.getElementById('btn');
     const msg = document.getElementById('msg');
 
+    const progress = document.getElementById('progress');
+    const fill = document.getElementById('progress-fill');
+    const LOAD_MS = 2500;
+    let loading = false;
+
     btn.addEventListener('click', () => {
-      msg.hidden = false;
-      // krótkie opóźnienie, żeby animacja opacity zadziałała
-      requestAnimationFrame(() => msg.classList.add('visible'));
-      btn.hidden = true;
+      if (loading) return;
+      loading = true;
+      btn.classList.remove('done');
+      progress.classList.remove('done');
+      msg.classList.remove('visible');
+      msg.hidden = true;
+      progress.hidden = false;
+      fill.style.width = '0%';
+      progress.setAttribute('aria-valuenow', '0');
+
+      const start = performance.now();
+      function step(now) {
+        const p = Math.min((now - start) / LOAD_MS, 1);
+        fill.style.width = (p * 100).toFixed(1) + '%';
+        progress.setAttribute('aria-valuenow', String(Math.round(p * 100)));
+        if (p < 1) {
+          requestAnimationFrame(step);
+        } else {
+          // 100% - zapal się na zielono
+          btn.classList.add('done');
+          progress.classList.add('done');
+          msg.hidden = false;
+          requestAnimationFrame(() => msg.classList.add('visible'));
+          loading = false;
+        }
+      }
+      requestAnimationFrame(step);
     });
 
     const btn2 = document.getElementById('btn2');
