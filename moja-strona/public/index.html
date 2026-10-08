@@ -2,7 +2,8 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#02030a">
   <title>michal.kalisz.pl</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,13 +14,27 @@
       margin: 0;
     }
     html {
-      background: radial-gradient(ellipse at 50% 100%, #1b2240 0%, #0a0c1a 55%, #02030a 100%) fixed;
+      background-color: #02030a; /* zapas: gdyby tło nie pokryło całego ekranu */
+      color-scheme: dark;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      height: 100lvh; /* pełna wysokość ekranu telefonu, także pod paskami przeglądarki */
+      z-index: -2;
+      background: radial-gradient(ellipse at 50% 100%, #1b2240 0%, #0a0c1a 55%, #02030a 100%);
+      pointer-events: none;
     }
     #stars {
       position: fixed;
       inset: 0;
       width: 100%;
       height: 100%;
+      height: 100lvh;
       z-index: -1;
       pointer-events: none;
     }
@@ -157,8 +172,8 @@
 
       function init() {
         const dpr = window.devicePixelRatio || 1;
-        w = window.innerWidth;
-        h = window.innerHeight;
+        w = canvas.clientWidth || window.innerWidth;
+        h = canvas.clientHeight || window.innerHeight;
         canvas.width = w * dpr;
         canvas.height = h * dpr;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -198,7 +213,12 @@
       }
 
       init();
-      window.addEventListener('resize', () => { init(); if (reduce) draw(0); });
+      window.addEventListener('resize', () => {
+        // na telefonie resize odpala się też przy chowaniu pasków przeglądarki
+        if (canvas.clientWidth === w && canvas.clientHeight === h) return;
+        init();
+        if (reduce) draw(0);
+      });
       requestAnimationFrame(draw);
     })();
 
