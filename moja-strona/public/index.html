@@ -42,6 +42,9 @@
       background: #fff;
       color: #000;
     }
+    button + button {
+      margin-top: 0.8em;
+    }
     p {
       font-size: clamp(1rem, 3vw, 1.5rem);
       margin: 1em 0 0;
@@ -59,6 +62,7 @@
 <body>
   <h1>michal.kalisz.pl Cześć</h1>
   <button id="btn" type="button">KLIKNIJ MNIE</button>
+  <button id="btn2" type="button">DRUGI PRZYCISK</button>
   <p id="msg" hidden> :) Działa!</p>
 
   <script>
