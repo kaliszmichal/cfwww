@@ -67,6 +67,42 @@
     p[hidden] {
       display: none;
     }
+    #pin-form {
+      display: flex;
+      gap: 0.5em;
+      margin-top: 0.8em;
+    }
+    #pin-form[hidden] {
+      display: none;
+    }
+    #pin {
+      width: 5.5em;
+      background: transparent;
+      color: #fff;
+      border: 1px solid #fff;
+      border-radius: 999px;
+      padding: 0.6em 1em;
+      font-size: 1rem;
+      font-family: inherit;
+      text-align: center;
+      letter-spacing: 0.3em;
+    }
+    #pin.error {
+      border-color: #f66;
+      animation: shake 0.3s;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+    #secret {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      margin: 1em 0 0;
+    }
+    #secret[hidden] {
+      display: none;
+    }
     #moon {
       font-size: clamp(4rem, 18vw, 9rem);
       line-height: 1;
@@ -88,6 +124,12 @@
   <button id="btn2" type="button">DRUGI PRZYCISK</button>
   <p id="msg" hidden> :) Działa!</p>
   <div id="moon" hidden aria-label="Księżyc" role="img">🌙</div>
+  <button id="btn3" type="button">SEKRET</button>
+  <form id="pin-form" hidden autocomplete="off">
+    <input id="pin" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="PIN" aria-label="PIN (4 cyfry)" required>
+    <button type="submit">OK</button>
+  </form>
+  <p id="secret" hidden aria-live="polite"></p>
 
   <script>
     const btn = document.getElementById('btn');
@@ -107,6 +149,51 @@
       moon.hidden = false;
       requestAnimationFrame(() => moon.classList.add('visible'));
       btn2.hidden = true;
+    });
+
+    // Sekretna wiadomość jest zaszyfrowana (AES-GCM, klucz z PIN-u przez PBKDF2),
+    // więc nie ma jej w kodzie strony jako zwykłego tekstu.
+    const SECRET = {
+      s: 'F5L/9jBcCUgGT0UinaF/Aw==',
+      i: 'xYFEnjxQufvUMOeG',
+      c: 'Bh0Ws+J+z2ByRjhkcnHy59CyWANh8nipKhDr2bpWdUSqwsa81B928f0vcoPM0swpYwEFC6Ev5fi8nWCd7PwSAV/KLnC8k2I='
+    };
+    const b64 = (s) => Uint8Array.from(atob(s), (ch) => ch.charCodeAt(0));
+
+    async function decryptSecret(pin) {
+      const enc = new TextEncoder();
+      const base = await crypto.subtle.importKey('raw', enc.encode(pin), 'PBKDF2', false, ['deriveKey']);
+      const key = await crypto.subtle.deriveKey(
+        { name: 'PBKDF2', salt: b64(SECRET.s), iterations: 200000, hash: 'SHA-256' },
+        base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']
+      );
+      const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(SECRET.i) }, key, b64(SECRET.c));
+      return new TextDecoder().decode(plain);
+    }
+
+    const btn3 = document.getElementById('btn3');
+    const pinForm = document.getElementById('pin-form');
+    const pinInput = document.getElementById('pin');
+    const secret = document.getElementById('secret');
+
+    btn3.addEventListener('click', () => {
+      pinForm.hidden = false;
+      btn3.hidden = true;
+      pinInput.focus();
+    });
+
+    pinForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        secret.textContent = await decryptSecret(pinInput.value);
+        secret.hidden = false;
+        pinForm.hidden = true;
+      } catch (err) {
+        pinInput.classList.remove('error');
+        void pinInput.offsetWidth; // restart animacji
+        pinInput.classList.add('error');
+        pinInput.select();
+      }
     });
   </script>
 </body>
