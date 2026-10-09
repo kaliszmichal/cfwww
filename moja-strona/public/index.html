@@ -8,14 +8,45 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>
+    // Ustaw zapisany motyw zanim strona się narysuje (bez migania). Domyślnie ciemny.
+    (function () {
+      var t = 'dark';
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') t = saved;
+      } catch (e) {}
+      document.documentElement.dataset.theme = t;
+      document.querySelector('meta[name="theme-color"]').content = t === 'light' ? '#cfe3fa' : '#02030a';
+    })();
+  </script>
   <style>
+    :root {
+      --bg-base: #02030a; /* zapas: gdyby tło nie pokryło całego ekranu */
+      --bg-grad: radial-gradient(ellipse at 50% 100%, #1b2240 0%, #0a0c1a 55%, #02030a 100%);
+      --fg: #fff;
+      --btn-bg: #fff;
+      --btn-fg: #000;
+      --btn-border: #fff;
+      --track: rgba(255, 255, 255, 0.2);
+      color-scheme: dark;
+    }
+    :root[data-theme="light"] {
+      --bg-base: #cfe3fa;
+      --bg-grad: radial-gradient(ellipse at 50% 0%, #fffbea 0%, #d3e5fa 50%, #9fc0ec 100%);
+      --fg: #0b1530;
+      --btn-bg: #0b1530;
+      --btn-fg: #fff;
+      --btn-border: #0b1530;
+      --track: rgba(11, 21, 48, 0.15);
+      color-scheme: light;
+    }
     html, body {
       height: 100%;
       margin: 0;
     }
     html {
-      background-color: #02030a; /* zapas: gdyby tło nie pokryło całego ekranu */
-      color-scheme: dark;
+      background-color: var(--bg-base);
     }
     body::before {
       content: "";
@@ -26,7 +57,7 @@
       height: 100%;
       height: 100lvh; /* pełna wysokość ekranu telefonu, także pod paskami przeglądarki */
       z-index: -2;
-      background: radial-gradient(ellipse at 50% 100%, #1b2240 0%, #0a0c1a 55%, #02030a 100%);
+      background: var(--bg-grad);
       pointer-events: none;
     }
     #stars {
@@ -42,7 +73,7 @@
       height: auto;
       min-height: 100%; /* gdy treści jest więcej niż ekranu, strona się przewija */
       background: transparent;
-      color: #fff;
+      color: var(--fg);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -59,9 +90,9 @@
       margin: 0 0 0.6em;
     }
     button {
-      background: #fff;
-      color: #000;
-      border: 1px solid #fff;
+      background: var(--btn-bg);
+      color: var(--btn-fg);
+      border: 1px solid var(--btn-border);
       border-radius: 999px;
       padding: 0.8em 2em;
       font-size: 1.4rem;
@@ -69,6 +100,19 @@
       font-family: inherit;
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
+    }
+    #theme-toggle {
+      position: fixed;
+      top: max(1rem, env(safe-area-inset-top));
+      right: max(1rem, env(safe-area-inset-right));
+      z-index: 10;
+      width: 3rem;
+      height: 3rem;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      font-size: 1.5rem;
+      line-height: 1;
     }
     #btn, #btn2, #btn3, #btn4 {
       box-sizing: border-box;
@@ -99,13 +143,13 @@
       box-sizing: border-box;
       width: 100%;
       background: transparent;
-      color: #fff;
+      color: var(--fg);
       font-size: 1.15rem;
       padding: 0.7em 1.5em;
     }
     #menu button:hover {
-      background: #fff;
-      color: #000;
+      background: var(--btn-bg);
+      color: var(--btn-fg);
     }
     #btn4::after {
       content: " ▾";
@@ -131,7 +175,7 @@
       height: 10px;
       margin-top: 1rem;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--track);
       overflow: hidden;
       transition: box-shadow 0.4s;
     }
@@ -142,7 +186,7 @@
       width: 0%;
       height: 100%;
       border-radius: 999px;
-      background: #fff;
+      background: var(--btn-bg);
       transition: background 0.4s;
     }
     #progress.done {
@@ -188,8 +232,8 @@
       min-width: 0;
       box-sizing: border-box;
       background: transparent;
-      color: #fff;
-      border: 1px solid #fff;
+      color: var(--fg);
+      border: 1px solid var(--btn-border);
       border-radius: 999px;
       padding: 0.8em 1em;
       font-size: 1.4rem;
@@ -231,6 +275,7 @@
 </head>
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
+  <button id="theme-toggle" type="button" aria-label="Przełącz na tryb jasny">☀️</button>
   <button id="btn" type="button">KLIKNIJ MNIE</button>
   <div id="progress" role="progressbar" aria-label="Ładowanie" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden>
     <div id="progress-fill"></div>
@@ -290,8 +335,10 @@
             if (s.y > h + 2) s.y = -2;
           }
           const a = reduce ? s.base : s.base * (0.7 + 0.3 * Math.sin(t / 1000 * s.tw + s.phase));
-          ctx.globalAlpha = a;
-          ctx.fillStyle = '#fff';
+          // w jasnym motywie białe gwiazdy byłyby niewidoczne - używamy granatowych, słabszych
+          const light = document.documentElement.dataset.theme === 'light';
+          ctx.globalAlpha = light ? a * 0.5 : a;
+          ctx.fillStyle = light ? '#2a4a8f' : '#fff';
           ctx.beginPath();
           ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
           ctx.fill();
@@ -307,8 +354,33 @@
         init();
         if (reduce) draw(0);
       });
+      // przy ograniczonym ruchu nie ma pętli animacji, więc po zmianie motywu rysujemy ponownie
+      window.addEventListener('themechange', () => { if (reduce) draw(0); });
       requestAnimationFrame(draw);
     })();
+
+    // Przełącznik motywu: ciemny (domyślny) / jasny, zapamiętywany w przeglądarce.
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+
+    function applyTheme(theme, save) {
+      const light = theme === 'light';
+      root.dataset.theme = theme;
+      themeMeta.content = light ? '#cfe3fa' : '#02030a';
+      // ikona pokazuje, na jaki motyw się przełączysz
+      themeToggle.textContent = light ? '🌙' : '☀️';
+      themeToggle.setAttribute('aria-label', light ? 'Przełącz na tryb ciemny' : 'Przełącz na tryb jasny');
+      if (save) {
+        try { localStorage.setItem('theme', theme); } catch (e) {}
+      }
+      window.dispatchEvent(new Event('themechange'));
+    }
+
+    themeToggle.addEventListener('click', () => {
+      applyTheme(root.dataset.theme === 'light' ? 'dark' : 'light', true);
+    });
+    applyTheme(root.dataset.theme === 'light' ? 'light' : 'dark', false);
 
     const btn = document.getElementById('btn');
 
