@@ -69,6 +69,22 @@
       z-index: -1;
       pointer-events: none;
     }
+    #astro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: clamp(64px, 18vw, 96px);
+      z-index: -1; /* nad gwiazdami, pod całą treścią */
+      pointer-events: none;
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+    #astro svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
     body {
       height: auto;
       min-height: 100%; /* gdy treści jest więcej niż ekranu, strona się przewija */
@@ -294,6 +310,40 @@
 </head>
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
+  <div id="astro" aria-hidden="true">
+    <svg viewBox="0 -12 100 124" fill="none" stroke="#0b1530" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+      <!-- antena -->
+      <path d="M50 5 V-3"/>
+      <circle cx="50" cy="-5" r="3" fill="#ff7a45"/>
+      <!-- plecak -->
+      <rect x="20" y="42" width="60" height="42" rx="12" fill="#c5cde0"/>
+      <!-- nogi (jedna kopie w powietrzu) -->
+      <rect x="31" y="78" width="16" height="28" rx="8" fill="#f2f4f8" transform="rotate(14 39 80)"/>
+      <rect x="54" y="78" width="16" height="28" rx="8" fill="#f2f4f8" transform="rotate(-24 62 80)"/>
+      <rect x="29" y="98" width="20" height="9" rx="4.5" fill="#ff7a45" stroke="none" transform="rotate(14 39 80)"/>
+      <rect x="52" y="98" width="20" height="9" rx="4.5" fill="#ff7a45" stroke="none" transform="rotate(-24 62 80)"/>
+      <!-- ręce: jedna pomachająca w górę, druga zwisa -->
+      <rect x="6" y="30" width="26" height="14" rx="7" fill="#f2f4f8" transform="rotate(-52 26 40)"/>
+      <rect x="68" y="56" width="26" height="14" rx="7" fill="#f2f4f8" transform="rotate(38 74 62)"/>
+      <!-- tułów -->
+      <rect x="27" y="46" width="46" height="40" rx="16" fill="#f2f4f8"/>
+      <rect x="39" y="58" width="22" height="13" rx="4" fill="#dfe4ee"/>
+      <circle cx="45" cy="64.5" r="2.3" fill="#ff7a45" stroke="none"/>
+      <circle cx="55" cy="64.5" r="2.3" fill="#4aa3ff" stroke="none"/>
+      <!-- hełm -->
+      <circle cx="50" cy="29" r="27" fill="#f2f4f8"/>
+      <ellipse cx="50" cy="30" rx="20" ry="16.5" fill="#1c2a52"/>
+      <!-- twarz: zeza i szeroki uśmiech z językiem -->
+      <circle cx="42.5" cy="26" r="5.2" fill="#fff" stroke="none"/>
+      <circle cx="57.5" cy="26" r="5.2" fill="#fff" stroke="none"/>
+      <circle cx="44.5" cy="27.5" r="2.2" fill="#0b1530" stroke="none"/>
+      <circle cx="55.5" cy="27.5" r="2.2" fill="#0b1530" stroke="none"/>
+      <path d="M41 35.5 Q50 45 59 35.5 Z" fill="#fff" stroke="none"/>
+      <path d="M46 39.5 Q50 46.5 54 39.5 Q50 37.8 46 39.5 Z" fill="#ff8fa3" stroke="none"/>
+      <!-- odblask na szybie -->
+      <path d="M34 20 Q37 15.5 43 14.5" stroke="#fff" stroke-width="2.2" opacity="0.7"/>
+    </svg>
+  </div>
   <button id="theme-toggle" type="button" aria-label="Przełącz na tryb jasny">
     <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
       <circle cx="12" cy="12" r="4"/>
@@ -384,6 +434,70 @@
       // przy ograniczonym ruchu nie ma pętli animacji, więc po zmianie motywu rysujemy ponownie
       window.addEventListener('themechange', () => { if (reduce) draw(0); });
       requestAnimationFrame(draw);
+    })();
+
+    // Astronauta dryfuje po całym ekranie i odbija się od krawędzi (z lekkim "spłaszczeniem" i nową rotacją).
+    (function () {
+      const astro = document.getElementById('astro');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const W = () => document.documentElement.clientWidth;
+      const H = () => window.innerHeight;
+      const rand = (a, b) => a + Math.random() * (b - a);
+
+      let x = rand(0, Math.max(0, W() - astro.offsetWidth));
+      let y = rand(0, Math.max(0, H() - astro.offsetHeight));
+      const speed = rand(42, 62); // piksele na sekundę
+      const angle = rand(0.3, Math.PI / 2 - 0.3) + Math.floor(rand(0, 4)) * (Math.PI / 2);
+      let vx = Math.cos(angle) * speed;
+      let vy = Math.sin(angle) * speed;
+      let rot = rand(-20, 20);
+      let vr = (Math.random() < 0.5 ? -1 : 1) * rand(10, 22); // stopnie na sekundę
+      let squash = 0, hitX = false;
+      let last = performance.now();
+
+      function render() {
+        const sq = hitX ? [1 - 0.28 * squash, 1 + 0.2 * squash] : [1 + 0.2 * squash, 1 - 0.28 * squash];
+        astro.style.transform =
+          `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) scale(${sq[0].toFixed(3)}, ${sq[1].toFixed(3)}) rotate(${rot.toFixed(1)}deg)`;
+      }
+
+      function bounce(alongX, dir) {
+        // odbicie z lekką zmianą kierunku, żeby trasa się nie powtarzała
+        const sp = Math.hypot(vx, vy);
+        let a = Math.atan2(vy, vx) + rand(-0.35, 0.35);
+        vx = Math.cos(a) * sp;
+        vy = Math.sin(a) * sp;
+        if (alongX) vx = dir * Math.abs(vx); else vy = dir * Math.abs(vy);
+        vr = (Math.random() < 0.5 ? -1 : 1) * rand(10, 30);
+        squash = 1;
+        hitX = alongX;
+      }
+
+      function step(now) {
+        const dt = Math.min((now - last) / 1000, 0.05);
+        last = now;
+        const maxX = Math.max(0, W() - astro.offsetWidth);
+        const maxY = Math.max(0, H() - astro.offsetHeight);
+        x += vx * dt;
+        y += vy * dt;
+        if (x < 0) { x = 0; bounce(true, 1); }
+        else if (x > maxX) { x = maxX; bounce(true, -1); }
+        if (y < 0) { y = 0; bounce(false, 1); }
+        else if (y > maxY) { y = maxY; bounce(false, -1); }
+        rot += vr * dt;
+        squash *= Math.exp(-dt * 7);
+        render();
+        requestAnimationFrame(step);
+      }
+
+      if (reduce) {
+        // bez ruchu: astronauta po prostu wisi w rogu
+        x = W() * 0.7; y = H() * 0.2; rot = -12;
+        render();
+      } else {
+        render();
+        requestAnimationFrame(step);
+      }
     })();
 
     // Przełącznik motywu: ciemny (domyślny) / jasny, zapamiętywany w przeglądarce.
