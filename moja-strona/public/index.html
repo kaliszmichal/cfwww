@@ -111,8 +111,27 @@
       padding: 0;
       display: grid;
       place-items: center;
-      font-size: 1.5rem;
-      line-height: 1;
+      background: transparent;
+      color: var(--fg);
+    }
+    #theme-toggle svg {
+      width: 1.4rem;
+      height: 1.4rem;
+      fill: none;
+      stroke: currentColor; /* jednokolorowe ikony w kolorze tekstu */
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    /* ikona pokazuje motyw, na który się przełączysz */
+    #theme-toggle .icon-moon { display: none; }
+    :root[data-theme="light"] #theme-toggle .icon-sun { display: none; }
+    :root[data-theme="light"] #theme-toggle .icon-moon { display: block; }
+    @media (hover: hover) {
+      #theme-toggle:hover {
+        background: var(--btn-bg);
+        color: var(--btn-fg);
+      }
     }
     #btn, #btn2, #btn3, #btn4 {
       box-sizing: border-box;
@@ -275,7 +294,15 @@
 </head>
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
-  <button id="theme-toggle" type="button" aria-label="Przełącz na tryb jasny">☀️</button>
+  <button id="theme-toggle" type="button" aria-label="Przełącz na tryb jasny">
+    <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+  </button>
   <button id="btn" type="button">KLIKNIJ MNIE</button>
   <div id="progress" role="progressbar" aria-label="Ładowanie" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden>
     <div id="progress-fill"></div>
@@ -368,8 +395,7 @@
       const light = theme === 'light';
       root.dataset.theme = theme;
       themeMeta.content = light ? '#cfe3fa' : '#02030a';
-      // ikona pokazuje, na jaki motyw się przełączysz
-      themeToggle.textContent = light ? '🌙' : '☀️';
+      // ikonę (słońce/księżyc) przełącza CSS według data-theme
       themeToggle.setAttribute('aria-label', light ? 'Przełącz na tryb ciemny' : 'Przełącz na tryb jasny');
       if (save) {
         try { localStorage.setItem('theme', theme); } catch (e) {}
