@@ -69,6 +69,68 @@
       z-index: -1;
       pointer-events: none;
     }
+    /* Rząd klawiszy w stylu "keycaps": koralowa tacka z trzema klawiszami */
+    #keys {
+      box-sizing: border-box;
+      width: min(15.7rem, 100%);
+      margin-top: 1.8rem;
+      padding: 0.75rem;
+      display: flex;
+      gap: 0.6rem;
+      border-radius: 1.6rem;
+      background: linear-gradient(135deg, #ff8890, #ff7a84);
+      box-shadow:
+        0 14px 28px rgba(190, 50, 70, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -2px 0 rgba(160, 40, 55, 0.25);
+    }
+    #keys .key {
+      flex: 1;
+      min-width: 0;
+      height: 3.6rem;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(165, 45, 60, 0.45);
+      border-radius: 0.5rem;
+      background: linear-gradient(180deg, #ff8791, #ff7680);
+      color: #ffe6b0;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      box-shadow:
+        0 3px 4px rgba(150, 35, 50, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      transition: transform 0.08s, box-shadow 0.08s, background 0.2s;
+    }
+    #keys .key.wide {
+      flex: 1.6;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 0 0.7rem 0.55rem 0;
+    }
+    #keys .key svg {
+      display: block;
+      width: 1.5rem;
+      height: 1.5rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    #keys .key.wide svg {
+      width: 1.9rem;
+    }
+    #keys .key:active,
+    #keys .key.pressed {
+      transform: translateY(2px);
+      box-shadow:
+        0 1px 1px rgba(150, 35, 50, 0.45),
+        inset 0 1px 2px rgba(150, 35, 50, 0.35);
+      background: linear-gradient(180deg, #ff7680, #ff6e79);
+    }
     #astro {
       position: fixed;
       top: 0;
@@ -371,6 +433,15 @@
     <button type="button">Wybór 2</button>
     <button type="button">Wybór 3</button>
   </div>
+  <div id="keys" role="group" aria-label="Klawisze">
+    <button class="key" type="button" data-key="Escape" aria-label="Esc">ESC</button>
+    <button class="key" type="button" data-key="Shift" aria-label="Shift">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 12h4.5v7h7v-7H20z"/></svg>
+    </button>
+    <button class="key wide" type="button" data-key="Enter" aria-label="Enter">
+      <svg viewBox="0 0 28 24" aria-hidden="true"><path d="M24 4v9H5M10 8l-5 5 5 5"/></svg>
+    </button>
+  </div>
 
   <script>
     // Gwiazdy w tle: trzy warstwy (paralaksa), powolny dryf i delikatne mruganie.
@@ -498,6 +569,17 @@
         render();
         requestAnimationFrame(step);
       }
+    })();
+
+    // Klawisze reagują też na prawdziwą klawiaturę (Esc, Shift, Enter) - samo podświetlenie, bez akcji.
+    (function () {
+      const keys = {};
+      document.querySelectorAll('#keys .key').forEach((k) => { keys[k.dataset.key] = k; });
+      window.addEventListener('keydown', (e) => { if (keys[e.key]) keys[e.key].classList.add('pressed'); });
+      window.addEventListener('keyup', (e) => { if (keys[e.key]) keys[e.key].classList.remove('pressed'); });
+      window.addEventListener('blur', () => {
+        Object.values(keys).forEach((k) => k.classList.remove('pressed'));
+      });
     })();
 
     // Przełącznik motywu: ciemny (domyślny) / jasny, zapamiętywany w przeglądarce.
