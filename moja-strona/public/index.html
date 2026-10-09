@@ -580,6 +580,16 @@
       window.addEventListener('blur', () => {
         Object.values(keys).forEach((k) => k.classList.remove('pressed'));
       });
+
+      // Krótka wibracja przy dotknięciu klawisza Enter (tylko ekran dotykowy, tylko ten klawisz).
+      // Działa na Androidzie (Chrome/Firefox); iPhone/Safari nie obsługuje Vibration API,
+      // a przeglądarki bez obsługi po prostu pomijają ten fragment.
+      const enterKey = keys.Enter;
+      if (enterKey && typeof navigator.vibrate === 'function') {
+        enterKey.addEventListener('pointerdown', (e) => {
+          if (e.pointerType === 'touch') navigator.vibrate(30);
+        });
+      }
     })();
 
     // Przełącznik motywu: ciemny (domyślny) / jasny, zapamiętywany w przeglądarce.
