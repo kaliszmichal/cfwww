@@ -222,19 +222,26 @@
     /* Klasyczny poziomy pasek na górze: ikona GitHub | przyciski | przełącznik motywu (bez tła-"wyspy") */
     #navbar {
       width: 100%;
-      max-width: 34rem;
+      max-width: 38rem;
       box-sizing: border-box;
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: auto 1fr auto; /* GitHub | przyciski | motyw - zawsze na swoich miejscach */
       align-items: center;
-      justify-content: center;
-      gap: 0.8rem 1rem;
+      gap: 0.6rem;
       position: sticky;
       top: max(0.6rem, env(safe-area-inset-top));
       z-index: 10;
       margin-bottom: 2rem;
     }
+    #github-link {
+      grid-column: 1;
+    }
+    #theme-toggle {
+      grid-column: 3;
+      justify-self: end;
+    }
     .nav-buttons {
+      grid-column: 2;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
