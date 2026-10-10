@@ -184,7 +184,17 @@
       font-weight: 700;
       font-family: inherit;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.2s, color 0.2s, scale 0.15s ease;
+    }
+    /* Lekki zoom po najechaniu na dowolny przycisk (własność "scale" działa niezależnie
+       od transform, więc nie gryzie się z animacją unoszenia #btn ani wciskaniem klawiszy). */
+    @media (hover: hover) {
+      button:hover, #github-link:hover {
+        scale: 1.06;
+      }
+    }
+    button:active, #github-link:active {
+      scale: 0.97;
     }
     #theme-toggle {
       flex-shrink: 0;
@@ -217,7 +227,7 @@
       background: transparent;
       color: var(--fg);
       text-decoration: none;
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.2s, color 0.2s, scale 0.15s ease;
     }
     /* Klasyczny poziomy pasek na górze: ikona GitHub | przyciski | przełącznik motywu (bez tła-"wyspy") */
     #navbar {
