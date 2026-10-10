@@ -423,34 +423,6 @@
     #moon[hidden] {
       display: none;
     }
-    /* Mały, minimalistyczny licznik odwiedzin w prawym dolnym rogu */
-    #visit-counter {
-      position: fixed;
-      right: max(0.75rem, env(safe-area-inset-right));
-      bottom: max(0.75rem, env(safe-area-inset-bottom));
-      z-index: 5;
-      display: flex;
-      align-items: center;
-      gap: 0.35em;
-      font-size: 0.72rem;
-      letter-spacing: 0.02em;
-      color: var(--fg);
-      opacity: 0.45;
-      pointer-events: none;
-      font-variant-numeric: tabular-nums;
-    }
-    #visit-counter svg {
-      width: 0.95em;
-      height: 0.95em;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    #visit-counter[hidden] {
-      display: none;
-    }
 
     /* Animacja wejścia: po wczytaniu strony tło, a potem kolejne elementy, wypływają płynnie z opóźnieniem. */
     @keyframes fade-in {
@@ -471,10 +443,9 @@
     #btn3        { animation: fade-up 0.9s ease-out 0.4s backwards; }
     #btn4        { animation: fade-up 0.9s ease-out 0.45s backwards; }
     #keys        { animation: fade-up 0.9s ease-out 1.0s backwards; }
-    #visit-counter { animation: fade-in 1s ease-out 1.2s backwards; }
     @media (prefers-reduced-motion: reduce) {
       body::before, #stars, #astro, #navbar, #github-link, #theme-toggle,
-      #btn2, #btn3, #btn4, #keys, #visit-counter { animation: none; }
+      #btn2, #btn3, #btn4, #keys { animation: none; }
     }
   </style>
 </head>
@@ -558,13 +529,6 @@
     <button class="key wide" type="button" data-key="Enter" aria-label="Enter">
       <svg viewBox="0 0 28 24" aria-hidden="true"><path d="M24 4v9H5M10 8l-5 5 5 5"/></svg>
     </button>
-  </div>
-  <div id="visit-counter" hidden aria-hidden="true">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/>
-      <circle cx="12" cy="12" r="3"/>
-    </svg>
-    <span id="visit-count">0</span>
   </div>
 
   <script>
@@ -821,22 +785,6 @@
       btn3.hidden = true;
       pinInput.focus();
     });
-
-    // Licznik odwiedzin: własny endpoint /api/visits (Cloudflare Worker + KV, ten sam serwer co strona).
-    // Jeśli endpoint jest niedostępny, licznik po prostu się nie pokazuje.
-    (function () {
-      const el = document.getElementById('visit-counter');
-      const count = document.getElementById('visit-count');
-      fetch('/api/visits')
-        .then((r) => (r.ok ? r.json() : Promise.reject()))
-        .then((data) => {
-          if (typeof data.count === 'number') {
-            count.textContent = data.count.toLocaleString('pl-PL');
-            el.hidden = false;
-          }
-        })
-        .catch(() => {});
-    })();
 
     pinForm.addEventListener('submit', async (e) => {
       e.preventDefault();
