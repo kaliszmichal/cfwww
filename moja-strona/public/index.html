@@ -822,16 +822,16 @@
       pinInput.focus();
     });
 
-    // Licznik odwiedzin: proste zliczanie przez darmowe CountAPI (bez własnego backendu).
-    // Jeśli usługa jest niedostępna, licznik po prostu się nie pokazuje.
+    // Licznik odwiedzin: własny endpoint /api/visits (Cloudflare Worker + KV, ten sam serwer co strona).
+    // Jeśli endpoint jest niedostępny, licznik po prostu się nie pokazuje.
     (function () {
       const el = document.getElementById('visit-counter');
       const count = document.getElementById('visit-count');
-      fetch('https://api.countapi.xyz/hit/michal-kalisz-pl/odwiedziny')
-        .then((r) => r.json())
+      fetch('/api/visits')
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
         .then((data) => {
-          if (typeof data.value === 'number') {
-            count.textContent = data.value.toLocaleString('pl-PL');
+          if (typeof data.count === 'number') {
+            count.textContent = data.count.toLocaleString('pl-PL');
             el.hidden = false;
           }
         })

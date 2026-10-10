@@ -1,7 +1,16 @@
 {
   "name": "frosty-snowflake-3f07",
   "compatibility_date": "2026-10-01",
+  "main": "src/worker.js",
   "assets": {
-    "directory": "./public"
-  }
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "VISITS",
+      // Jednorazowo: `npx wrangler kv namespace create VISITS` i wklej tu zwrócone "id".
+      "id": "REPLACE_WITH_KV_NAMESPACE_ID"
+    }
+  ]
 }
