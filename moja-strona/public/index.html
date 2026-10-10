@@ -365,7 +365,7 @@
     #btn {
       background: var(--btn1-bg);
       border-color: var(--btn1-border);
-      animation: float 3s ease-in-out infinite, fade-in 1s ease-out 0.3s backwards;
+      animation: fade-in 1s ease-out 0.3s backwards;
       transition: background 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s;
     }
     #btn.done {
@@ -399,10 +399,6 @@
     }
     #progress.done #progress-fill {
       background: #2ecc71;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
     }
     @media (prefers-reduced-motion: reduce) {
       #btn { animation: none; }
