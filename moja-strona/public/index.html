@@ -109,7 +109,13 @@
       box-shadow:
         0 3px 4px rgba(35, 100, 170, 0.45),
         inset 0 1px 0 rgba(255, 255, 255, 0.28);
-      transition: transform 0.08s, box-shadow 0.08s, background 0.2s;
+      transition: transform 0.08s, box-shadow 0.08s, background 0.2s, filter 0.15s;
+      scale: 1; /* bez zoomu: klawisze stykają się bokami w tacce, powiększenie by je wypychało poza brzeg */
+    }
+    @media (hover: hover) {
+      #keys .key:hover {
+        filter: brightness(1.12);
+      }
     }
     #keys .key.wide {
       flex: 1.6;
@@ -317,6 +323,10 @@
     #menu button:hover {
       background: var(--btn-bg);
       color: var(--btn-fg);
+      scale: 1; /* bez zoomu: kontener #menu ma overflow:hidden, powiększony przycisk by się ucinał */
+    }
+    #menu button:active {
+      scale: 0.98;
     }
     #btn4::after {
       content: " ▾";
