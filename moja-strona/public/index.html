@@ -410,6 +410,59 @@
       display: none;
     }
 
+    /* Przycisk w stylu glassmorphism: matowe szkło z rozmyciem tego, co jest za nim */
+    #glass-btn {
+      box-sizing: border-box;
+      width: min(15.7rem, 100%);
+      margin-top: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6em;
+      padding: 0.9em 1.6em;
+      color: var(--fg);
+      font-size: 1.02rem;
+      letter-spacing: 0.06em;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06));
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      backdrop-filter: blur(14px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.1s;
+    }
+    #glass-btn svg {
+      width: 1.25em;
+      height: 1.25em;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    :root[data-theme="light"] #glass-btn {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.25));
+      border-color: rgba(255, 255, 255, 0.85);
+      box-shadow:
+        0 8px 24px rgba(11, 21, 48, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+    }
+    @media (hover: hover) {
+      #glass-btn:hover {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.12));
+        border-color: rgba(255, 255, 255, 0.6);
+      }
+      :root[data-theme="light"] #glass-btn:hover {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
+      }
+    }
+    #glass-btn:active {
+      transform: translateY(1px);
+    }
+
     /* Animacja wejścia: po wczytaniu strony tło, a potem kolejne elementy, wypływają płynnie z opóźnieniem. */
     @keyframes fade-in {
       from { opacity: 0; }
@@ -428,9 +481,10 @@
     #btn3        { animation: fade-up 0.9s ease-out 1.2s backwards; }
     #btn4        { animation: fade-up 0.9s ease-out 1.4s backwards; }
     #keys        { animation: fade-up 0.9s ease-out 1.6s backwards; }
+    #glass-btn   { animation: fade-up 0.9s ease-out 1.8s backwards; }
     @media (prefers-reduced-motion: reduce) {
       body::before, #stars, #astro, #github-link, #theme-toggle,
-      #btn2, #btn3, #btn4, #keys { animation: none; }
+      #btn2, #btn3, #btn4, #keys, #glass-btn { animation: none; }
     }
   </style>
 </head>
@@ -511,6 +565,10 @@
       <svg viewBox="0 0 28 24" aria-hidden="true"><path d="M24 4v9H5M10 8l-5 5 5 5"/></svg>
     </button>
   </div>
+  <button id="glass-btn" type="button">
+    OSTATNI PRZYCISK
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>
+  </button>
 
   <script>
     // Gwiazdy w tle: trzy warstwy (paralaksa), powolny dryf i delikatne mruganie.
