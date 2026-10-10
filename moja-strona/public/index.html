@@ -28,6 +28,8 @@
       --btn-bg: #fff;
       --btn-fg: #000;
       --btn-border: #fff;
+      --btn1-bg: #d4d4d4; /* pierwszy przycisk: lekko szary */
+      --btn1-border: #d4d4d4;
       --track: rgba(255, 255, 255, 0.2);
       color-scheme: dark;
     }
@@ -38,6 +40,8 @@
       --btn-bg: #0b1530;
       --btn-fg: #fff;
       --btn-border: #0b1530;
+      --btn1-bg: var(--btn-bg);
+      --btn1-border: var(--btn-border);
       --track: rgba(11, 21, 48, 0.15);
       color-scheme: light;
     }
@@ -257,6 +261,8 @@
       transform: rotate(180deg);
     }
     #btn {
+      background: var(--btn1-bg);
+      border-color: var(--btn1-border);
       animation: float 3s ease-in-out infinite;
       transition: background 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s;
     }
