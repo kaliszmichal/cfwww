@@ -298,7 +298,7 @@
     #btn {
       background: var(--btn1-bg);
       border-color: var(--btn1-border);
-      animation: float 3s ease-in-out infinite;
+      animation: float 3s ease-in-out infinite, fade-in 1s ease-out 0.8s backwards;
       transition: background 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s;
     }
     #btn.done {
@@ -408,6 +408,29 @@
     }
     #moon[hidden] {
       display: none;
+    }
+
+    /* Animacja wejścia: po wczytaniu strony tło, a potem kolejne elementy, wypływają płynnie z opóźnieniem. */
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: none; }
+    }
+    body::before { animation: fade-in 1.2s ease-out backwards; }
+    #stars       { animation: fade-in 1.6s ease-out 0.2s backwards; }
+    #astro       { animation: fade-in 1.4s ease-out 0.6s backwards; } /* tylko opacity: transform ustawia JS */
+    #github-link { animation: fade-up 0.9s ease-out 0.5s backwards; }
+    #theme-toggle { animation: fade-up 0.9s ease-out 0.6s backwards; }
+    #btn2        { animation: fade-up 0.9s ease-out 1.0s backwards; }
+    #btn3        { animation: fade-up 0.9s ease-out 1.2s backwards; }
+    #btn4        { animation: fade-up 0.9s ease-out 1.4s backwards; }
+    #keys        { animation: fade-up 0.9s ease-out 1.6s backwards; }
+    @media (prefers-reduced-motion: reduce) {
+      body::before, #stars, #astro, #github-link, #theme-toggle,
+      #btn2, #btn3, #btn4, #keys { animation: none; }
     }
   </style>
 </head>
