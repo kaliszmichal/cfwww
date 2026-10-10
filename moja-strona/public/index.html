@@ -211,10 +211,10 @@
     #github-link {
       position: fixed;
       top: max(1rem, env(safe-area-inset-top));
-      left: max(1rem, env(safe-area-inset-left));
+      left: calc(max(1rem, env(safe-area-inset-left)) + 2cm);
       z-index: 10;
-      width: 3rem;
-      height: 3rem;
+      width: 3.6rem;
+      height: 3.6rem;
       box-sizing: border-box;
       display: grid;
       place-items: center;
@@ -226,8 +226,8 @@
       transition: background 0.2s, color 0.2s;
     }
     #github-link svg {
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 1.8rem;
+      height: 1.8rem;
       fill: currentColor;
     }
     #github-link:focus-visible {
