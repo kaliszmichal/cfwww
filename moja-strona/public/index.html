@@ -644,13 +644,27 @@
       requestAnimationFrame(draw);
     })();
 
-    // Astronauta dryfuje po całym ekranie i odbija się od krawędzi (z lekkim "spłaszczeniem" i nową rotacją).
+    // Astronauta dryfuje po całym ekranie i odbija się od krawędzi oraz od przycisków
+    // (z lekkim "spłaszczeniem" i nową rotacją).
     (function () {
       const astro = document.getElementById('astro');
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const W = () => document.documentElement.clientWidth;
       const H = () => window.innerHeight;
       const rand = (a, b) => a + Math.random() * (b - a);
+
+      // Astronauta jest większy niż odstępy między pojedynczymi przyciskami, więc żeby się
+      // między nimi nie zacinał, traktujemy każdą grupę przycisków (pasek, tacka klawiszy,
+      // menu, formularz PIN) jako jedną bryłę do odbicia - sprawdzamy, które są akurat widoczne.
+      const obstacles = ['navbar', 'keys', 'menu', 'pin-form']
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
+      function isVisible(el) {
+        const style = getComputedStyle(el);
+        if (style.display === 'none' || style.visibility === 'hidden') return false;
+        const r = el.getBoundingClientRect();
+        return r.width > 0 && r.height > 0;
+      }
 
       let x = rand(0, Math.max(0, W() - astro.offsetWidth));
       let y = rand(0, Math.max(0, H() - astro.offsetHeight));
@@ -681,6 +695,68 @@
         hitX = alongX;
       }
 
+      // "Bryła" do kolizji jest nieco mniejsza niż cały obrazek SVG (pomija przezroczyste
+      // rogi wokół rozłożonych rąk i anteny), żeby dotknięcie wyglądało naturalnie.
+      const COLLISION_INSET = 0.18;
+
+      // Panele (pasek, tacka klawiszy, menu, PIN) stoją blisko siebie w jednej wąskiej
+      // kolumnie - próba omijania każdego z osobna prowadziła do utykania w szczelinach
+      // między nimi. Zamiast tego traktujemy wszystkie aktualnie widoczne panele jako
+      // jedną, pojedynczą bryłę (tak samo niezawodną w obsłudze jak krawędzie ekranu).
+      function contentEnvelope() {
+        let r = null;
+        for (const el of obstacles) {
+          if (!isVisible(el)) continue;
+          const b = el.getBoundingClientRect();
+          if (b.width <= 0 || b.height <= 0) continue;
+          if (!r) r = { left: b.left, right: b.right, top: b.top, bottom: b.bottom };
+          else {
+            r.left = Math.min(r.left, b.left);
+            r.right = Math.max(r.right, b.right);
+            r.top = Math.min(r.top, b.top);
+            r.bottom = Math.max(r.bottom, b.bottom);
+          }
+        }
+        return r;
+      }
+
+      function resolveObstacles() {
+        const r = contentEnvelope();
+        if (!r) return; // nic widocznego - nie ma od czego się odbijać
+        const w = astro.offsetWidth, h = astro.offsetHeight;
+        const cw = w * (1 - 2 * COLLISION_INSET), ch = h * (1 - 2 * COLLISION_INSET);
+        const acx = x + w / 2, acy = y + h / 2;
+        const ocx = (r.left + r.right) / 2, ocy = (r.top + r.bottom) / 2;
+        const dx = acx - ocx, dy = acy - ocy;
+        const overlapX = (cw / 2 + (r.right - r.left) / 2) - Math.abs(dx);
+        const overlapY = (ch / 2 + (r.bottom - r.top) / 2) - Math.abs(dy);
+        if (overlapX <= 0 || overlapY <= 0) return; // bez kolizji
+
+        // Panel bywa prawie tak szeroki jak ekran (mało miejsca po bokach), więc zamiast
+        // zawsze uciekać w najbliższą stronę, sprawdzamy, po której stronie faktycznie
+        // zmieści się cały astronauta - inaczej potrafił utknąć, odbijając się w kółko
+        // między krawędzią ekranu a panelem w zbyt wąskiej szczelinie.
+        const spaceLeft = r.left, spaceRight = W() - r.right;
+        const spaceAbove = r.top, spaceBelow = H() - r.bottom;
+        const xFits = spaceLeft >= w || spaceRight >= w;
+        const yFits = spaceAbove >= h || spaceBelow >= h;
+        const useX = xFits && (!yFits || overlapX < overlapY);
+
+        if (useX) {
+          let dir = dx >= 0 ? 1 : -1;
+          if (dir > 0 && spaceRight < w && spaceLeft >= w) dir = -1;
+          else if (dir < 0 && spaceLeft < w && spaceRight >= w) dir = 1;
+          x += dir * overlapX;
+          bounce(true, dir);
+        } else {
+          let dir = dy >= 0 ? 1 : -1;
+          if (dir > 0 && spaceBelow < h && spaceAbove >= h) dir = -1;
+          else if (dir < 0 && spaceAbove < h && spaceBelow >= h) dir = 1;
+          y += dir * overlapY;
+          bounce(false, dir);
+        }
+      }
+
       function step(now) {
         const dt = Math.min((now - last) / 1000, 0.05);
         last = now;
@@ -692,6 +768,7 @@
         else if (x > maxX) { x = maxX; bounce(true, -1); }
         if (y < 0) { y = 0; bounce(false, 1); }
         else if (y > maxY) { y = maxY; bounce(false, -1); }
+        resolveObstacles();
         rot += vr * dt;
         squash *= Math.exp(-dt * 7);
         render();
