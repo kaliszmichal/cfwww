@@ -268,6 +268,32 @@
       width: auto;
       padding: 0.55em 1.2em;
       font-size: 1.2rem; /* +30% względem poprzednich 0.92rem */
+      white-space: nowrap; /* przycisk nie łamie tekstu w środku - zamiast tego cały rząd zawija się na telefonie */
+    }
+    /* Węższe telefony: mniejsze ikony i przyciski, żeby pasek zmieścił się bez łamania tekstu w pastylkach */
+    @media (max-width: 480px) {
+      #github-link, #theme-toggle {
+        width: 3.2rem;
+        height: 3.2rem;
+      }
+      #github-link svg {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+      #theme-toggle svg {
+        width: 1.4rem;
+        height: 1.4rem;
+      }
+      .nav-btn {
+        font-size: 0.95rem;
+        padding: 0.5em 1em;
+      }
+      #navbar {
+        gap: 0.5rem;
+      }
+      .nav-buttons {
+        gap: 0.4rem;
+      }
     }
     #github-link svg {
       width: 2.34rem; /* +30% względem poprzednich 1.8rem */
