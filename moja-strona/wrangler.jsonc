@@ -15,6 +15,6 @@
   "vars": {
     "TO_ADDRESS": "kaliszowy@gmail.com",
     // Nadawca musi należeć do domeny z włączonym Email Routing
-    "FROM_ADDRESS": "formularz@kalisz.pl"
+    "FROM_ADDRESS": "formularz@michal.kalisz.pl"
   }
 }
