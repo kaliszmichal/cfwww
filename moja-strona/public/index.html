@@ -1006,6 +1006,18 @@
         cfSend.disabled = false;
       });
 
+      /* Po odświeżeniu (F5) zawsze lądujemy w sekcji „Obszary”; wejście z linku czy przycisk „wstecz” działają jak zwykle */
+      try {
+        var nav0 = performance.getEntriesByType('navigation')[0];
+        if (nav0 && nav0.type === 'reload') {
+          history.scrollRestoration = 'manual';
+          if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+          var goAreas = function () { document.getElementById('obszary').scrollIntoView({ behavior: 'auto', block: 'start' }); };
+          goAreas();
+          window.addEventListener('load', function () { goAreas(); });
+        }
+      } catch (e) {}
+
       /* Język startowy: zapisany wybór, w drugiej kolejności język przeglądarki */
       var startLang = 'pl';
       try {
