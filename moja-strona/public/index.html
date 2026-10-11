@@ -477,12 +477,24 @@
       body { font-size: 1.0625rem; }
     }
     @media (max-width: 560px) {
-      .mk { display: none; }
-      .nav-in { justify-content: flex-end; }
-      .nav-links a { font-size: 0.9rem; }
+      .mk { font-size: 1rem; }
+      .nav-right { gap: 0.4rem; }
+      .nav-links { gap: 0.7rem; }
+      .nav-links a { font-size: 0.85rem; white-space: nowrap; }
+      .theme { width: 2.25rem; height: 2.25rem; }
       .ev { grid-template-columns: 4.3rem minmax(0, 1fr); }
       .ev .src { display: none; }
       .why { grid-column: 2; }
+    }
+
+    @media (max-width: 360px) {
+      .nav-links { gap: 0.5rem; }
+      .nav-links a { font-size: 0.8rem; }
+    }
+    @media (max-width: 340px) {
+      .mk { font-size: 0.9rem; margin-right: 0.75rem; }
+      .nav-links { gap: 0.4rem; }
+      .nav-links a { font-size: 0.76rem; }
     }
 
     /* Ograniczony ruch: te same treści, bez animacji */
