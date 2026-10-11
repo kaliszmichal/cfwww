@@ -1,7 +1,20 @@
 {
   "name": "frosty-snowflake-3f07",
+  "main": "src/worker.js",
   "compatibility_date": "2026-10-01",
   "assets": {
-    "directory": "./public"
+    "directory": "./public",
+    "binding": "ASSETS",
+    // Worker uruchamia się tylko dla /api/*, reszta to statyczne pliki
+    "run_worker_first": ["/api/*"]
+  },
+  // Wysyłka przez Cloudflare Email Routing: adres odbiorcy musi być zweryfikowany w Email Routing
+  "send_email": [
+    { "name": "CONTACT_EMAIL", "destination_address": "kaliszowy@gmail.com" }
+  ],
+  "vars": {
+    "TO_ADDRESS": "kaliszowy@gmail.com",
+    // Nadawca musi należeć do domeny z włączonym Email Routing
+    "FROM_ADDRESS": "formularz@kalisz.pl"
   }
 }

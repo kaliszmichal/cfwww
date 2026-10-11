@@ -268,8 +268,9 @@
       cursor: pointer;
       transition: background 0.25s, color 0.25s, transform 0.25s var(--ease);
     }
-    .btn:hover { background: var(--hl-solid); color: #12161c; transform: translateY(-1px); }
-    :root[data-theme="dark"] .btn:hover { background: var(--hl-solid); color: #12161c; }
+    @media (hover: hover) {
+      .btn:hover { background: var(--hl-solid); color: #12161c; transform: translateY(-1px); }
+    }
 
     .link {
       font: 600 1rem/1.3 var(--f-display);
@@ -478,6 +479,27 @@
     }
     .contact p { margin: 1.5rem 0 0; }
     .contact .link { font-size: clamp(1.2rem, 2.6vw, 1.5rem); }
+
+    .cform { margin-top: 2rem; max-width: 34rem; }
+    .contact .cform p { margin: 0; }
+    .fld { margin-bottom: 1.25rem; }
+    .fld label { display: block; margin-bottom: 0.35rem; font: 600 0.9rem/1.3 var(--f-display); color: var(--muted); }
+    .fld input, .fld textarea {
+      display: block; width: 100%; padding: 0.7rem 0.85rem;
+      border: 1px solid var(--rule); border-radius: 10px;
+      background: transparent; color: var(--ink);
+      font: 400 1.05rem/1.5 var(--f-text);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .fld textarea { resize: vertical; min-height: 8rem; }
+    .fld input:focus, .fld textarea:focus { outline: none; border-color: var(--ink); box-shadow: 0 3px 0 var(--hl-solid); }
+    .fld [aria-invalid="true"] { border-color: #c2410c; }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .cform-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin-bottom: 2rem; }
+    .cform .btn:disabled { opacity: 0.6; cursor: default; transform: none; }
+    .cform-status { font: 500 0.95rem/1.4 var(--f-display); color: var(--muted); }
+    .cform-status.err { color: #c2410c; }
+    :root[data-theme="dark"] .cform-status.err, :root[data-theme="dark"] .fld [aria-invalid="true"] { color: #fb923c; border-color: #fb923c; }
 
     .foot { padding-block: 2.25rem 3rem; border-top: 1px solid var(--rule); font: 400 0.9rem/1.5 var(--f-display); color: var(--muted); }
     .foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; }
@@ -754,9 +776,18 @@
         <h2 class="sec-title" data-i18n="t4">Kontakt</h2>
         <div>
           <p class="contact-big" data-i18n="cb">Masz pomysł albo problem do rozwiązania?</p>
-          <p data-i18n="cs">Najszybciej napiszesz do mnie przez GitHub.</p>
+          <p data-i18n="cs">Napisz do mnie przez formularz albo przez GitHub.</p>
+          <form class="cform" id="cform" novalidate>
+            <div class="fld"><label for="cf-name" data-i18n="fn">Imię</label><input id="cf-name" name="name" type="text" autocomplete="name" maxlength="100" required></div>
+            <div class="fld"><label for="cf-email" data-i18n="fe">Adres e-mail</label><input id="cf-email" name="email" type="email" autocomplete="email" maxlength="200" required></div>
+            <div class="fld"><label for="cf-msg" data-i18n="fm">Wiadomość</label><textarea id="cf-msg" name="message" rows="5" maxlength="5000" required></textarea></div>
+            <div class="hp" aria-hidden="true"><label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+            <div class="cform-row">
+              <button class="btn" id="cf-send" type="submit" data-i18n="fs">Wyślij wiadomość</button>
+              <p class="cform-status" id="cf-status" role="status" aria-live="polite"></p>
+            </div>
+          </form>
           <p><a class="link" href="https://github.com/kaliszmichal" target="_blank" rel="noopener noreferrer">github.com/kaliszmichal</a></p>
-          <!-- Do uzupełnienia: adres e-mail, np. <p><a class="link" href="mailto:...">...</a></p> -->
         </div>
       </div>
     </section>
@@ -779,7 +810,7 @@
       var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
 
       /* Języki: PL (treść w HTML) i EN (słownik poniżej) */
-      var EN = {"skip": "Skip to content", "n1": "Areas", "n2": "Projects", "n3": "About", "n4": "Contact", "who": "<strong>Michał Kalisz<\/strong>Developer and IT administrator", "h0": "I code.", "h1": "I secure.", "h2": "I automate with AI.", "lead": "I combine hands-on infrastructure experience with language models, so that threat analysis and routine tasks take <mark class=\"hl on\">less time<\/mark>, while the decisions stay with people.", "btn": "See projects", "gh": "GitHub profile", "t1": "What I do", "a1": "Programming", "a1p": "Tools that solve a specific problem: browser extensions, web apps, macros and scripts. I start with a <mark class=\"hl on\">small, working version<\/mark> and grow it together with its users.", "a2": "AI in cybersecurity", "a2p": "Language models are good at summarising alerts, reading logs and suggesting next steps. I treat them as an <mark class=\"hl on\">analyst's assistant<\/mark>: fast and patient, but always with its conclusions checked by a human.", "ct": "Event log (sample data)", "cn": "A simulation on made-up data: this is what a first-pass review looks like, after which the analyst makes the call.", "a3": "AI in everyday work", "a3p": "Reports, documents, spreadsheets, tickets: anything that repeats every week can be automated. That leaves more time for <mark class=\"hl on\">decisions, not clicking<\/mark>.", "tl1": "Python, JavaScript, VBA, Flask, SQLite", "tl2": "EDR, SIEM, MITRE ATT&amp;CK, language models", "tl3": "Automation, Excel, documentation, prompts", "t2": "Selected projects", "p2n": "<span class=\"pn\">Numbers in words</span>", "p2s": "A Word macro that writes amounts and numbers out in words in Polish.", "p2p": "The ZamienKwotyNaSlownie macro handles zlotys, euros and dollars, square metres, fractions and whole numbers. Options are picked in a simple form, and it also works on macOS.", "p2l1": "Correct Polish inflection, e.g. \"tysiąc\" instead of \"jeden tysiąc\"", "p2l2": "Workarounds for VBA limits on macOS (no VBScript.RegExp, encoding issues)", "p2t": "VBA, Microsoft Word", "p2k": "Code on GitHub", "p3s": "A web application for analysing banking data.", "p3p": "My first full-stack project in Python: a Flask backend with SQLite, user roles, a REST API and an admin panel.", "p3l1": "Role-based access control", "p3l2": "REST API for fetching data", "p3l3": "Admin panel for managing users", "p4n": "<span class=\"pn\">Triage</span><span class=\"badge\">concept<\/span>", "p4s": "An AI assistant for first-pass analysis of EDR alerts.", "p4p": "A language model summarises the alert, maps it to MITRE ATT&amp;CK techniques and proposes next steps. The analyst sees the reasoning and approves the decision.", "p4l1": "Input: an alert and context from the EDR console", "p4l2": "Output: a summary, hypotheses and a checklist", "p4l3": "Rule: AI suggests, the human decides", "p4t": "Python, language models, MITRE ATT&amp;CK", "p5n": "<span class=\"pn\">PhishLens</span><span class=\"badge\">concept<\/span>", "p5s": "A classifier for suspicious e-mail messages.", "p5p": "It assesses headers, links and message content, then explains in plain language why something looks suspicious. The user should understand the threat, not just get a warning.", "p5l1": "Checking sender, domain and link address consistency", "p5l2": "A short explanation for the user", "p5l3": "Report to an analyst in one click", "p5t": "Python, natural language processing, e-mail", "p6n": "<span class=\"pn\">Admin's Notebook</span><span class=\"badge\">concept<\/span>", "p6s": "Drafts of documentation and tickets from raw notes.", "p6p": "Turns repair notes into a clear ticket, guide or report. The administrator edits finished text instead of writing it from scratch.", "p6l1": "Templates for typical incidents and changes", "p6l2": "Consistent language and document format", "p6l3": "Version history available", "p6t": "Automation, documentation, language models", "t3": "About me", "o1": "Day to day I administer IT infrastructure in a domain environment: Active Directory, Group Policy, workstation security, printers and file servers. After hours I write extensions, apps and macros that make work easier for me and others.", "o2": "I treat AI as a capable colleague. It is great at analysis and first drafts, but every result needs checking. That is why I build tools in which <mark class=\"hl on\">the human always has the last word<\/mark>.", "f1k": "Day to day", "f1v": "IT administration in a domain environment", "f2k": "After hours", "f2v": "Browser extensions, web apps and macros", "f3k": "Interests", "f3v": "Post-quantum cryptography, MITRE ATT&amp;CK, EDR and SIEM", "f4k": "Technologies", "f4v": "Python, JavaScript, VBA, Flask, SQLite, Active Directory", "t4": "Contact", "cb": "Got an idea or a problem to solve?", "cs": "The quickest way to reach me is GitHub.", "ft": "Work in progress: projects labelled \"concept\" are examples.", "m0": "Login succeeded: svc-backup from 10.0.4.23", "m1": "Query for update.vendor-cdn.example", "m2": "powershell.exe -EncodedCommand JABzAD0ATgBl…", "m3": "Read \\\\nas\\finanse\\2026\\raporty", "m4": "Attachment faktura.iso from a new sender", "m5": "Screen-lock policy applied", "m6": "Outbound connection to 203.0.113.40:4444", "m7": "Login succeeded: j.nowak from 10.0.4.8", "m8": "Query for ntp.example.org", "w0": "An encoded command run right after a service account logged in.", "w1": "A disk image from a sender nobody has seen before. A typical phishing pattern.", "w2": "A rarely used port and a host outside the usual traffic.", "_title": "Michał Kalisz | developer, AI in cybersecurity", "_desc": "Michał Kalisz: programming, using AI in cybersecurity and automating everyday work. Portfolio and selected projects.", "_ogdesc": "Tools in which AI helps with the work and the human has the last word.", "_navlabel": "Page sections", "_mk": "Michał Kalisz, top of the page", "_top": "Back to top", "run": "Analyse logs", "clear": "Clear", "toLight": "Switch to light theme", "toDark": "Switch to dark theme", "sum": "{h} of {n} events need attention. The analyst decides how to respond."};
+      var EN = {"skip": "Skip to content", "fn": "Name", "fe": "E-mail address", "fm": "Message", "fs": "Send message", "fsending": "Sending…", "fok": "Thanks! Your message has been sent.", "ferr": "Could not send the message. Please try again later or write via GitHub.", "finv": "Please fill in your name, a valid e-mail address and a message.", "n1": "Areas", "n2": "Projects", "n3": "About", "n4": "Contact", "who": "<strong>Michał Kalisz<\/strong>Developer and IT administrator", "h0": "I code.", "h1": "I secure.", "h2": "I automate with AI.", "lead": "I combine hands-on infrastructure experience with language models, so that threat analysis and routine tasks take <mark class=\"hl on\">less time<\/mark>, while the decisions stay with people.", "btn": "See projects", "gh": "GitHub profile", "t1": "What I do", "a1": "Programming", "a1p": "Tools that solve a specific problem: browser extensions, web apps, macros and scripts. I start with a <mark class=\"hl on\">small, working version<\/mark> and grow it together with its users.", "a2": "AI in cybersecurity", "a2p": "Language models are good at summarising alerts, reading logs and suggesting next steps. I treat them as an <mark class=\"hl on\">analyst's assistant<\/mark>: fast and patient, but always with its conclusions checked by a human.", "ct": "Event log (sample data)", "cn": "A simulation on made-up data: this is what a first-pass review looks like, after which the analyst makes the call.", "a3": "AI in everyday work", "a3p": "Reports, documents, spreadsheets, tickets: anything that repeats every week can be automated. That leaves more time for <mark class=\"hl on\">decisions, not clicking<\/mark>.", "tl1": "Python, JavaScript, VBA, Flask, SQLite", "tl2": "EDR, SIEM, MITRE ATT&amp;CK, language models", "tl3": "Automation, Excel, documentation, prompts", "t2": "Selected projects", "p2n": "<span class=\"pn\">Numbers in words</span>", "p2s": "A Word macro that writes amounts and numbers out in words in Polish.", "p2p": "The ZamienKwotyNaSlownie macro handles zlotys, euros and dollars, square metres, fractions and whole numbers. Options are picked in a simple form, and it also works on macOS.", "p2l1": "Correct Polish inflection, e.g. \"tysiąc\" instead of \"jeden tysiąc\"", "p2l2": "Workarounds for VBA limits on macOS (no VBScript.RegExp, encoding issues)", "p2t": "VBA, Microsoft Word", "p2k": "Code on GitHub", "p3s": "A web application for analysing banking data.", "p3p": "My first full-stack project in Python: a Flask backend with SQLite, user roles, a REST API and an admin panel.", "p3l1": "Role-based access control", "p3l2": "REST API for fetching data", "p3l3": "Admin panel for managing users", "p4n": "<span class=\"pn\">Triage</span><span class=\"badge\">concept<\/span>", "p4s": "An AI assistant for first-pass analysis of EDR alerts.", "p4p": "A language model summarises the alert, maps it to MITRE ATT&amp;CK techniques and proposes next steps. The analyst sees the reasoning and approves the decision.", "p4l1": "Input: an alert and context from the EDR console", "p4l2": "Output: a summary, hypotheses and a checklist", "p4l3": "Rule: AI suggests, the human decides", "p4t": "Python, language models, MITRE ATT&amp;CK", "p5n": "<span class=\"pn\">PhishLens</span><span class=\"badge\">concept<\/span>", "p5s": "A classifier for suspicious e-mail messages.", "p5p": "It assesses headers, links and message content, then explains in plain language why something looks suspicious. The user should understand the threat, not just get a warning.", "p5l1": "Checking sender, domain and link address consistency", "p5l2": "A short explanation for the user", "p5l3": "Report to an analyst in one click", "p5t": "Python, natural language processing, e-mail", "p6n": "<span class=\"pn\">Admin's Notebook</span><span class=\"badge\">concept<\/span>", "p6s": "Drafts of documentation and tickets from raw notes.", "p6p": "Turns repair notes into a clear ticket, guide or report. The administrator edits finished text instead of writing it from scratch.", "p6l1": "Templates for typical incidents and changes", "p6l2": "Consistent language and document format", "p6l3": "Version history available", "p6t": "Automation, documentation, language models", "t3": "About me", "o1": "Day to day I administer IT infrastructure in a domain environment: Active Directory, Group Policy, workstation security, printers and file servers. After hours I write extensions, apps and macros that make work easier for me and others.", "o2": "I treat AI as a capable colleague. It is great at analysis and first drafts, but every result needs checking. That is why I build tools in which <mark class=\"hl on\">the human always has the last word<\/mark>.", "f1k": "Day to day", "f1v": "IT administration in a domain environment", "f2k": "After hours", "f2v": "Browser extensions, web apps and macros", "f3k": "Interests", "f3v": "Post-quantum cryptography, MITRE ATT&amp;CK, EDR and SIEM", "f4k": "Technologies", "f4v": "Python, JavaScript, VBA, Flask, SQLite, Active Directory", "t4": "Contact", "cb": "Got an idea or a problem to solve?", "cs": "Write to me using the form or via GitHub.", "ft": "Work in progress: projects labelled \"concept\" are examples.", "m0": "Login succeeded: svc-backup from 10.0.4.23", "m1": "Query for update.vendor-cdn.example", "m2": "powershell.exe -EncodedCommand JABzAD0ATgBl…", "m3": "Read \\\\nas\\finanse\\2026\\raporty", "m4": "Attachment faktura.iso from a new sender", "m5": "Screen-lock policy applied", "m6": "Outbound connection to 203.0.113.40:4444", "m7": "Login succeeded: j.nowak from 10.0.4.8", "m8": "Query for ntp.example.org", "w0": "An encoded command run right after a service account logged in.", "w1": "A disk image from a sender nobody has seen before. A typical phishing pattern.", "w2": "A rarely used port and a host outside the usual traffic.", "_title": "Michał Kalisz | developer, AI in cybersecurity", "_desc": "Michał Kalisz: programming, using AI in cybersecurity and automating everyday work. Portfolio and selected projects.", "_ogdesc": "Tools in which AI helps with the work and the human has the last word.", "_navlabel": "Page sections", "_mk": "Michał Kalisz, top of the page", "_top": "Back to top", "run": "Analyse logs", "clear": "Clear", "toLight": "Switch to light theme", "toDark": "Switch to dark theme", "sum": "{h} of {n} events need attention. The analyst decides how to respond."};
       var PL = {}, nodes = Array.prototype.slice.call(document.querySelectorAll('[data-i18n]'));
       nodes.forEach(function (n) { PL[n.dataset.i18n] = n.innerHTML; });
       PL._title = document.title;
@@ -789,6 +820,9 @@
       PL.run = 'Przeanalizuj logi'; PL.clear = 'Wyczyść';
       PL.toLight = 'Przełącz na jasny motyw'; PL.toDark = 'Przełącz na ciemny motyw';
       PL.sum = '{h} z {n} zdarzeń wymaga uwagi. Decyzję o reakcji podejmuje analityk.';
+      PL.fsending = 'Wysyłanie…'; PL.fok = 'Dziękuję! Wiadomość została wysłana.';
+      PL.ferr = 'Nie udało się wysłać wiadomości. Spróbuj później albo napisz przez GitHub.';
+      PL.finv = 'Uzupełnij imię, poprawny adres e-mail i treść wiadomości.';
       var lang = 'pl';
       function t(k) { return (lang === 'en' ? EN : PL)[k]; }
       var langBtns = Array.prototype.slice.call(document.querySelectorAll('.lang'));
@@ -930,6 +964,48 @@
         busy = false;
         done = true;
       });
+      /* Formularz kontaktowy: wysyłka do /api/contact (Worker + Cloudflare Email Routing) */
+      var cform = document.getElementById('cform');
+      var cfStatus = document.getElementById('cf-status');
+      var cfSend = document.getElementById('cf-send');
+      var cfKey = '';
+      function setStatus(key, err) {
+        cfKey = key;
+        cfStatus.textContent = key ? t(key) : '';
+        cfStatus.classList.toggle('err', !!err);
+      }
+      langHooks.push(function () { if (cfKey) cfStatus.textContent = t(cfKey); });
+      cform.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var f = cform.elements;
+        var bad = !f.name.value.trim() || !/^\S+@\S+\.\S{2,}$/.test(f.email.value.trim()) || f.message.value.trim().length < 5;
+        ['name', 'email', 'message'].forEach(function (k) { f[k].removeAttribute('aria-invalid'); });
+        if (bad) {
+          if (!f.name.value.trim()) f.name.setAttribute('aria-invalid', 'true');
+          if (!/^\S+@\S+\.\S{2,}$/.test(f.email.value.trim())) f.email.setAttribute('aria-invalid', 'true');
+          if (f.message.value.trim().length < 5) f.message.setAttribute('aria-invalid', 'true');
+          setStatus('finv', true);
+          cform.querySelector('[aria-invalid]').focus();
+          return;
+        }
+        cfSend.disabled = true;
+        setStatus('fsending', false);
+        try {
+          var res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ name: f.name.value, email: f.email.value, message: f.message.value, website: f.website.value })
+          });
+          var out = await res.json();
+          if (!res.ok || !out.ok) throw new Error('send');
+          cform.reset();
+          setStatus('fok', false);
+        } catch (err) {
+          setStatus('ferr', true);
+        }
+        cfSend.disabled = false;
+      });
+
       /* Język startowy: zapisany wybór, w drugiej kolejności język przeglądarki */
       var startLang = 'pl';
       try {
