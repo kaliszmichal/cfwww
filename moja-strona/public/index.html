@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Michał Kalisz | programista, AI w cyberbezpieczeństwie</title>
-  <meta name="description" content="Michał Kalisz: programowanie, wykorzystanie AI w cyberbezpieczeństwie i automatyzacja codziennej pracy. Portfolio i wybrane projekty.">
+  <meta name="description" id="mDesc" content="Michał Kalisz: programowanie, wykorzystanie AI w cyberbezpieczeństwie i automatyzacja codziennej pracy. Portfolio i wybrane projekty.">
   <meta name="theme-color" content="#eef1f3">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pl_PL">
-  <meta property="og:title" content="Michał Kalisz | programista, AI w cyberbezpieczeństwie">
-  <meta property="og:description" content="Narzędzia, w których AI pomaga w pracy, a człowiek ma ostatnie słowo.">
+  <meta property="og:title" id="mOgT" content="Michał Kalisz | programista, AI w cyberbezpieczeństwie">
+  <meta property="og:description" id="mOgD" content="Narzędzia, w których AI pomaga w pracy, a człowiek ma ostatnie słowo.">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -193,6 +193,15 @@
       cursor: pointer;
       transition: background 0.2s;
     }
+    .lang {
+      min-width: 2.25rem; height: 2.5rem; padding: 0 0.35rem;
+      border: 0; border-radius: 10px; background: transparent; color: var(--ink);
+      font: 600 0.85rem/1 var(--f-display); letter-spacing: 0.04em; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .lang:hover { background: var(--paper-2); }
+    .lang-foot { display: none; height: 2rem; border: 1px solid var(--rule); }
+    @media (max-width: 400px) { .lang-nav { display: none; } .lang-foot { display: inline-block; } }
     .theme:hover { background: var(--paper-2); }
     .theme svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
     .theme .i-sun { display: none; }
@@ -482,6 +491,7 @@
       .nav-links { gap: 0.7rem; }
       .nav-links a { font-size: 1.02rem; white-space: nowrap; }
       .theme { width: 2.25rem; height: 2.25rem; }
+      .lang { height: 2.25rem; }
       .ev { grid-template-columns: 4.3rem minmax(0, 1fr); }
       .ev .src { display: none; }
       .why { grid-column: 2; }
@@ -492,6 +502,7 @@
       .nav-right { gap: 0.25rem; }
       .nav-links { gap: 0.55rem; }
       .theme { width: 2rem; height: 2rem; }
+      .lang { min-width: 1.9rem; height: 2rem; padding: 0 0.2rem; font-size: 0.8rem; }
     }
     @media (max-width: 360px) {
       .nav-links { gap: 0.45rem; }
@@ -538,18 +549,19 @@
   </style>
 </head>
 <body>
-  <a class="skip" href="#tresc">Przejdź do treści</a>
+  <a class="skip" href="#tresc" data-i18n="skip">Przejdź do treści</a>
 
   <header class="nav" id="nav">
     <div class="wrap nav-in">
       <a class="mk" href="#top" aria-label="Michał Kalisz, początek strony">MK</a>
       <div class="nav-right">
         <nav class="nav-links" aria-label="Sekcje strony">
-          <a href="#obszary">Obszary</a>
-          <a href="#projekty">Projekty</a>
-          <a href="#o-mnie">O mnie</a>
-          <a href="#kontakt">Kontakt</a>
+          <a href="#obszary" data-i18n="n1">Obszary</a>
+          <a href="#projekty" data-i18n="n2">Projekty</a>
+          <a href="#o-mnie" data-i18n="n3">O mnie</a>
+          <a href="#kontakt" data-i18n="n4">Kontakt</a>
         </nav>
+        <button class="lang lang-nav" type="button" lang="en" aria-label="Switch to English">EN</button>
         <button class="theme" id="theme" type="button" aria-label="Przełącz na ciemny motyw">
           <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8 8 0 0 1 9.8 4a8 8 0 1 0 10.2 10.2z"/></svg>
           <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>
@@ -561,17 +573,17 @@
   <main id="tresc">
     <section class="hero" id="top">
       <div class="wrap row">
-        <p class="who after-wipe"><strong>Michał Kalisz</strong>Programista i administrator IT</p>
+        <p class="who after-wipe" data-i18n="who"><strong>Michał Kalisz</strong>Programista i administrator IT</p>
         <div class="hero-main">
           <h1 class="hero-title">
-            <span class="rl" style="--i:0">Programuję.</span>
-            <span class="rl" style="--i:1">Zabezpieczam.</span>
-            <span class="rl" style="--i:2">Automatyzuję z AI.</span>
+            <span class="rl" style="--i:0" data-i18n="h0">Programuję.</span>
+            <span class="rl" style="--i:1" data-i18n="h1">Zabezpieczam.</span>
+            <span class="rl" style="--i:2" data-i18n="h2">Automatyzuję z AI.</span>
           </h1>
-          <p class="lead after-wipe">Łączę praktykę z pracy w infrastrukturze z modelami językowymi, żeby analiza zagrożeń i rutynowe zadania zajmowały <mark class="hl" data-delay="2500">mniej czasu</mark>, a decyzje zostawały po stronie człowieka.</p>
+          <p class="lead after-wipe" data-i18n="lead">Łączę praktykę z pracy w infrastrukturze z modelami językowymi, żeby analiza zagrożeń i rutynowe zadania zajmowały <mark class="hl" data-delay="2500">mniej czasu</mark>, a decyzje zostawały po stronie człowieka.</p>
           <div class="cta after-wipe">
-            <a class="btn" href="#projekty">Zobacz projekty</a>
-            <a class="link" href="https://github.com/kaliszmichal" target="_blank" rel="noopener noreferrer">Profil na GitHubie</a>
+            <a class="btn" href="#projekty" data-i18n="btn">Zobacz projekty</a>
+            <a class="link" href="https://github.com/kaliszmichal" target="_blank" rel="noopener noreferrer" data-i18n="gh">Profil na GitHubie</a>
           </div>
         </div>
       </div>
@@ -579,44 +591,44 @@
 
     <section class="sec" id="obszary">
       <div class="wrap row">
-        <h2 class="sec-title">Czym się zajmuję</h2>
+        <h2 class="sec-title" data-i18n="t1">Czym się zajmuję</h2>
         <div class="areas">
           <article class="area">
-            <h3>Programowanie</h3>
-            <p>Narzędzia, które rozwiązują konkretny problem: rozszerzenia przeglądarki, aplikacje webowe, makra i skrypty. Zaczynam od <mark class="hl">małej, działającej wersji</mark> i rozwijam ją razem z użytkownikiem.</p>
-            <p class="tools">Python, JavaScript, VBA, Flask, SQLite</p>
+            <h3 data-i18n="a1">Programowanie</h3>
+            <p data-i18n="a1p">Narzędzia, które rozwiązują konkretny problem: rozszerzenia przeglądarki, aplikacje webowe, makra i skrypty. Zaczynam od <mark class="hl">małej, działającej wersji</mark> i rozwijam ją razem z użytkownikiem.</p>
+            <p class="tools" data-i18n="tl1">Python, JavaScript, VBA, Flask, SQLite</p>
           </article>
 
           <article class="area">
-            <h3>AI w cyberbezpieczeństwie</h3>
-            <p>Modele językowe dobrze streszczają alerty, czytają logi i podpowiadają kolejne kroki. Traktuję je jak <mark class="hl">asystenta analityka</mark>: szybkiego i cierpliwego, ale takiego, którego wnioski zawsze sprawdza człowiek.</p>
-            <p class="tools">EDR, SIEM, MITRE ATT&amp;CK, modele językowe</p>
+            <h3 data-i18n="a2">AI w cyberbezpieczeństwie</h3>
+            <p data-i18n="a2p">Modele językowe dobrze streszczają alerty, czytają logi i podpowiadają kolejne kroki. Traktuję je jak <mark class="hl">asystenta analityka</mark>: szybkiego i cierpliwego, ale takiego, którego wnioski zawsze sprawdza człowiek.</p>
+            <p class="tools" data-i18n="tl2">EDR, SIEM, MITRE ATT&amp;CK, modele językowe</p>
 
             <figure class="console" aria-labelledby="console-title">
               <div class="console-bar">
-                <span class="console-title" id="console-title">Dziennik zdarzeń (przykładowe dane)</span>
+                <span class="console-title" id="console-title" data-i18n="ct">Dziennik zdarzeń (przykładowe dane)</span>
                 <button class="run" id="run" type="button">Przeanalizuj logi</button>
               </div>
               <ol class="log" id="log">
-                <li class="ev"><time>08:14:02</time><span class="src">auth</span><span class="msg">Logowanie udane: svc-backup z 10.0.4.23</span></li>
-                <li class="ev"><time>08:14:09</time><span class="src">dns</span><span class="msg">Zapytanie o update.vendor-cdn.example</span></li>
-                <li class="ev" data-flag="1"><time>08:14:31</time><span class="src">proc</span><span class="msg">powershell.exe -EncodedCommand JABzAD0ATgBl…</span><span class="why">Zakodowane polecenie uruchomione zaraz po logowaniu konta serwisowego.</span></li>
-                <li class="ev"><time>08:15:03</time><span class="src">smb</span><span class="msg">Odczyt \\nas\finanse\2026\raporty</span></li>
-                <li class="ev" data-flag="1"><time>08:15:44</time><span class="src">mail</span><span class="msg">Załącznik faktura.iso od nowego nadawcy</span><span class="why">Obraz dysku od nadawcy, którego wcześniej nikt nie widział. Typowy schemat phishingu.</span></li>
-                <li class="ev"><time>08:16:10</time><span class="src">gpo</span><span class="msg">Zastosowano politykę blokady ekranu</span></li>
-                <li class="ev" data-flag="1"><time>08:16:52</time><span class="src">net</span><span class="msg">Połączenie wychodzące na 203.0.113.40:4444</span><span class="why">Rzadko używany port i host spoza zwykłego ruchu.</span></li>
-                <li class="ev"><time>08:17:20</time><span class="src">auth</span><span class="msg">Logowanie udane: j.nowak z 10.0.4.8</span></li>
-                <li class="ev"><time>08:17:41</time><span class="src">dns</span><span class="msg">Zapytanie o ntp.example.org</span></li>
+                <li class="ev"><time>08:14:02</time><span class="src">auth</span><span class="msg" data-i18n="m0">Logowanie udane: svc-backup z 10.0.4.23</span></li>
+                <li class="ev"><time>08:14:09</time><span class="src">dns</span><span class="msg" data-i18n="m1">Zapytanie o update.vendor-cdn.example</span></li>
+                <li class="ev" data-flag="1"><time>08:14:31</time><span class="src">proc</span><span class="msg" data-i18n="m2">powershell.exe -EncodedCommand JABzAD0ATgBl…</span><span class="why" data-i18n="w0">Zakodowane polecenie uruchomione zaraz po logowaniu konta serwisowego.</span></li>
+                <li class="ev"><time>08:15:03</time><span class="src">smb</span><span class="msg" data-i18n="m3">Odczyt \\nas\finanse\2026\raporty</span></li>
+                <li class="ev" data-flag="1"><time>08:15:44</time><span class="src">mail</span><span class="msg" data-i18n="m4">Załącznik faktura.iso od nowego nadawcy</span><span class="why" data-i18n="w1">Obraz dysku od nadawcy, którego wcześniej nikt nie widział. Typowy schemat phishingu.</span></li>
+                <li class="ev"><time>08:16:10</time><span class="src">gpo</span><span class="msg" data-i18n="m5">Zastosowano politykę blokady ekranu</span></li>
+                <li class="ev" data-flag="1"><time>08:16:52</time><span class="src">net</span><span class="msg" data-i18n="m6">Połączenie wychodzące na 203.0.113.40:4444</span><span class="why" data-i18n="w2">Rzadko używany port i host spoza zwykłego ruchu.</span></li>
+                <li class="ev"><time>08:17:20</time><span class="src">auth</span><span class="msg" data-i18n="m7">Logowanie udane: j.nowak z 10.0.4.8</span></li>
+                <li class="ev"><time>08:17:41</time><span class="src">dns</span><span class="msg" data-i18n="m8">Zapytanie o ntp.example.org</span></li>
               </ol>
               <p class="console-sum" id="sum" role="status" aria-live="polite"></p>
             </figure>
-            <p class="console-note">Symulacja na wymyślonych danych: tak wygląda wstępny przegląd, po którym analityk podejmuje decyzję.</p>
+            <p class="console-note" data-i18n="cn">Symulacja na wymyślonych danych: tak wygląda wstępny przegląd, po którym analityk podejmuje decyzję.</p>
           </article>
 
           <article class="area">
-            <h3>AI w codziennej pracy</h3>
-            <p>Raporty, dokumenty, arkusze, zgłoszenia: wszystko, co powtarza się co tydzień, da się zautomatyzować. Dzięki temu zostaje więcej czasu na <mark class="hl">decyzje, a nie na klikanie</mark>.</p>
-            <p class="tools">Automatyzacja, Excel, dokumentacja, prompty</p>
+            <h3 data-i18n="a3">AI w codziennej pracy</h3>
+            <p data-i18n="a3p">Raporty, dokumenty, arkusze, zgłoszenia: wszystko, co powtarza się co tydzień, da się zautomatyzować. Dzięki temu zostaje więcej czasu na <mark class="hl">decyzje, a nie na klikanie</mark>.</p>
+            <p class="tools" data-i18n="tl3">Automatyzacja, Excel, dokumentacja, prompty</p>
           </article>
         </div>
       </div>
@@ -624,37 +636,37 @@
 
     <section class="sec" id="projekty">
       <div class="wrap row">
-        <h2 class="sec-title">Wybrane projekty</h2>
+        <h2 class="sec-title" data-i18n="t2">Wybrane projekty</h2>
         <ul class="projects">
           <li class="proj open">
             <h3 class="proj-h"><button class="proj-btn" type="button" aria-expanded="true" aria-controls="p2">
-              <span class="proj-name">Liczby słownie</span>
-              <span class="proj-sum">Makro Worda, które zapisuje kwoty i liczby słowami po polsku.</span>
+              <span class="proj-name" data-i18n="p2n">Liczby słownie</span>
+              <span class="proj-sum" data-i18n="p2s">Makro Worda, które zapisuje kwoty i liczby słowami po polsku.</span>
               <span class="proj-icon" aria-hidden="true"></span>
             </button></h3>
             <div class="proj-body" id="p2"><div class="proj-in"><div class="proj-pad">
-              <p>Makro ZamienKwotyNaSlownie obsługuje złote, euro i dolary, metry kwadratowe, ułamki i liczby całkowite. Opcje wybiera się w prostym formularzu, a całość działa też na macOS.</p>
+              <p data-i18n="p2p">Makro ZamienKwotyNaSlownie obsługuje złote, euro i dolary, metry kwadratowe, ułamki i liczby całkowite. Opcje wybiera się w prostym formularzu, a całość działa też na macOS.</p>
               <ul>
-                <li>Poprawna polska odmiana, np. „tysiąc” zamiast „jeden tysiąc”</li>
-                <li>Obejście ograniczeń VBA na macOS (brak VBScript.RegExp, problemy z kodowaniem)</li>
+                <li data-i18n="p2l1">Poprawna polska odmiana, np. „tysiąc” zamiast „jeden tysiąc”</li>
+                <li data-i18n="p2l2">Obejście ograniczeń VBA na macOS (brak VBScript.RegExp, problemy z kodowaniem)</li>
               </ul>
-              <p class="tools">VBA, Microsoft Word</p>
-              <p class="link-wrap"><a class="link" href="https://github.com/kaliszmichal/LiczbySlownie" target="_blank" rel="noopener noreferrer">Kod na GitHubie</a></p>
+              <p class="tools" data-i18n="p2t">VBA, Microsoft Word</p>
+              <p class="link-wrap"><a class="link" href="https://github.com/kaliszmichal/LiczbySlownie" target="_blank" rel="noopener noreferrer" data-i18n="p2k">Kod na GitHubie</a></p>
             </div></div></div>
           </li>
 
           <li class="proj">
             <h3 class="proj-h"><button class="proj-btn" type="button" aria-expanded="false" aria-controls="p3">
               <span class="proj-name">Banking Analytics</span>
-              <span class="proj-sum">Aplikacja webowa do analizy danych bankowych.</span>
+              <span class="proj-sum" data-i18n="p3s">Aplikacja webowa do analizy danych bankowych.</span>
               <span class="proj-icon" aria-hidden="true"></span>
             </button></h3>
             <div class="proj-body" id="p3"><div class="proj-in"><div class="proj-pad">
-              <p>Mój pierwszy pełny projekt full-stack w Pythonie: backend we Flasku z bazą SQLite, podział na role użytkowników, REST API i panel administratora.</p>
+              <p data-i18n="p3p">Mój pierwszy pełny projekt full-stack w Pythonie: backend we Flasku z bazą SQLite, podział na role użytkowników, REST API i panel administratora.</p>
               <ul>
-                <li>Kontrola dostępu oparta na rolach</li>
-                <li>REST API do pobierania danych</li>
-                <li>Panel administratora do zarządzania użytkownikami</li>
+                <li data-i18n="p3l1">Kontrola dostępu oparta na rolach</li>
+                <li data-i18n="p3l2">REST API do pobierania danych</li>
+                <li data-i18n="p3l3">Panel administratora do zarządzania użytkownikami</li>
               </ul>
               <p class="tools">Python, Flask, SQLite, REST</p>
             </div></div></div>
@@ -662,52 +674,52 @@
 
           <li class="proj">
             <h3 class="proj-h"><button class="proj-btn" type="button" aria-expanded="false" aria-controls="p4">
-              <span class="proj-name">Triage<span class="badge">koncept</span></span>
-              <span class="proj-sum">Asystent AI do wstępnej analizy alertów EDR.</span>
+              <span class="proj-name" data-i18n="p4n">Triage<span class="badge">koncept</span></span>
+              <span class="proj-sum" data-i18n="p4s">Asystent AI do wstępnej analizy alertów EDR.</span>
               <span class="proj-icon" aria-hidden="true"></span>
             </button></h3>
             <div class="proj-body" id="p4"><div class="proj-in"><div class="proj-pad">
-              <p>Model językowy streszcza alert, zestawia go z technikami MITRE ATT&amp;CK i proponuje kolejne kroki. Analityk widzi uzasadnienie i sam zatwierdza decyzję.</p>
+              <p data-i18n="p4p">Model językowy streszcza alert, zestawia go z technikami MITRE ATT&amp;CK i proponuje kolejne kroki. Analityk widzi uzasadnienie i sam zatwierdza decyzję.</p>
               <ul>
-                <li>Wejście: alert i kontekst z konsoli EDR</li>
-                <li>Wyjście: streszczenie, hipotezy i lista kontrolna</li>
-                <li>Zasada: AI podpowiada, człowiek decyduje</li>
+                <li data-i18n="p4l1">Wejście: alert i kontekst z konsoli EDR</li>
+                <li data-i18n="p4l2">Wyjście: streszczenie, hipotezy i lista kontrolna</li>
+                <li data-i18n="p4l3">Zasada: AI podpowiada, człowiek decyduje</li>
               </ul>
-              <p class="tools">Python, modele językowe, MITRE ATT&amp;CK</p>
+              <p class="tools" data-i18n="p4t">Python, modele językowe, MITRE ATT&amp;CK</p>
             </div></div></div>
           </li>
 
           <li class="proj">
             <h3 class="proj-h"><button class="proj-btn" type="button" aria-expanded="false" aria-controls="p5">
-              <span class="proj-name">PhishLens<span class="badge">koncept</span></span>
-              <span class="proj-sum">Klasyfikator podejrzanych wiadomości e-mail.</span>
+              <span class="proj-name" data-i18n="p5n">PhishLens<span class="badge">koncept</span></span>
+              <span class="proj-sum" data-i18n="p5s">Klasyfikator podejrzanych wiadomości e-mail.</span>
               <span class="proj-icon" aria-hidden="true"></span>
             </button></h3>
             <div class="proj-body" id="p5"><div class="proj-in"><div class="proj-pad">
-              <p>Ocenia nagłówki, linki i treść wiadomości, a potem zwykłym językiem tłumaczy, dlaczego wygląda podejrzanie. Użytkownik ma zrozumieć zagrożenie, a nie tylko dostać ostrzeżenie.</p>
+              <p data-i18n="p5p">Ocenia nagłówki, linki i treść wiadomości, a potem zwykłym językiem tłumaczy, dlaczego wygląda podejrzanie. Użytkownik ma zrozumieć zagrożenie, a nie tylko dostać ostrzeżenie.</p>
               <ul>
-                <li>Sprawdzanie zgodności nadawcy, domeny i adresów w linkach</li>
-                <li>Wyjaśnienie dla użytkownika w kilku zdaniach</li>
-                <li>Zgłoszenie do analityka jednym kliknięciem</li>
+                <li data-i18n="p5l1">Sprawdzanie zgodności nadawcy, domeny i adresów w linkach</li>
+                <li data-i18n="p5l2">Wyjaśnienie dla użytkownika w kilku zdaniach</li>
+                <li data-i18n="p5l3">Zgłoszenie do analityka jednym kliknięciem</li>
               </ul>
-              <p class="tools">Python, przetwarzanie języka, e-mail</p>
+              <p class="tools" data-i18n="p5t">Python, przetwarzanie języka, e-mail</p>
             </div></div></div>
           </li>
 
           <li class="proj">
             <h3 class="proj-h"><button class="proj-btn" type="button" aria-expanded="false" aria-controls="p6">
-              <span class="proj-name">Notatnik administratora<span class="badge">koncept</span></span>
-              <span class="proj-sum">Szkice dokumentacji i zgłoszeń z surowych notatek.</span>
+              <span class="proj-name" data-i18n="p6n">Notatnik administratora<span class="badge">koncept</span></span>
+              <span class="proj-sum" data-i18n="p6s">Szkice dokumentacji i zgłoszeń z surowych notatek.</span>
               <span class="proj-icon" aria-hidden="true"></span>
             </button></h3>
             <div class="proj-body" id="p6"><div class="proj-in"><div class="proj-pad">
-              <p>Zamienia notatki z naprawy w czytelne zgłoszenie, instrukcję albo raport. Administrator poprawia gotową treść zamiast pisać ją od zera.</p>
+              <p data-i18n="p6p">Zamienia notatki z naprawy w czytelne zgłoszenie, instrukcję albo raport. Administrator poprawia gotową treść zamiast pisać ją od zera.</p>
               <ul>
-                <li>Szablony dla typowych incydentów i zmian</li>
-                <li>Ujednolicony język i format dokumentów</li>
-                <li>Historia wersji do wglądu</li>
+                <li data-i18n="p6l1">Szablony dla typowych incydentów i zmian</li>
+                <li data-i18n="p6l2">Ujednolicony język i format dokumentów</li>
+                <li data-i18n="p6l3">Historia wersji do wglądu</li>
               </ul>
-              <p class="tools">Automatyzacja, dokumentacja, modele językowe</p>
+              <p class="tools" data-i18n="p6t">Automatyzacja, dokumentacja, modele językowe</p>
             </div></div></div>
           </li>
         </ul>
@@ -716,15 +728,15 @@
 
     <section class="sec about" id="o-mnie">
       <div class="wrap row">
-        <h2 class="sec-title">O mnie</h2>
+        <h2 class="sec-title" data-i18n="t3">O mnie</h2>
         <div>
-          <p>Na co dzień administruję infrastrukturą IT w środowisku domenowym: Active Directory, zasady grup, bezpieczeństwo stacji roboczych, drukarki i serwery plików. Po godzinach piszę rozszerzenia, aplikacje i makra, które ułatwiają pracę mnie i innym.</p>
-          <p>AI traktuję jak sprawnego współpracownika. Świetnie radzi sobie z analizą i pierwszymi szkicami, ale każdy wynik wymaga sprawdzenia. Dlatego buduję narzędzia, w których <mark class="hl">człowiek zawsze ma ostatnie słowo</mark>.</p>
+          <p data-i18n="o1">Na co dzień administruję infrastrukturą IT w środowisku domenowym: Active Directory, zasady grup, bezpieczeństwo stacji roboczych, drukarki i serwery plików. Po godzinach piszę rozszerzenia, aplikacje i makra, które ułatwiają pracę mnie i innym.</p>
+          <p data-i18n="o2">AI traktuję jak sprawnego współpracownika. Świetnie radzi sobie z analizą i pierwszymi szkicami, ale każdy wynik wymaga sprawdzenia. Dlatego buduję narzędzia, w których <mark class="hl">człowiek zawsze ma ostatnie słowo</mark>.</p>
           <dl class="facts">
-            <div><dt>Na co dzień</dt><dd>Administracja IT w środowisku domenowym</dd></div>
-            <div><dt>Po godzinach</dt><dd>Rozszerzenia przeglądarek, aplikacje webowe i makra</dd></div>
-            <div><dt>Ciekawi mnie</dt><dd>Kryptografia postkwantowa, MITRE ATT&amp;CK, EDR i SIEM</dd></div>
-            <div><dt>Technologie</dt><dd>Python, JavaScript, VBA, Flask, SQLite, Active Directory</dd></div>
+            <div><dt data-i18n="f1k">Na co dzień</dt><dd data-i18n="f1v">Administracja IT w środowisku domenowym</dd></div>
+            <div><dt data-i18n="f2k">Po godzinach</dt><dd data-i18n="f2v">Rozszerzenia przeglądarek, aplikacje webowe i makra</dd></div>
+            <div><dt data-i18n="f3k">Ciekawi mnie</dt><dd data-i18n="f3v">Kryptografia postkwantowa, MITRE ATT&amp;CK, EDR i SIEM</dd></div>
+            <div><dt data-i18n="f4k">Technologie</dt><dd data-i18n="f4v">Python, JavaScript, VBA, Flask, SQLite, Active Directory</dd></div>
           </dl>
         </div>
       </div>
@@ -732,10 +744,10 @@
 
     <section class="sec contact" id="kontakt">
       <div class="wrap row">
-        <h2 class="sec-title">Kontakt</h2>
+        <h2 class="sec-title" data-i18n="t4">Kontakt</h2>
         <div>
-          <p class="contact-big">Masz pomysł albo problem do rozwiązania?</p>
-          <p>Najszybciej napiszesz do mnie przez GitHub.</p>
+          <p class="contact-big" data-i18n="cb">Masz pomysł albo problem do rozwiązania?</p>
+          <p data-i18n="cs">Najszybciej napiszesz do mnie przez GitHub.</p>
           <p><a class="link" href="https://github.com/kaliszmichal" target="_blank" rel="noopener noreferrer">github.com/kaliszmichal</a></p>
           <!-- Do uzupełnienia: adres e-mail, np. <p><a class="link" href="mailto:...">...</a></p> -->
         </div>
@@ -746,7 +758,8 @@
   <footer class="foot">
     <div class="wrap">
       <span>© 2026 Michał Kalisz</span>
-      <span>Wersja robocza: projekty z etykietą „koncept” są przykładowe.</span>
+      <span data-i18n="ft">Wersja robocza: projekty z etykietą „koncept” są przykładowe.</span>
+      <button class="lang lang-foot" type="button" lang="en" aria-label="Switch to English">EN</button>
     </div>
   </footer>
   <button class="to-top" id="toTop" type="button" aria-label="Wróć na górę strony"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
@@ -758,15 +771,55 @@
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
 
+      /* Języki: PL (treść w HTML) i EN (słownik poniżej) */
+      var EN = {"skip": "Skip to content", "n1": "Areas", "n2": "Projects", "n3": "About", "n4": "Contact", "who": "<strong>Michał Kalisz<\/strong>Developer and IT administrator", "h0": "I code.", "h1": "I secure.", "h2": "I automate with AI.", "lead": "I combine hands-on infrastructure experience with language models, so that threat analysis and routine tasks take <mark class=\"hl on\">less time<\/mark>, while the decisions stay with people.", "btn": "See projects", "gh": "GitHub profile", "t1": "What I do", "a1": "Programming", "a1p": "Tools that solve a specific problem: browser extensions, web apps, macros and scripts. I start with a <mark class=\"hl on\">small, working version<\/mark> and grow it together with its users.", "a2": "AI in cybersecurity", "a2p": "Language models are good at summarising alerts, reading logs and suggesting next steps. I treat them as an <mark class=\"hl on\">analyst's assistant<\/mark>: fast and patient, but always with its conclusions checked by a human.", "ct": "Event log (sample data)", "cn": "A simulation on made-up data: this is what a first-pass review looks like, after which the analyst makes the call.", "a3": "AI in everyday work", "a3p": "Reports, documents, spreadsheets, tickets: anything that repeats every week can be automated. That leaves more time for <mark class=\"hl on\">decisions, not clicking<\/mark>.", "tl1": "Python, JavaScript, VBA, Flask, SQLite", "tl2": "EDR, SIEM, MITRE ATT&amp;CK, language models", "tl3": "Automation, Excel, documentation, prompts", "t2": "Selected projects", "p2n": "Numbers in words", "p2s": "A Word macro that writes amounts and numbers out in words in Polish.", "p2p": "The ZamienKwotyNaSlownie macro handles zlotys, euros and dollars, square metres, fractions and whole numbers. Options are picked in a simple form, and it also works on macOS.", "p2l1": "Correct Polish inflection, e.g. \"tysiąc\" instead of \"jeden tysiąc\"", "p2l2": "Workarounds for VBA limits on macOS (no VBScript.RegExp, encoding issues)", "p2t": "VBA, Microsoft Word", "p2k": "Code on GitHub", "p3s": "A web application for analysing banking data.", "p3p": "My first full-stack project in Python: a Flask backend with SQLite, user roles, a REST API and an admin panel.", "p3l1": "Role-based access control", "p3l2": "REST API for fetching data", "p3l3": "Admin panel for managing users", "p4n": "Triage<span class=\"badge\">concept<\/span>", "p4s": "An AI assistant for first-pass analysis of EDR alerts.", "p4p": "A language model summarises the alert, maps it to MITRE ATT&amp;CK techniques and proposes next steps. The analyst sees the reasoning and approves the decision.", "p4l1": "Input: an alert and context from the EDR console", "p4l2": "Output: a summary, hypotheses and a checklist", "p4l3": "Rule: AI suggests, the human decides", "p4t": "Python, language models, MITRE ATT&amp;CK", "p5n": "PhishLens<span class=\"badge\">concept<\/span>", "p5s": "A classifier for suspicious e-mail messages.", "p5p": "It assesses headers, links and message content, then explains in plain language why something looks suspicious. The user should understand the threat, not just get a warning.", "p5l1": "Checking sender, domain and link address consistency", "p5l2": "A short explanation for the user", "p5l3": "Report to an analyst in one click", "p5t": "Python, natural language processing, e-mail", "p6n": "Admin's Notebook<span class=\"badge\">concept<\/span>", "p6s": "Drafts of documentation and tickets from raw notes.", "p6p": "Turns repair notes into a clear ticket, guide or report. The administrator edits finished text instead of writing it from scratch.", "p6l1": "Templates for typical incidents and changes", "p6l2": "Consistent language and document format", "p6l3": "Version history available", "p6t": "Automation, documentation, language models", "t3": "About me", "o1": "Day to day I administer IT infrastructure in a domain environment: Active Directory, Group Policy, workstation security, printers and file servers. After hours I write extensions, apps and macros that make work easier for me and others.", "o2": "I treat AI as a capable colleague. It is great at analysis and first drafts, but every result needs checking. That is why I build tools in which <mark class=\"hl on\">the human always has the last word<\/mark>.", "f1k": "Day to day", "f1v": "IT administration in a domain environment", "f2k": "After hours", "f2v": "Browser extensions, web apps and macros", "f3k": "Interests", "f3v": "Post-quantum cryptography, MITRE ATT&amp;CK, EDR and SIEM", "f4k": "Technologies", "f4v": "Python, JavaScript, VBA, Flask, SQLite, Active Directory", "t4": "Contact", "cb": "Got an idea or a problem to solve?", "cs": "The quickest way to reach me is GitHub.", "ft": "Work in progress: projects labelled \"concept\" are examples.", "m0": "Login succeeded: svc-backup from 10.0.4.23", "m1": "Query for update.vendor-cdn.example", "m2": "powershell.exe -EncodedCommand JABzAD0ATgBl…", "m3": "Read \\\\nas\\finanse\\2026\\raporty", "m4": "Attachment faktura.iso from a new sender", "m5": "Screen-lock policy applied", "m6": "Outbound connection to 203.0.113.40:4444", "m7": "Login succeeded: j.nowak from 10.0.4.8", "m8": "Query for ntp.example.org", "w0": "An encoded command run right after a service account logged in.", "w1": "A disk image from a sender nobody has seen before. A typical phishing pattern.", "w2": "A rarely used port and a host outside the usual traffic.", "_title": "Michał Kalisz | developer, AI in cybersecurity", "_desc": "Michał Kalisz: programming, using AI in cybersecurity and automating everyday work. Portfolio and selected projects.", "_ogdesc": "Tools in which AI helps with the work and the human has the last word.", "_navlabel": "Page sections", "_mk": "Michał Kalisz, top of the page", "_top": "Back to top", "run": "Analyse logs", "clear": "Clear", "toLight": "Switch to light theme", "toDark": "Switch to dark theme", "sum": "{h} of {n} events need attention. The analyst decides how to respond."};
+      var PL = {}, nodes = Array.prototype.slice.call(document.querySelectorAll('[data-i18n]'));
+      nodes.forEach(function (n) { PL[n.dataset.i18n] = n.innerHTML; });
+      PL._title = document.title;
+      PL._desc = document.getElementById('mDesc').content;
+      PL._ogdesc = document.getElementById('mOgD').content;
+      PL._navlabel = 'Sekcje strony'; PL._mk = 'Michał Kalisz, początek strony'; PL._top = 'Wróć na górę strony';
+      PL.run = 'Przeanalizuj logi'; PL.clear = 'Wyczyść';
+      PL.toLight = 'Przełącz na jasny motyw'; PL.toDark = 'Przełącz na ciemny motyw';
+      PL.sum = '{h} z {n} zdarzeń wymaga uwagi. Decyzję o reakcji podejmuje analityk.';
+      var lang = 'pl';
+      function t(k) { return (lang === 'en' ? EN : PL)[k]; }
+      var langBtns = Array.prototype.slice.call(document.querySelectorAll('.lang'));
+      var langHooks = [];
+      function applyLang(l, save) {
+        lang = l;
+        root.lang = l;
+        nodes.forEach(function (n) {
+          n.innerHTML = t(n.dataset.i18n);
+          n.querySelectorAll('mark.hl').forEach(function (m) { m.classList.add('on'); });
+        });
+        document.title = t('_title');
+        document.getElementById('mDesc').content = t('_desc');
+        document.getElementById('mOgT').content = t('_title');
+        document.getElementById('mOgD').content = t('_ogdesc');
+        document.querySelector('.nav-links').setAttribute('aria-label', t('_navlabel'));
+        document.querySelector('.mk').setAttribute('aria-label', t('_mk'));
+        document.getElementById('toTop').setAttribute('aria-label', t('_top'));
+        langBtns.forEach(function (b) {
+          b.textContent = l === 'en' ? 'PL' : 'EN';
+          b.lang = l === 'en' ? 'pl' : 'en';
+          b.setAttribute('aria-label', l === 'en' ? 'Przełącz na polski' : 'Switch to English');
+        });
+        langHooks.forEach(function (f) { f(); });
+        if (save) { try { localStorage.setItem('lang', l); } catch (e) {} }
+      }
+      langBtns.forEach(function (b) { b.addEventListener('click', function () { applyLang(lang === 'en' ? 'pl' : 'en', true); }); });
+
       /* Motyw: przełącznik zapamiętuje wybór w przeglądarce (jeśli jest dostępna) */
       var themeBtn = document.getElementById('theme');
       var themeMeta = document.querySelector('meta[name="theme-color"]');
-      function applyTheme(t, save) {
-        root.dataset.theme = t;
-        themeMeta.content = t === 'dark' ? '#0f1319' : '#eef1f3';
-        themeBtn.setAttribute('aria-label', t === 'dark' ? 'Przełącz na jasny motyw' : 'Przełącz na ciemny motyw');
-        if (save) { try { localStorage.setItem('theme', t); } catch (e) {} }
+      function applyTheme(mode, save) {
+        root.dataset.theme = mode;
+        themeMeta.content = mode === 'dark' ? '#0f1319' : '#eef1f3';
+        themeBtn.setAttribute('aria-label', t(mode === 'dark' ? 'toLight' : 'toDark'));
+        if (save) { try { localStorage.setItem('theme', mode); } catch (e) {} }
       }
+      langHooks.push(function () { applyTheme(root.dataset.theme, false); });
       applyTheme(root.dataset.theme, false);
       themeBtn.addEventListener('click', function () {
         applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark', true);
@@ -827,12 +880,18 @@
       var log = document.getElementById('log');
       var sum = document.getElementById('sum');
       var events = Array.prototype.slice.call(log.children);
-      var busy = false, done = false;
+      var busy = false, done = false, lastHits = 0;
+      run.textContent = t('run');
+      langHooks.push(function () {
+        if (busy) return;
+        run.textContent = t(done ? 'clear' : 'run');
+        if (done) sum.textContent = t('sum').replace('{h}', lastHits).replace('{n}', events.length);
+      });
 
       function resetConsole() {
         events.forEach(function (e) { e.classList.remove('now', 'hit', 'ok'); });
         sum.textContent = '';
-        run.textContent = 'Przeanalizuj logi';
+        run.textContent = t('run');
         done = false;
       }
 
@@ -856,13 +915,22 @@
             ev.classList.add('ok');
           }
         }
-        sum.textContent = hits + ' z ' + events.length + ' zdarzeń wymaga uwagi. Decyzję o reakcji podejmuje analityk.';
-        run.textContent = 'Wyczyść';
+        lastHits = hits;
+        sum.textContent = t('sum').replace('{h}', hits).replace('{n}', events.length);
+        run.textContent = t('clear');
         run.disabled = false;
         log.removeAttribute('aria-busy');
         busy = false;
         done = true;
       });
+      /* Język startowy: zapisany wybór, w drugiej kolejności język przeglądarki */
+      var startLang = 'pl';
+      try {
+        var sl = localStorage.getItem('lang');
+        if (sl === 'pl' || sl === 'en') startLang = sl;
+        else if (!/^pl\b/i.test(navigator.language || 'pl')) startLang = 'en';
+      } catch (e) {}
+      if (startLang === 'en') applyLang('en', false);
     })();
   </script>
 </body>
