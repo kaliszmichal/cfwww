@@ -163,12 +163,8 @@
       justify-content: space-between;
       height: 3.75rem;
     }
-    .mk {
-      font: 800 1.1rem/1 var(--f-display);
-      font-stretch: 125%;
-      letter-spacing: -0.01em;
-      text-decoration: none;
-    }
+    .mk { display: inline-flex; align-items: center; color: var(--ink); text-decoration: none; }
+    .mk svg { display: block; height: 1.8rem; width: auto; fill: none; stroke: currentColor; stroke-width: 18; stroke-linecap: round; stroke-linejoin: round; }
     .nav-right { display: flex; align-items: center; gap: clamp(0.9rem, 2.4vw, 1.75rem); }
     .nav-links { display: flex; gap: clamp(0.8rem, 2.4vw, 1.75rem); }
     .nav-links a {
@@ -514,7 +510,7 @@
       body { font-size: 1.0625rem; }
     }
     @media (max-width: 560px) {
-      .mk { font-size: 1rem; }
+      .mk svg { height: 1.3rem; }
       .nav-right { gap: 0.4rem; }
       .nav-links { gap: 0.7rem; }
       .nav-links a { font-size: 1.02rem; white-space: nowrap; }
@@ -538,7 +534,8 @@
       .nav-links a { font-size: 0.96rem; }
     }
     @media (max-width: 340px) {
-      .mk { font-size: 0.9rem; margin-right: 0.75rem; }
+      .mk { margin-right: 0.75rem; }
+      .mk svg { height: 1.1rem; }
       .nav-links { gap: 0.4rem; }
       .nav-links a { font-size: 0.91rem; }
     }
@@ -582,7 +579,7 @@
 
   <header class="nav" id="nav">
     <div class="wrap nav-in">
-      <a class="mk" href="#top" aria-label="Michał Kalisz, początek strony">MK</a>
+      <a class="mk" href="#top" aria-label="Michał Kalisz, początek strony"><svg viewBox="0 0 380 232" aria-hidden="true" focusable="false"><path d="M15 217V9L112 165L210 12V130"/><path d="M367 10L262 118C228 148 208 165 208 195V217"/><path d="M265 115L370 218"/></svg></a>
       <div class="nav-right">
         <nav class="nav-links" aria-label="Sekcje strony">
           <a href="#obszary" data-i18n="n1">Obszary</a>
