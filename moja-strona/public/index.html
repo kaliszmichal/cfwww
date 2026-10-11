@@ -172,7 +172,7 @@
     .nav-right { display: flex; align-items: center; gap: clamp(0.9rem, 2.4vw, 1.75rem); }
     .nav-links { display: flex; gap: clamp(0.8rem, 2.4vw, 1.75rem); }
     .nav-links a {
-      font: 500 0.95rem/1 var(--f-display);
+      font: 500 1.14rem/1 var(--f-display);
       color: var(--muted);
       text-decoration: none;
       padding: 0.5rem 0;
@@ -480,21 +480,27 @@
       .mk { font-size: 1rem; }
       .nav-right { gap: 0.4rem; }
       .nav-links { gap: 0.7rem; }
-      .nav-links a { font-size: 0.85rem; white-space: nowrap; }
+      .nav-links a { font-size: 1.02rem; white-space: nowrap; }
       .theme { width: 2.25rem; height: 2.25rem; }
       .ev { grid-template-columns: 4.3rem minmax(0, 1fr); }
       .ev .src { display: none; }
       .why { grid-column: 2; }
     }
 
+    @media (max-width: 400px) {
+      .nav-in { width: calc(100% - 1.8rem); }
+      .nav-right { gap: 0.25rem; }
+      .nav-links { gap: 0.55rem; }
+      .theme { width: 2rem; height: 2rem; }
+    }
     @media (max-width: 360px) {
-      .nav-links { gap: 0.5rem; }
-      .nav-links a { font-size: 0.8rem; }
+      .nav-links { gap: 0.45rem; }
+      .nav-links a { font-size: 0.96rem; }
     }
     @media (max-width: 340px) {
       .mk { font-size: 0.9rem; margin-right: 0.75rem; }
       .nav-links { gap: 0.4rem; }
-      .nav-links a { font-size: 0.76rem; }
+      .nav-links a { font-size: 0.91rem; }
     }
 
     /* Ograniczony ruch: te same treści, bez animacji */
