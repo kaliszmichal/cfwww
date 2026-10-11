@@ -1,853 +1,838 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#02030a">
-  <title>michal.kalisz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Michał Kalisz | programista, AI w cyberbezpieczeństwie</title>
+  <meta name="description" content="Michał Kalisz: programowanie, wykorzystanie AI w cyberbezpieczeństwie i automatyzacja codziennej pracy. Portfolio i wybrane projekty.">
+  <meta name="theme-color" content="#eef1f3">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pl_PL">
+  <meta property="og:title" content="Michał Kalisz | programista, AI w cyberbezpieczeństwie">
+  <meta property="og:description" content="Narzędzia, w których AI pomaga w pracy, a człowiek ma ostatnie słowo.">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/archivo-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/source-serif-4-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <script>
-    // Ustaw zapisany motyw zanim strona się narysuje (bez migania). Domyślnie ciemny.
+    // Motyw ustawiany zanim strona się narysuje (bez migania): zapisany wybór, w drugiej kolejności ustawienie systemu.
     (function () {
-      var t = 'dark';
+      var root = document.documentElement, theme = 'light';
       try {
         var saved = localStorage.getItem('theme');
-        if (saved === 'light' || saved === 'dark') t = saved;
+        if (saved === 'light' || saved === 'dark') theme = saved;
+        else if (window.matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark';
       } catch (e) {}
-      document.documentElement.dataset.theme = t;
-      document.querySelector('meta[name="theme-color"]').content = t === 'light' ? '#cfe3fa' : '#02030a';
+      root.dataset.theme = theme;
+      root.classList.add('js');
+      document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#0f1319' : '#eef1f3';
     })();
   </script>
   <style>
-    :root {
-      --bg-base: #02030a; /* zapas: gdyby tło nie pokryło całego ekranu */
-      --bg-grad: radial-gradient(ellipse at 50% 100%, #1b2240 0%, #0a0c1a 55%, #02030a 100%);
-      --fg: #fff;
-      --btn-bg: #fff;
-      --btn-fg: #000;
-      --btn-border: #fff;
-      --btn1-bg: #d4d4d4; /* pierwszy przycisk: lekko szary */
-      --btn1-border: #d4d4d4;
-      --track: rgba(255, 255, 255, 0.2);
-      color-scheme: dark;
+    /* Czcionki hostowane razem ze stroną (licencja SIL OFL, pliki LICENSE w katalogu fonts) */
+    @font-face {
+      font-family: "Archivo";
+      font-style: normal;
+      font-weight: 100 900;
+      font-stretch: 62% 125%;
+      font-display: swap;
+      src: url("fonts/archivo-latin-ext.woff2") format("woff2");
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
     }
-    :root[data-theme="light"] {
-      --bg-base: #cfe3fa;
-      --bg-grad: radial-gradient(ellipse at 50% 0%, #fffbea 0%, #d3e5fa 50%, #9fc0ec 100%);
-      --fg: #0b1530;
-      --btn-bg: #0b1530;
-      --btn-fg: #fff;
-      --btn-border: #0b1530;
-      --btn1-bg: var(--btn-bg);
-      --btn1-border: var(--btn-border);
-      --track: rgba(11, 21, 48, 0.15);
+    @font-face {
+      font-family: "Archivo";
+      font-style: normal;
+      font-weight: 100 900;
+      font-stretch: 62% 125%;
+      font-display: swap;
+      src: url("fonts/archivo-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: "Source Serif 4";
+      font-style: normal;
+      font-weight: 200 900;
+      font-display: swap;
+      src: url("fonts/source-serif-4-latin-ext.woff2") format("woff2");
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: "Source Serif 4";
+      font-style: normal;
+      font-weight: 200 900;
+      font-display: swap;
+      src: url("fonts/source-serif-4-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* Paleta: papier, atrament, żółty zakreślacz */
+    :root {
+      --paper: #eef1f3;
+      --paper-2: #e2e7ea;
+      --ink: #12161c;
+      --muted: #566170;
+      --rule: rgba(18, 22, 28, 0.15);
+      --hl: rgba(255, 225, 77, 1);
+      --redact: #12161c;
+      --hl-solid: #ffe14d;
+      --panel: #12161c;
+      --panel-ink: #dbe2e9;
+      --panel-muted: #8b97a6;
+      --panel-line: rgba(255, 255, 255, 0.1);
+
+      --f-display: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --f-text: "Source Serif 4", Georgia, "Times New Roman", serif;
+      --f-log: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+      --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+      --ease-wipe: cubic-bezier(0.76, 0, 0.24, 1);
+      --gut: clamp(1.25rem, 5vw, 2.5rem);
+      --margin-col: 12.5rem;
       color-scheme: light;
     }
-    html, body {
-      height: 100%;
-      margin: 0;
+    :root[data-theme="dark"] {
+      --paper: #0f1319;
+      --paper-2: #171c24;
+      --ink: #e9edf1;
+      --muted: #9aa5b3;
+      --rule: rgba(233, 237, 241, 0.14);
+      --hl: rgba(245, 215, 66, 0.3);
+      --redact: #2b3342;
+      --panel: #0a0d12;
+      color-scheme: dark;
     }
+
+    *, *::before, *::after { box-sizing: border-box; }
     html {
-      background-color: var(--bg-base);
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      height: 100lvh; /* pełna wysokość ekranu telefonu, także pod paskami przeglądarki */
-      z-index: -2;
-      background: var(--bg-grad);
-      pointer-events: none;
-    }
-    #stars {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      height: 100lvh;
-      z-index: -1;
-      pointer-events: none;
-    }
-    /* Rząd klawiszy w stylu "keycaps": koralowa tacka z trzema klawiszami */
-    #keys {
-      box-sizing: border-box;
-      width: min(15.7rem, 100%);
-      margin-top: 1.8rem;
-      padding: 0.75rem;
-      display: flex;
-      gap: 0.6rem;
-      border-radius: 1.6rem;
-      background: linear-gradient(135deg, #a6dcff, #86cbfb);
-      box-shadow:
-        0 14px 28px rgba(50, 130, 200, 0.4),
-        inset 0 2px 0 rgba(255, 255, 255, 0.2),
-        inset 0 -2px 0 rgba(40, 110, 180, 0.25);
-    }
-    #keys .key {
-      flex: 1;
-      min-width: 0;
-      height: 3.6rem;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(40, 110, 175, 0.5);
-      border-radius: 0.5rem;
-      background: linear-gradient(180deg, #a3dbff, #8fd0fc);
-      color: #0d3b66;
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      box-shadow:
-        0 3px 4px rgba(35, 100, 170, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.28);
-      transition: transform 0.08s, box-shadow 0.08s, background 0.2s, filter 0.15s;
-      scale: 1; /* bez zoomu: klawisze stykają się bokami w tacce, powiększenie by je wypychało poza brzeg */
-    }
-    @media (hover: hover) {
-      #keys .key:hover {
-        filter: brightness(1.12);
-      }
-    }
-    #keys .key.wide {
-      flex: 1.6;
-      align-items: flex-end;
-      justify-content: flex-end;
-      padding: 0 0.7rem 0.55rem 0;
-    }
-    #keys .key svg {
-      display: block;
-      width: 1.5rem;
-      height: 1.5rem;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    #keys .key.wide svg {
-      width: 1.9rem;
-    }
-    #keys .key:active,
-    #keys .key.pressed {
-      transform: translateY(2px);
-      box-shadow:
-        0 1px 1px rgba(35, 100, 170, 0.45),
-        inset 0 1px 2px rgba(35, 100, 170, 0.35);
-      background: linear-gradient(180deg, #8fd0fc, #82c7f8);
-    }
-    #astro {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: clamp(64px, 18vw, 96px);
-      z-index: -1; /* nad gwiazdami, pod całą treścią */
-      pointer-events: none;
-      transform-origin: 50% 50%;
-      will-change: transform;
-    }
-    #astro svg {
-      display: block;
-      width: 100%;
-      height: auto;
-      overflow: visible;
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      background: var(--paper);
     }
     body {
-      height: auto;
-      min-height: 100%; /* gdy treści jest więcej niż ekranu, strona się przewija */
-      background: transparent;
-      color: var(--fg);
+      margin: 0;
+      min-height: 100vh;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--f-text);
+      font-size: 1.1875rem;
+      line-height: 1.62;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+    ::selection { background: var(--hl-solid); color: #12161c; }
+    a { color: inherit; }
+    :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
+
+    .wrap { width: min(1120px, calc(100% - 2 * var(--gut))); margin-inline: auto; }
+    .row {
+      display: grid;
+      grid-template-columns: var(--margin-col) minmax(0, 1fr);
+      column-gap: clamp(2rem, 5vw, 4.5rem);
+    }
+    .skip {
+      position: absolute;
+      left: var(--gut);
+      top: -4rem;
+      z-index: 100;
+      padding: 0.6rem 1rem;
+      background: var(--ink);
+      color: var(--paper);
+      font: 600 0.95rem var(--f-display);
+      border-radius: 8px;
+    }
+    .skip:focus { top: 0.75rem; }
+
+    /* Nawigacja */
+    .nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 50;
+      background: color-mix(in srgb, var(--paper) 84%, transparent);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      transition: box-shadow 0.3s;
+    }
+    .nav.scrolled { box-shadow: 0 1px 0 var(--rule); }
+    .nav-in {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-start; /* pasek przycisków trzyma się góry, reszta płynie pod nim */
-      text-align: center;
-      padding: 1.5rem 1rem;
-      box-sizing: border-box;
-      font-family: "Exo 2",-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      justify-content: space-between;
+      height: 3.75rem;
     }
-    h1 {
-      font-size: clamp(1.5rem, 6vw, 3.5rem);
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      margin: 0 0 0.6em;
-    }
-    button {
-      background: var(--btn-bg);
-      color: var(--btn-fg);
-      border: 1px solid var(--btn-border);
-      border-radius: 999px;
-      padding: 0.8em 2em;
-      font-size: 1.12rem;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s, scale 0.15s ease;
-    }
-    /* Lekki zoom po najechaniu na dowolny przycisk (własność "scale" działa niezależnie
-       od transform, więc nie gryzie się z animacją unoszenia #btn ani wciskaniem klawiszy). */
-    @media (hover: hover) {
-      button:hover, #github-link:hover {
-        scale: 1.06;
-      }
-    }
-    button:active, #github-link:active {
-      scale: 0.97;
-    }
-    #theme-toggle {
-      flex-shrink: 0;
-      width: 4.7rem; /* +30% względem poprzednich 3.6rem */
-      height: 4.7rem;
-      padding: 0;
-      display: grid;
-      place-items: center;
-      background: transparent;
-      color: var(--fg);
-    }
-    #theme-toggle svg {
-      width: 2.18rem; /* +30% względem poprzednich 1.68rem */
-      height: 2.18rem;
-      fill: none;
-      stroke: currentColor; /* jednokolorowe ikony w kolorze tekstu */
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    #github-link {
-      flex-shrink: 0;
-      width: 4.7rem; /* +30% względem poprzednich 3.6rem */
-      height: 4.7rem;
-      box-sizing: border-box;
-      display: grid;
-      place-items: center;
-      border: 1px solid var(--btn-border);
-      border-radius: 999px;
-      background: transparent;
-      color: var(--fg);
+    .mk {
+      font: 800 1.1rem/1 var(--f-display);
+      font-stretch: 125%;
+      letter-spacing: -0.01em;
       text-decoration: none;
-      transition: background 0.2s, color 0.2s, scale 0.15s ease;
     }
-    /* Klasyczny poziomy pasek na górze: ikona GitHub | przyciski | przełącznik motywu (bez tła-"wyspy") */
-    #navbar {
-      width: 100%;
-      max-width: 49rem; /* +30% względem poprzednich 38rem */
-      box-sizing: border-box;
+    .nav-right { display: flex; align-items: center; gap: clamp(0.9rem, 2.4vw, 1.75rem); }
+    .nav-links { display: flex; gap: clamp(0.8rem, 2.4vw, 1.75rem); }
+    .nav-links a {
+      font: 500 0.95rem/1 var(--f-display);
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.5rem 0;
+      background: linear-gradient(var(--hl-solid), var(--hl-solid)) no-repeat 0 100% / 0% 3px;
+      transition: color 0.2s, background-size 0.35s var(--ease);
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a[aria-current="true"] { color: var(--ink); background-size: 100% 3px; }
+    .theme {
       display: grid;
-      grid-template-columns: auto 1fr auto; /* GitHub | przyciski | motyw - zawsze na swoich miejscach */
-      align-items: center;
-      gap: 0.8rem;
+      place-items: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .theme:hover { background: var(--paper-2); }
+    .theme svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .theme .i-sun { display: none; }
+    :root[data-theme="dark"] .theme .i-sun { display: block; }
+    :root[data-theme="dark"] .theme .i-moon { display: none; }
+
+    /* Sekcje */
+    .sec { padding-block: clamp(3.5rem, 8vw, 6rem); scroll-margin-top: 1rem; }
+    .sec-title {
       position: sticky;
-      top: max(0.6rem, env(safe-area-inset-top));
-      z-index: 10;
-      margin-bottom: 2rem;
+      top: 6rem;
+      align-self: start;
+      margin: 0.45rem 0 0;
+      font: 600 0.95rem/1.3 var(--f-display);
+      color: var(--muted);
     }
-    #github-link {
-      grid-column: 1;
+
+    /* Hero: pasy cenzury odsłaniają nagłówek */
+    .hero { padding-top: clamp(8rem, 20vh, 12rem); padding-bottom: clamp(4rem, 9vw, 7rem); }
+    .who { margin: 0.6rem 0 0; font: 400 0.95rem/1.45 var(--f-display); color: var(--muted); }
+    .who strong { display: block; font-weight: 650; font-size: 1.05rem; color: var(--ink); }
+    .hero-main { container-type: inline-size; }
+    .hero-title {
+      margin: 0;
+      font: 780 clamp(1.9rem, 6.2vw, 5rem) / 1.02 var(--f-display);
+      font-size: min(9.5cqw, 5.2rem); /* najdłuższy wiersz zawsze mieści się w jednej linii */
+      font-stretch: 118%;
+      letter-spacing: -0.02em;
     }
-    #theme-toggle {
-      grid-column: 3;
-      justify-self: end;
+    .rl {
+      display: block;
+      position: relative;
+      width: fit-content;
+      max-width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0.07em 0.04em 0.09em 0;
+      margin-bottom: -0.04em;
     }
-    .nav-buttons {
-      grid-column: 2;
+    .rl::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--redact);
+      animation: wipe 1.05s var(--ease-wipe) both;
+      animation-delay: calc(0.55s + var(--i) * 0.34s);
+    }
+    @keyframes wipe { to { transform: translateX(101%); } }
+    @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+    .after-wipe { animation: appear 0.9s ease both; animation-delay: 2.1s; }
+    .lead { max-width: 36rem; margin: clamp(1.75rem, 4vw, 2.75rem) 0 0; font-size: clamp(1.2rem, 2.3vw, 1.4rem); line-height: 1.55; }
+    .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.75rem; margin-top: 2rem; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.8rem 1.3rem;
+      border: 1px solid var(--ink);
+      border-radius: 10px;
+      background: var(--ink);
+      color: var(--paper);
+      font: 600 1rem/1.2 var(--f-display);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s, transform 0.25s var(--ease);
+    }
+    .btn:hover { background: var(--hl-solid); color: #12161c; transform: translateY(-1px); }
+    :root[data-theme="dark"] .btn:hover { background: var(--hl-solid); color: #12161c; }
+
+    .link {
+      font: 600 1rem/1.3 var(--f-display);
+      text-decoration: none;
+      background: linear-gradient(var(--hl), var(--hl)) no-repeat 0 100% / 100% 0.2em;
+      transition: background-size 0.3s var(--ease);
+    }
+    .link:hover { background-size: 100% 100%; }
+
+    /* Zakreślacz: rysuje się, gdy fraza trafia w pole widzenia */
+    mark.hl {
+      color: inherit;
+      background: linear-gradient(var(--hl), var(--hl)) no-repeat 0 78% / 100% 64%;
+      padding: 0 0.14em;
+      margin: 0 -0.14em;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+      transition: background-size 1s var(--ease);
+    }
+    .js mark.hl:not(.on) { background-size: 0% 64%; }
+
+    /* Obszary */
+    .areas { display: grid; gap: clamp(3.5rem, 8vw, 6rem); }
+    .area h3 {
+      margin: 0 0 0.9rem;
+      font: 650 clamp(1.55rem, 3.2vw, 2.1rem) / 1.15 var(--f-display);
+      font-stretch: 108%;
+      letter-spacing: -0.015em;
+    }
+    .area p { max-width: 38rem; margin: 0; }
+    .area .tools, .proj-pad .tools { margin-top: 1rem; font: 400 0.95rem/1.5 var(--f-display); color: var(--muted); }
+
+    /* Konsola: AI zakreśla podejrzane zdarzenia po kliknięciu */
+    .console {
+      margin: 2rem 0 0;
+      background: var(--panel);
+      color: var(--panel-ink);
+      border-radius: 14px;
+      border: 1px solid var(--panel-line);
+      overflow: hidden;
+    }
+    .console-bar {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      justify-content: center;
-      gap: 0.65rem;
+      justify-content: space-between;
+      gap: 0.75rem 1rem;
+      padding: 0.85rem 1rem 0.85rem 1.1rem;
+      border-bottom: 1px solid var(--panel-line);
     }
-    .nav-btn {
-      width: auto;
-      padding: 0.55em 1.2em;
-      font-size: 1.2rem; /* +30% względem poprzednich 0.92rem */
-      white-space: nowrap; /* przycisk nie łamie tekstu w środku - zamiast tego cały rząd zawija się na telefonie */
+    .console-title { font: 500 0.9rem/1.3 var(--f-display); color: var(--panel-muted); }
+    .run {
+      padding: 0.55rem 1rem;
+      border: 0;
+      border-radius: 8px;
+      background: var(--hl-solid);
+      color: #12161c;
+      font: 650 0.95rem/1 var(--f-display);
+      cursor: pointer;
+      transition: transform 0.2s var(--ease), opacity 0.2s;
     }
-    /* Węższe telefony: mniejsze ikony i przyciski, żeby pasek zmieścił się bez łamania tekstu w pastylkach */
-    @media (max-width: 480px) {
-      #github-link, #theme-toggle {
-        width: 3.2rem;
-        height: 3.2rem;
-      }
-      #github-link svg {
-        width: 1.5rem;
-        height: 1.5rem;
-      }
-      #theme-toggle svg {
-        width: 1.4rem;
-        height: 1.4rem;
-      }
-      .nav-btn {
-        font-size: 0.95rem;
-        padding: 0.5em 1em;
-      }
-      #navbar {
-        gap: 0.5rem;
-      }
-      .nav-buttons {
-        gap: 0.4rem;
-      }
+    .run:hover:not(:disabled) { transform: translateY(-1px); }
+    .run:disabled { opacity: 0.55; cursor: progress; }
+    .run:focus-visible { outline-color: #fff; }
+    .log { list-style: none; margin: 0; padding: 0.5rem 0; font: 400 0.8rem/1.55 var(--f-log); }
+    .ev {
+      position: relative;
+      display: grid;
+      grid-template-columns: 4.6rem 3.2rem minmax(0, 1fr);
+      column-gap: 0.75rem;
+      padding: 0.32rem 1.1rem;
+      transition: opacity 0.4s;
     }
-    #github-link svg {
-      width: 2.34rem; /* +30% względem poprzednich 1.8rem */
-      height: 2.34rem;
-      fill: currentColor;
+    .ev > * { position: relative; z-index: 1; }
+    .ev::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--hl-solid);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s var(--ease);
     }
-    #github-link:focus-visible {
-      outline: 2px solid var(--fg);
-      outline-offset: 2px;
+    .ev::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.3rem;
+      bottom: 0.3rem;
+      width: 3px;
+      background: var(--hl-solid);
+      opacity: 0;
+      transition: opacity 0.15s;
     }
-    @media (hover: hover) {
-      #github-link:hover {
-        background: var(--btn-bg);
-        color: var(--btn-fg);
-      }
-    }
-    /* ikona pokazuje motyw, na który się przełączysz */
-    #theme-toggle .icon-moon { display: none; }
-    :root[data-theme="light"] #theme-toggle .icon-sun { display: none; }
-    :root[data-theme="light"] #theme-toggle .icon-moon { display: block; }
-    @media (hover: hover) {
-      #theme-toggle:hover {
-        background: var(--btn-bg);
-        color: var(--btn-fg);
-      }
-    }
-    #menu {
-      width: min(15.7rem, 100%);
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
+    .ev.now::after { opacity: 1; }
+    .ev.hit { color: #12161c; }
+    .ev.hit::before { transform: scaleX(1); }
+    .ev.ok { opacity: 0.5; }
+    .ev time, .ev .src { color: var(--panel-muted); }
+    .ev.hit time, .ev.hit .src { color: #3a3f1a; }
+    .ev .msg { overflow-wrap: anywhere; }
+    .why {
+      grid-column: 3;
       max-height: 0;
       overflow: hidden;
-      opacity: 0;
       visibility: hidden;
-      transition: max-height 0.4s ease, opacity 0.3s, margin-top 0.4s, visibility 0s 0.4s;
+      font: 500 0.82rem/1.45 var(--f-display);
+      transition: max-height 0.5s var(--ease), margin 0.5s var(--ease), visibility 0s 0.5s;
     }
-    #menu.open {
-      max-height: 16rem;
-      margin-top: 0.9rem;
-      opacity: 1;
-      visibility: visible;
-      transition: max-height 0.4s ease, opacity 0.3s, margin-top 0.4s, visibility 0s;
+    .ev.hit .why { max-height: 6rem; margin-top: 0.25rem; visibility: visible; transition-delay: 0.25s, 0.25s, 0s; }
+    .console-sum:empty { display: none; }
+    .area .console-sum {
+      max-width: none;
+      margin: 0;
+      padding: 0.9rem 1.1rem 1.1rem;
+      border-top: 1px solid var(--panel-line);
+      font: 500 0.95rem/1.45 var(--f-display);
+      color: var(--panel-ink);
     }
-    #menu button {
-      box-sizing: border-box;
+    .area .console-note { margin-top: 0.75rem; font: 400 0.85rem/1.4 var(--f-display); color: var(--muted); }
+
+    /* Projekty */
+    .projects { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+    .proj { border-bottom: 1px solid var(--rule); }
+    .proj-h { margin: 0; font: inherit; }
+    .proj-btn {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+      column-gap: 1.5rem;
       width: 100%;
-      background: transparent;
-      color: var(--fg);
-      font-size: 0.92rem;
-      padding: 0.7em 1.5em;
+      padding: 1.6rem 0;
+      border: 0;
+      background: none;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
     }
-    #menu button:hover {
-      background: var(--btn-bg);
-      color: var(--btn-fg);
-      scale: 1; /* bez zoomu: kontener #menu ma overflow:hidden, powiększony przycisk by się ucinał */
+    .proj-name {
+      justify-self: start;
+      font: 650 clamp(1.35rem, 2.6vw, 1.7rem) / 1.2 var(--f-display);
+      font-stretch: 106%;
+      letter-spacing: -0.01em;
+      background: linear-gradient(var(--hl), var(--hl)) no-repeat 0 82% / 0% 0.42em;
+      transition: background-size 0.4s var(--ease);
     }
-    #menu button:active {
-      scale: 0.98;
-    }
-    #btn4::after {
-      content: " ▾";
+    .proj-btn:hover .proj-name, .proj-btn:focus-visible .proj-name { background-size: 100% 0.42em; }
+    .badge {
       display: inline-block;
-      transition: transform 0.3s;
-    }
-    #btn4[aria-expanded="true"]::after {
-      transform: rotate(180deg);
-    }
-    #btn {
-      background: var(--btn1-bg);
-      border-color: var(--btn1-border);
-      animation: fade-in 1s ease-out 0.3s backwards;
-      transition: background 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s;
-    }
-    #btn.done {
-      background: #2ecc71;
-      border-color: #2ecc71;
-      color: #04210f;
-      box-shadow: 0 0 28px rgba(46, 204, 113, 0.75);
-    }
-    #progress {
-      box-sizing: border-box;
-      width: min(15.7rem, 100%);
-      height: 10px;
-      margin-top: 1rem;
+      margin-left: 0.7rem;
+      padding: 0.12rem 0.55rem;
+      border: 1px solid var(--rule);
       border-radius: 999px;
-      background: var(--track);
-      overflow: hidden;
-      transition: box-shadow 0.4s;
+      font: 600 0.72rem/1.3 var(--f-display);
+      letter-spacing: 0;
+      color: var(--muted);
+      vertical-align: 0.15em;
     }
-    #progress[hidden] {
-      display: none;
+    .proj-sum { grid-column: 1; margin-top: 0.35rem; color: var(--muted); font-size: 1.05rem; line-height: 1.5; }
+    .proj-icon { grid-column: 2; grid-row: 1; position: relative; width: 1.5rem; height: 1.5rem; margin-top: 0.15rem; }
+    .proj-icon::before, .proj-icon::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1rem;
+      height: 2px;
+      margin: -1px 0 0 -0.5rem;
+      background: var(--ink);
+      transition: transform 0.4s var(--ease);
     }
-    #progress-fill {
-      width: 0%;
-      height: 100%;
-      border-radius: 999px;
-      background: var(--btn-bg);
-      transition: background 0.4s;
+    .proj-icon::after { transform: rotate(90deg); }
+    .proj.open .proj-icon::after { transform: rotate(0deg); }
+    .proj-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.45s var(--ease); }
+    .proj.open .proj-body { grid-template-rows: 1fr; }
+    .proj-in { min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s 0.45s; }
+    .proj.open .proj-in { visibility: visible; transition-delay: 0s; }
+    .proj-pad { padding: 0.25rem 0 2rem; max-width: 40rem; }
+    .proj-pad p { margin: 0; }
+    .proj-pad ul { margin: 1rem 0 0; padding-left: 1.2rem; list-style: "– "; }
+    .proj-pad li { margin-top: 0.35rem; padding-left: 0.2rem; }
+    .proj-pad li::marker { color: var(--muted); }
+    .proj-pad .link-wrap { margin: 1.25rem 0 0; }
+
+    /* O mnie */
+    .about p { max-width: 38rem; margin: 0 0 1.25rem; }
+    .facts { margin: 2.5rem 0 0; display: grid; gap: 1.25rem; }
+    .facts div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); column-gap: 1.5rem; }
+    .facts dt { font: 600 0.95rem/1.6 var(--f-display); color: var(--muted); padding-top: 0.2rem; }
+    .facts dd { margin: 0; }
+
+    /* Kontakt */
+    .contact-big {
+      margin: 0;
+      max-width: 22ch;
+      font: 700 clamp(1.9rem, 5.2vw, 3.6rem) / 1.08 var(--f-display);
+      font-stretch: 114%;
+      letter-spacing: -0.02em;
     }
-    #progress.done {
-      box-shadow: 0 0 18px rgba(46, 204, 113, 0.75);
+    .contact p { margin: 1.5rem 0 0; }
+    .contact .link { font-size: clamp(1.2rem, 2.6vw, 1.5rem); }
+
+    .foot { padding-block: 2.25rem 3rem; border-top: 1px solid var(--rule); font: 400 0.9rem/1.5 var(--f-display); color: var(--muted); }
+    .foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; }
+
+    /* Telefon */
+    @media (max-width: 820px) {
+      .row { grid-template-columns: minmax(0, 1fr); row-gap: 1.5rem; }
+      .sec-title { position: static; margin: 0; }
+      .who { margin: 0 0 1.5rem; }
+      .hero-title { font-stretch: 100%; font-size: min(11cqw, 5.2rem); }
+      .facts div { grid-template-columns: minmax(0, 1fr); row-gap: 0.1rem; }
+      body { font-size: 1.0625rem; }
     }
-    #progress.done #progress-fill {
-      background: #2ecc71;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      #btn { animation: none; }
-    }
-    p {
-      font-size: clamp(1rem, 3vw, 1.5rem);
-      margin: 1em 0 0;
-      opacity: 0;
-      transition: opacity 0.6s;
-    }
-    p.visible {
-      opacity: 0.8;
-    }
-    p[hidden] {
-      display: none;
-    }
-    #pin-form {
-      display: flex;
-      gap: 0.5em;
-      margin-top: 1.6em;
-      width: min(15.7rem, 100%); /* tak samo szeroko jak przyciski */
-    }
-    #pin-form button {
-      width: auto;
-      padding: 0.8em 1.4em;
-    }
-    #pin-form[hidden] {
-      display: none;
-    }
-    #pin {
-      flex: 1;
-      min-width: 0;
-      box-sizing: border-box;
-      background: transparent;
-      color: var(--fg);
-      border: 1px solid var(--btn-border);
-      border-radius: 999px;
-      padding: 0.8em 1em;
-      font-size: 1.12rem;
-      font-family: inherit;
-      text-align: center;
-      letter-spacing: 0.3em;
-    }
-    #pin.error {
-      border-color: #f66;
-      animation: shake 0.3s;
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      75% { transform: translateX(6px); }
-    }
-    #secret {
-      font-size: clamp(1rem, 3vw, 1.5rem);
-      margin: 1em 0 0;
-      opacity: 1; /* nadpisuje p { opacity: 0 } */
-    }
-    #secret[hidden] {
-      display: none;
-    }
-    #moon {
-      font-size: clamp(4rem, 18vw, 9rem);
-      line-height: 1;
-      margin-top: 0.3em;
-      opacity: 0;
-      transition: opacity 0.6s;
-    }
-    #moon.visible {
-      opacity: 1;
-    }
-    #moon[hidden] {
-      display: none;
+    @media (max-width: 560px) {
+      .mk { display: none; }
+      .nav-in { justify-content: flex-end; }
+      .nav-links a { font-size: 0.9rem; }
+      .ev { grid-template-columns: 4.3rem minmax(0, 1fr); }
+      .ev .src { display: none; }
+      .why { grid-column: 2; }
     }
 
-    /* Animacja wejścia: po wczytaniu strony tło, a potem kolejne elementy, wypływają płynnie z opóźnieniem. */
-    @keyframes fade-in {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    @keyframes fade-up {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: none; }
-    }
-    body::before { animation: fade-in 1.2s ease-out backwards; }
-    #stars       { animation: fade-in 1.6s ease-out 0.2s backwards; }
-    #astro       { animation: fade-in 1.4s ease-out 0.6s backwards; } /* tylko opacity: transform ustawia JS */
-    #navbar      { animation: fade-up 0.9s ease-out 0.15s backwards; }
-    #github-link { animation: fade-up 0.9s ease-out 0.2s backwards; }
-    #theme-toggle { animation: fade-up 0.9s ease-out 0.45s backwards; }
-    #btn2        { animation: fade-up 0.9s ease-out 0.35s backwards; }
-    #btn3        { animation: fade-up 0.9s ease-out 0.4s backwards; }
-    #btn4        { animation: fade-up 0.9s ease-out 0.45s backwards; }
-    #keys        { animation: fade-up 0.9s ease-out 1.0s backwards; }
+    /* Ograniczony ruch: te same treści, bez animacji */
     @media (prefers-reduced-motion: reduce) {
-      body::before, #stars, #astro, #navbar, #github-link, #theme-toggle,
-      #btn2, #btn3, #btn4, #keys { animation: none; }
+      html { scroll-behavior: auto; }
+      .rl::after { display: none; }
+      .after-wipe { animation: none; }
+      .js mark.hl:not(.on) { background-size: 100% 64%; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; transition-delay: 0s !important; }
     }
   </style>
 </head>
 <body>
-  <canvas id="stars" aria-hidden="true"></canvas>
-  <div id="astro" aria-hidden="true">
-    <svg viewBox="0 -12 100 124" fill="none" stroke="#0b1530" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
-      <!-- antena -->
-      <path d="M50 5 V-3"/>
-      <circle cx="50" cy="-5" r="3" fill="#ff7a45"/>
-      <!-- plecak -->
-      <rect x="20" y="42" width="60" height="42" rx="12" fill="#c5cde0"/>
-      <!-- nogi (jedna kopie w powietrzu) -->
-      <rect x="31" y="78" width="16" height="28" rx="8" fill="#f2f4f8" transform="rotate(14 39 80)"/>
-      <rect x="54" y="78" width="16" height="28" rx="8" fill="#f2f4f8" transform="rotate(-24 62 80)"/>
-      <rect x="29" y="98" width="20" height="9" rx="4.5" fill="#ff7a45" stroke="none" transform="rotate(14 39 80)"/>
-      <rect x="52" y="98" width="20" height="9" rx="4.5" fill="#ff7a45" stroke="none" transform="rotate(-24 62 80)"/>
-      <!-- ręce: jedna pomachająca w górę, druga zwisa -->
-      <rect x="5" y="47" width="26" height="14" rx="7" fill="#f2f4f8" transform="rotate(-28 28 54)"/>
-      <rect x="68" y="56" width="26" height="14" rx="7" fill="#f2f4f8" transform="rotate(38 74 62)"/>
-      <!-- tułów -->
-      <rect x="27" y="46" width="46" height="40" rx="16" fill="#f2f4f8"/>
-      <rect x="39" y="58" width="22" height="13" rx="4" fill="#dfe4ee"/>
-      <circle cx="45" cy="64.5" r="2.3" fill="#ff7a45" stroke="none"/>
-      <circle cx="55" cy="64.5" r="2.3" fill="#4aa3ff" stroke="none"/>
-      <!-- hełm -->
-      <circle cx="50" cy="29" r="27" fill="#f2f4f8"/>
-      <ellipse cx="50" cy="30" rx="20" ry="16.5" fill="#1c2a52"/>
-      <!-- twarz: zeza i szeroki uśmiech z językiem -->
-      <circle cx="42.5" cy="26" r="5.2" fill="#fff" stroke="none"/>
-      <circle cx="57.5" cy="26" r="5.2" fill="#fff" stroke="none"/>
-      <circle cx="44.5" cy="27.5" r="2.2" fill="#0b1530" stroke="none"/>
-      <circle cx="55.5" cy="27.5" r="2.2" fill="#0b1530" stroke="none"/>
-      <path d="M41 35.5 Q50 45 59 35.5 Z" fill="#fff" stroke="none"/>
-      <path d="M46 39.5 Q50 46.5 54 39.5 Q50 37.8 46 39.5 Z" fill="#ff8fa3" stroke="none"/>
-      <!-- odblask na szybie -->
-      <path d="M34 20 Q37 15.5 43 14.5" stroke="#fff" stroke-width="2.2" opacity="0.7"/>
-    </svg>
-  </div>
-  <nav id="navbar" aria-label="Główne przyciski">
-    <a id="github-link" href="https://github.com/kaliszmichal" target="_blank" rel="noopener noreferrer" aria-label="GitHub: kaliszmichal" title="GitHub">
-      <svg viewBox="0 0 16 16" aria-hidden="true">
-        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-      </svg>
-    </a>
-    <div class="nav-buttons">
-      <button id="btn" class="nav-btn" type="button">KLIKNIJ MNIE</button>
-      <button id="btn2" class="nav-btn" type="button">DRUGI PRZYCISK</button>
-      <button id="btn3" class="nav-btn" type="button">KLIK</button>
-      <button id="btn4" class="nav-btn" type="button" aria-expanded="false" aria-controls="menu">MENU</button>
+  <a class="skip" href="#tresc">Przejdź do treści</a>
+
+  <header class="nav" id="nav">
+    <div class="wrap nav-in">
+      <a class="mk" href="#top" aria-label="Michał Kalisz, początek strony">MK</a>
+      <div class="nav-right">
+        <nav class="nav-links" aria-label="Sekcje strony">
+          <a href="#obszary">Obszary</a>
+          <a href="#projekty">Projekty</a>
+          <a href="#o-mnie">O mnie</a>
+          <a href="#kontakt">Kontakt</a>
+        </nav>
+        <button class="theme" id="theme" type="button" aria-label="Przełącz na ciemny motyw">
+          <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8 8 0 0 1 9.8 4a8 8 0 1 0 10.2 10.2z"/></svg>
+          <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>
+        </button>
+      </div>
     </div>
-    <button id="theme-toggle" type="button" aria-label="Przełącz na tryb jasny">
-      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="4"/>
-        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-      </svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
-      </svg>
-    </button>
-  </nav>
-  <div id="menu" role="group" aria-label="Menu">
-    <button type="button">Wybór 1</button>
-    <button type="button">Wybór 2</button>
-    <button type="button">Wybór 3</button>
-  </div>
-  <div id="progress" role="progressbar" aria-label="Ładowanie" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden>
-    <div id="progress-fill"></div>
-  </div>
-  <div id="moon" hidden aria-label="Księżyc" role="img">🌙</div>
-  <form id="pin-form" hidden autocomplete="off">
-    <input id="pin" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="PIN" aria-label="PIN (4 cyfry)" required>
-    <button type="submit">OK</button>
-  </form>
-  <p id="secret" hidden aria-live="polite"></p>
-  <div id="keys" role="group" aria-label="Klawisze">
-    <button class="key" type="button" data-key="Escape" aria-label="Esc">ESC</button>
-    <button class="key" type="button" data-key="Shift" aria-label="Shift">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 12h4.5v7h7v-7H20z"/></svg>
-    </button>
-    <button class="key wide" type="button" data-key="Enter" aria-label="Enter">
-      <svg viewBox="0 0 28 24" aria-hidden="true"><path d="M24 4v9H5M10 8l-5 5 5 5"/></svg>
-    </button>
-  </div>
+  </header>
+
+  <main id="tresc">
+    <section class="hero" id="top">
+      <div class="wrap row">
+        <p class="who after-wipe"><strong>Michał Kalisz</strong>Programista i administrator IT</p>
+        <div class="hero-main">
+          <h1 class="hero-title">
+            <span class="rl" style="--i:0">Programuję.</span>
+            <span class="rl" style="--i:1">Zabezpieczam.</span>
+            <span class="rl" style="--i:2">Automatyzuję z AI.</span>
+          </h1>
+          <p class="lead after-wipe">Łączę praktykę z pracy w infrastrukturze z modelami językowymi, żeby analiza zagrożeń i rutynowe zadania zajmowały <mark class="hl" data-delay="2500">mniej czasu</mark>, a decyzje zostawały po stronie człowieka.</p>
+          <div class="cta after-wipe">
+            <a class="btn" href="#projekty">Zobacz projekty</a>
+            <a class="link" href="https://github.com/kaliszmichal" target="_blank" rel="noopener noreferrer">Profil na GitHubie</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="obszary">
+      <div class="wrap row">
+        <h2 class="sec-title">Czym się zajmuję</h2>
+        <div class="areas">
+          <article class="area">
+            <h3>Programowanie</h3>
+            <p>Narzędzia, które rozwiązują konkretny problem: rozszerzenia przeglądarki, aplikacje webowe, makra i skrypty. Zaczynam od <mark class="hl">małej, działającej wersji</mark> i rozwijam ją razem z użytkownikiem.</p>
+            <p class="tools">Python, JavaScript, VBA, Flask, SQLite</p>
+          </article>
+
+          <article class="area">
+            <h3>AI w cyberbezpieczeństwie</h3>
+            <p>Modele językowe dobrze streszczają alerty, czytają logi i podpowiadają kolejne kroki. Traktuję je jak <mark class="hl">asystenta analityka</mark>: szybkiego i cierpliwego, ale takiego, którego wnioski zawsze sprawdza człowiek.</p>
+            <p class="tools">EDR, SIEM, MITRE ATT&amp;CK, modele językowe</p>
+
+            <figure class="console" aria-labelledby="console-title">
+              <div class="console-bar">
+                <span class="console-title" id="console-title">Dziennik zdarzeń (przykładowe dane)</span>
+                <button class="run" id="run" type="button">Przeanalizuj logi</button>
+              </div>
+              <ol class="log" id="log">
+                <li class="ev"><time>08:14:02</time><span class="src">auth</span><span class="msg">Logowanie udane: svc-backup z 10.0.4.23</span></li>
+                <li class="ev"><time>08:14:09</time><span class="src">dns</span><span class="msg">Zapytanie o update.vendor-cdn.example</span></li>
+                <li class="ev" data-flag="1"><time>08:14:31</time><span class="src">proc</span><span class="msg">powershell.exe -EncodedCommand JABzAD0ATgBl…</span><span class="why">Zakodowane polecenie uruchomione zaraz po logowaniu konta serwisowego.</span></li>
+                <li class="ev"><time>08:15:03</time><span class="src">smb</span><span class="msg">Odczyt \\nas\finanse\2026\raporty</span></li>
+                <li class="ev" data-flag="1"><time>08:15:44</time><span class="src">mail</span><span class="msg">Załącznik faktura.iso od nowego nadawcy</span><span class="why">Obraz dysku od nadawcy, którego wcześniej nikt nie widział. Typowy schemat phishingu.</span></li>
+                <li class="ev"><time>08:16:10</time><span class="src">gpo</span><span class="msg">Zastosowano politykę blokady ekranu</span></li>
+                <li class="ev" data-flag="1"><time>08:16:52</time><span class="src">net</span><span class="msg">Połączenie wychodzące na 203.0.113.40:4444</span><span class="why">Rzadko używany port i host spoza zwykłego ruchu.</span></li>
+                <li class="ev"><time>08:17:20</time><span class="src">auth</span><span class="msg">Logowanie udane: j.nowak z 10.0.4.8</span></li>
+                <li class="ev"><time>08:17:41</time><span class="src">dns</span><span class="msg">Zapytanie o ntp.example.org</span></li>
+              </ol>
+              <p class="console-sum" id="sum" role="status" aria-live="polite"></p>
+            </figure>
+            <p class="console-note">Symulacja na wymyślonych danych: tak wygląda wstępny przegląd, po którym analityk podejmuje decyzję.</p>
+          </article>
+
+          <article class="area">
+            <h3>AI w codziennej pracy</h3>
+            <p>Raporty, dokumenty, arkusze, zgłoszenia: wszystko, co powtarza się co tydzień, da się zautomatyzować. Dzięki temu zostaje więcej czasu na <mark class="hl">decyzje, a nie na klikanie</mark>.</p>
+            <p class="tools">Automatyzacja, Excel, dokumentacja, prompty</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="projekty">
+      <div class="wrap row">
+        <h2 class="sec-title">Wybrane projekty</h2>
+        <ul class="projects">
+          <li class="proj open">
+            <h3 class="proj-h"><button class="proj-btn" type="button" aria-expanded="true" aria-controls="p1">
+              <span class="proj-name">EKW Downloader</span>
+              <span class="proj-sum">Rozszerzenie przeglądarki do pobierania odpisów ksiąg wieczystych.</span>
+              <span class="proj-icon" aria-hidden="true"></span>
+            </button></h3>
+            <div class="proj-body" id="p1"><div class="proj-in"><div class="proj-pad">
+              <p>Rozszerzenie dla Chrome, Edge i Firefoksa. Pobiera treść księgi wieczystej i zapisuje ją jako PDF w pełni offline, bez zewnętrznych usług.</p>
+              <ul>
+                <li>Numer księgi z kodami wydziałów sądów i historią wyszukiwań</li>
+                <li>Licencje oparte na podpisie HMAC-SHA256</li>
+                <li>Przegląd kodu i audyt bezpieczeństwa, m.in. pod kątem XSS i wyścigów (race conditions)</li>
+              </ul>
+              <p class="tools">JavaScript, rozszerzenia przeglądarek, PDF</p>
+            </div></div></div>
+          </li>
+
+          <li class="proj">
+            <h3 class="proj-h"><button class="proj-btn" type="button" aria-expanded="false" aria-controls="p2">
+              <span class="proj-name">Liczby słownie</span>
+              <span class="proj-sum">Makro Worda, które zapisuje kwoty i liczby słowami po polsku.</span>
+              <span class="proj-icon" aria-hidden="true"></span>
+            </button></h3>
+            <div class="proj-body" id="p2"><div class="proj-in"><div class="proj-pad">
+              <p>Makro ZamienKwotyNaSlownie obsługuje złote, euro i dolary, metry kwadratowe, ułamki i liczby całkowite. Opcje wybiera się w prostym formularzu, a całość działa też na macOS.</p>
+              <ul>
+                <li>Poprawna polska odmiana, np. „tysiąc” zamiast „jeden tysiąc”</li>
+                <li>Obejście ograniczeń VBA na macOS (brak VBScript.RegExp, problemy z kodowaniem)</li>
+              </ul>
+              <p class="tools">VBA, Microsoft Word</p>
+              <p class="link-wrap"><a class="link" href="https://github.com/kaliszmichal/LiczbySlownie" target="_blank" rel="noopener noreferrer">Kod na GitHubie</a></p>
+            </div></div></div>
+          </li>
+
+          <li class="proj">
+            <h3 class="proj-h"><button class="proj-btn" type="button" aria-expanded="false" aria-controls="p3">
+              <span class="proj-name">Banking Analytics</span>
+              <span class="proj-sum">Aplikacja webowa do analizy danych bankowych.</span>
+              <span class="proj-icon" aria-hidden="true"></span>
+            </button></h3>
+            <div class="proj-body" id="p3"><div class="proj-in"><div class="proj-pad">
+              <p>Mój pierwszy pełny projekt full-stack w Pythonie: backend we Flasku z bazą SQLite, podział na role użytkowników, REST API i panel administratora.</p>
+              <ul>
+                <li>Kontrola dostępu oparta na rolach</li>
+                <li>REST API do pobierania danych</li>
+                <li>Panel administratora do zarządzania użytkownikami</li>
+              </ul>
+              <p class="tools">Python, Flask, SQLite, REST</p>
+            </div></div></div>
+          </li>
+
+          <li class="proj">
+            <h3 class="proj-h"><button class="proj-btn" type="button" aria-expanded="false" aria-controls="p4">
+              <span class="proj-name">Triage<span class="badge">koncept</span></span>
+              <span class="proj-sum">Asystent AI do wstępnej analizy alertów EDR.</span>
+              <span class="proj-icon" aria-hidden="true"></span>
+            </button></h3>
+            <div class="proj-body" id="p4"><div class="proj-in"><div class="proj-pad">
+              <p>Model językowy streszcza alert, zestawia go z technikami MITRE ATT&amp;CK i proponuje kolejne kroki. Analityk widzi uzasadnienie i sam zatwierdza decyzję.</p>
+              <ul>
+                <li>Wejście: alert i kontekst z konsoli EDR</li>
+                <li>Wyjście: streszczenie, hipotezy i lista kontrolna</li>
+                <li>Zasada: AI podpowiada, człowiek decyduje</li>
+              </ul>
+              <p class="tools">Python, modele językowe, MITRE ATT&amp;CK</p>
+            </div></div></div>
+          </li>
+
+          <li class="proj">
+            <h3 class="proj-h"><button class="proj-btn" type="button" aria-expanded="false" aria-controls="p5">
+              <span class="proj-name">PhishLens<span class="badge">koncept</span></span>
+              <span class="proj-sum">Klasyfikator podejrzanych wiadomości e-mail.</span>
+              <span class="proj-icon" aria-hidden="true"></span>
+            </button></h3>
+            <div class="proj-body" id="p5"><div class="proj-in"><div class="proj-pad">
+              <p>Ocenia nagłówki, linki i treść wiadomości, a potem zwykłym językiem tłumaczy, dlaczego wygląda podejrzanie. Użytkownik ma zrozumieć zagrożenie, a nie tylko dostać ostrzeżenie.</p>
+              <ul>
+                <li>Sprawdzanie zgodności nadawcy, domeny i adresów w linkach</li>
+                <li>Wyjaśnienie dla użytkownika w kilku zdaniach</li>
+                <li>Zgłoszenie do analityka jednym kliknięciem</li>
+              </ul>
+              <p class="tools">Python, przetwarzanie języka, e-mail</p>
+            </div></div></div>
+          </li>
+
+          <li class="proj">
+            <h3 class="proj-h"><button class="proj-btn" type="button" aria-expanded="false" aria-controls="p6">
+              <span class="proj-name">Notatnik administratora<span class="badge">koncept</span></span>
+              <span class="proj-sum">Szkice dokumentacji i zgłoszeń z surowych notatek.</span>
+              <span class="proj-icon" aria-hidden="true"></span>
+            </button></h3>
+            <div class="proj-body" id="p6"><div class="proj-in"><div class="proj-pad">
+              <p>Zamienia notatki z naprawy w czytelne zgłoszenie, instrukcję albo raport. Administrator poprawia gotową treść zamiast pisać ją od zera.</p>
+              <ul>
+                <li>Szablony dla typowych incydentów i zmian</li>
+                <li>Ujednolicony język i format dokumentów</li>
+                <li>Historia wersji do wglądu</li>
+              </ul>
+              <p class="tools">Automatyzacja, dokumentacja, modele językowe</p>
+            </div></div></div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="sec about" id="o-mnie">
+      <div class="wrap row">
+        <h2 class="sec-title">O mnie</h2>
+        <div>
+          <p>Na co dzień administruję infrastrukturą IT w środowisku domenowym: Active Directory, zasady grup, bezpieczeństwo stacji roboczych, drukarki i serwery plików. Po godzinach piszę rozszerzenia, aplikacje i makra, które ułatwiają pracę mnie i innym.</p>
+          <p>AI traktuję jak sprawnego współpracownika. Świetnie radzi sobie z analizą i pierwszymi szkicami, ale każdy wynik wymaga sprawdzenia. Dlatego buduję narzędzia, w których <mark class="hl">człowiek zawsze ma ostatnie słowo</mark>.</p>
+          <dl class="facts">
+            <div><dt>Na co dzień</dt><dd>Administracja IT w środowisku domenowym</dd></div>
+            <div><dt>Po godzinach</dt><dd>Rozszerzenia przeglądarek, aplikacje webowe i makra</dd></div>
+            <div><dt>Ciekawi mnie</dt><dd>Kryptografia postkwantowa, MITRE ATT&amp;CK, EDR i SIEM</dd></div>
+            <div><dt>Technologie</dt><dd>Python, JavaScript, VBA, Flask, SQLite, Active Directory</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec contact" id="kontakt">
+      <div class="wrap row">
+        <h2 class="sec-title">Kontakt</h2>
+        <div>
+          <p class="contact-big">Masz pomysł albo problem do rozwiązania?</p>
+          <p>Najszybciej napiszesz do mnie przez GitHub.</p>
+          <p><a class="link" href="https://github.com/kaliszmichal" target="_blank" rel="noopener noreferrer">github.com/kaliszmichal</a></p>
+          <!-- Do uzupełnienia: adres e-mail, np. <p><a class="link" href="mailto:...">...</a></p> -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Michał Kalisz</span>
+      <span>Wersja robocza: projekty z etykietą „koncept” są przykładowe.</span>
+    </div>
+  </footer>
 
   <script>
-    // Gwiazdy w tle: trzy warstwy (paralaksa), powolny dryf i delikatne mruganie.
     (function () {
-      const canvas = document.getElementById('stars');
-      const ctx = canvas.getContext('2d');
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let w, h, stars = [];
+      'use strict';
+      var root = document.documentElement;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
 
-      function init() {
-        const dpr = window.devicePixelRatio || 1;
-        w = canvas.clientWidth || window.innerWidth;
-        h = canvas.clientHeight || window.innerHeight;
-        canvas.width = w * dpr;
-        canvas.height = h * dpr;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        const count = Math.round((w * h) / 6000);
-        stars = Array.from({ length: count }, () => {
-          const layer = Math.random();            // 0 = daleko, 1 = blisko
-          return {
-            x: Math.random() * w,
-            y: Math.random() * h,
-            r: 0.4 + layer * 1.3,
-            speed: 0.03 + layer * 0.12,           // piksele na klatkę
-            base: 0.35 + layer * 0.55,
-            phase: Math.random() * Math.PI * 2,
-            tw: 0.4 + Math.random() * 1.2
-          };
-        });
+      /* Motyw: przełącznik zapamiętuje wybór w przeglądarce (jeśli jest dostępna) */
+      var themeBtn = document.getElementById('theme');
+      var themeMeta = document.querySelector('meta[name="theme-color"]');
+      function applyTheme(t, save) {
+        root.dataset.theme = t;
+        themeMeta.content = t === 'dark' ? '#0f1319' : '#eef1f3';
+        themeBtn.setAttribute('aria-label', t === 'dark' ? 'Przełącz na jasny motyw' : 'Przełącz na ciemny motyw');
+        if (save) { try { localStorage.setItem('theme', t); } catch (e) {} }
       }
-
-      function draw(t) {
-        ctx.clearRect(0, 0, w, h);
-        for (const s of stars) {
-          if (!reduce) {
-            s.x -= s.speed;
-            s.y += s.speed * 0.25;
-            if (s.x < -2) s.x = w + 2;
-            if (s.y > h + 2) s.y = -2;
-          }
-          const a = reduce ? s.base : s.base * (0.7 + 0.3 * Math.sin(t / 1000 * s.tw + s.phase));
-          // w jasnym motywie białe gwiazdy byłyby niewidoczne - używamy granatowych, słabszych
-          const light = document.documentElement.dataset.theme === 'light';
-          ctx.globalAlpha = light ? a * 0.5 : a;
-          ctx.fillStyle = light ? '#2a4a8f' : '#fff';
-          ctx.beginPath();
-          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        ctx.globalAlpha = 1;
-        if (!reduce) requestAnimationFrame(draw);
-      }
-
-      init();
-      window.addEventListener('resize', () => {
-        // na telefonie resize odpala się też przy chowaniu pasków przeglądarki
-        if (canvas.clientWidth === w && canvas.clientHeight === h) return;
-        init();
-        if (reduce) draw(0);
+      applyTheme(root.dataset.theme, false);
+      themeBtn.addEventListener('click', function () {
+        applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark', true);
       });
-      // przy ograniczonym ruchu nie ma pętli animacji, więc po zmianie motywu rysujemy ponownie
-      window.addEventListener('themechange', () => { if (reduce) draw(0); });
-      requestAnimationFrame(draw);
-    })();
 
-    // Astronauta dryfuje po całym ekranie i odbija się od krawędzi (z lekkim "spłaszczeniem" i nową rotacją).
-    (function () {
-      const astro = document.getElementById('astro');
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const W = () => document.documentElement.clientWidth;
-      const H = () => window.innerHeight;
-      const rand = (a, b) => a + Math.random() * (b - a);
+      /* Nawigacja: cień po przewinięciu i podkreślenie bieżącej sekcji */
+      var nav = document.getElementById('nav');
+      function onScroll() { nav.classList.toggle('scrolled', window.scrollY > 8); }
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
 
-      let x = rand(0, Math.max(0, W() - astro.offsetWidth));
-      let y = rand(0, Math.max(0, H() - astro.offsetHeight));
-      const speed = rand(42, 62); // piksele na sekundę
-      const angle = rand(0.3, Math.PI / 2 - 0.3) + Math.floor(rand(0, 4)) * (Math.PI / 2);
-      let vx = Math.cos(angle) * speed;
-      let vy = Math.sin(angle) * speed;
-      let rot = rand(-20, 20);
-      let vr = (Math.random() < 0.5 ? -1 : 1) * rand(10, 22); // stopnie na sekundę
-      let squash = 0, hitX = false;
-      let last = performance.now();
-
-      function render() {
-        const sq = hitX ? [1 - 0.28 * squash, 1 + 0.2 * squash] : [1 + 0.2 * squash, 1 - 0.28 * squash];
-        astro.style.transform =
-          `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) scale(${sq[0].toFixed(3)}, ${sq[1].toFixed(3)}) rotate(${rot.toFixed(1)}deg)`;
+      var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+      if ('IntersectionObserver' in window) {
+        var spy = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            links.forEach(function (a) {
+              a.toggleAttribute('aria-current', false);
+              if (a.getAttribute('href') === '#' + e.target.id) a.setAttribute('aria-current', 'true');
+            });
+          });
+        }, { rootMargin: '-40% 0px -55% 0px' });
+        document.querySelectorAll('main section[id]').forEach(function (s) { spy.observe(s); });
       }
 
-      function bounce(alongX, dir) {
-        // odbicie z lekką zmianą kierunku, żeby trasa się nie powtarzała
-        const sp = Math.hypot(vx, vy);
-        let a = Math.atan2(vy, vx) + rand(-0.35, 0.35);
-        vx = Math.cos(a) * sp;
-        vy = Math.sin(a) * sp;
-        if (alongX) vx = dir * Math.abs(vx); else vy = dir * Math.abs(vy);
-        vr = (Math.random() < 0.5 ? -1 : 1) * rand(10, 30);
-        squash = 1;
-        hitX = alongX;
-      }
-
-      function step(now) {
-        const dt = Math.min((now - last) / 1000, 0.05);
-        last = now;
-        const maxX = Math.max(0, W() - astro.offsetWidth);
-        const maxY = Math.max(0, H() - astro.offsetHeight);
-        x += vx * dt;
-        y += vy * dt;
-        if (x < 0) { x = 0; bounce(true, 1); }
-        else if (x > maxX) { x = maxX; bounce(true, -1); }
-        if (y < 0) { y = 0; bounce(false, 1); }
-        else if (y > maxY) { y = maxY; bounce(false, -1); }
-        rot += vr * dt;
-        squash *= Math.exp(-dt * 7);
-        render();
-        requestAnimationFrame(step);
-      }
-
-      if (reduce) {
-        // bez ruchu: astronauta po prostu wisi w rogu
-        x = W() * 0.7; y = H() * 0.2; rot = -12;
-        render();
+      /* Zakreślacz rysuje się, gdy fraza wchodzi w pole widzenia */
+      var marks = Array.prototype.slice.call(document.querySelectorAll('mark.hl'));
+      if ('IntersectionObserver' in window && !reduce) {
+        var hlObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            var el = e.target;
+            setTimeout(function () { el.classList.add('on'); }, Number(el.dataset.delay) || 0);
+            hlObs.unobserve(el);
+          });
+        }, { rootMargin: '0px 0px -12% 0px' });
+        marks.forEach(function (m) { hlObs.observe(m); });
       } else {
-        render();
-        requestAnimationFrame(step);
+        marks.forEach(function (m) { m.classList.add('on'); });
       }
-    })();
 
-    // Klawisze reagują też na prawdziwą klawiaturę (Esc, Shift, Enter) - samo podświetlenie, bez akcji.
-    (function () {
-      const keys = {};
-      document.querySelectorAll('#keys .key').forEach((k) => { keys[k.dataset.key] = k; });
-      window.addEventListener('keydown', (e) => { if (keys[e.key]) keys[e.key].classList.add('pressed'); });
-      window.addEventListener('keyup', (e) => { if (keys[e.key]) keys[e.key].classList.remove('pressed'); });
-      window.addEventListener('blur', () => {
-        Object.values(keys).forEach((k) => k.classList.remove('pressed'));
+      /* Projekty: rozwijanie szczegółów */
+      document.querySelectorAll('.proj-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var item = btn.closest('.proj');
+          var open = item.classList.toggle('open');
+          btn.setAttribute('aria-expanded', String(open));
+        });
       });
 
-      // Krótka wibracja przy dotknięciu klawisza Enter (tylko ekran dotykowy, tylko ten klawisz).
-      // Działa na Androidzie (Chrome/Firefox); iPhone/Safari nie obsługuje Vibration API,
-      // a przeglądarki bez obsługi po prostu pomijają ten fragment.
-      const enterKey = keys.Enter;
-      if (enterKey && typeof navigator.vibrate === 'function') {
-        enterKey.addEventListener('pointerdown', (e) => {
-          if (e.pointerType === 'touch') navigator.vibrate(30);
-        });
+      /* Konsola: symulowana analiza logów, w której AI zakreśla podejrzane zdarzenia */
+      var run = document.getElementById('run');
+      var log = document.getElementById('log');
+      var sum = document.getElementById('sum');
+      var events = Array.prototype.slice.call(log.children);
+      var busy = false, done = false;
+
+      function resetConsole() {
+        events.forEach(function (e) { e.classList.remove('now', 'hit', 'ok'); });
+        sum.textContent = '';
+        run.textContent = 'Przeanalizuj logi';
+        done = false;
       }
-    })();
 
-    // Przełącznik motywu: ciemny (domyślny) / jasny, zapamiętywany w przeglądarce.
-    const root = document.documentElement;
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeMeta = document.querySelector('meta[name="theme-color"]');
-
-    function applyTheme(theme, save) {
-      const light = theme === 'light';
-      root.dataset.theme = theme;
-      themeMeta.content = light ? '#cfe3fa' : '#02030a';
-      // ikonę (słońce/księżyc) przełącza CSS według data-theme
-      themeToggle.setAttribute('aria-label', light ? 'Przełącz na tryb ciemny' : 'Przełącz na tryb jasny');
-      if (save) {
-        try { localStorage.setItem('theme', theme); } catch (e) {}
-      }
-      window.dispatchEvent(new Event('themechange'));
-    }
-
-    themeToggle.addEventListener('click', () => {
-      applyTheme(root.dataset.theme === 'light' ? 'dark' : 'light', true);
-    });
-    applyTheme(root.dataset.theme === 'light' ? 'light' : 'dark', false);
-
-    const btn = document.getElementById('btn');
-
-    const progress = document.getElementById('progress');
-    const fill = document.getElementById('progress-fill');
-    const BTN_LABEL = btn.textContent;
-    const LOAD_MS = 2500;
-    let loading = false;
-
-    btn.addEventListener('click', () => {
-      if (loading) return;
-      loading = true;
-      btn.classList.remove('done');
-      btn.textContent = BTN_LABEL;
-      progress.classList.remove('done');
-      progress.hidden = false;
-      fill.style.width = '0%';
-      progress.setAttribute('aria-valuenow', '0');
-
-      const start = performance.now();
-      function step(now) {
-        const p = Math.min((now - start) / LOAD_MS, 1);
-        fill.style.width = (p * 100).toFixed(1) + '%';
-        progress.setAttribute('aria-valuenow', String(Math.round(p * 100)));
-        if (p < 1) {
-          requestAnimationFrame(step);
-        } else {
-          // 100% - zapal się na zielono
-          btn.classList.add('done');
-          progress.classList.add('done');
-          btn.textContent = 'OK';
-          loading = false;
+      run.addEventListener('click', async function () {
+        if (busy) return;
+        if (done) { resetConsole(); return; }
+        busy = true;
+        run.disabled = true;
+        log.setAttribute('aria-busy', 'true');
+        var step = reduce ? 0 : 340, hits = 0;
+        for (var i = 0; i < events.length; i++) {
+          var ev = events[i];
+          ev.classList.add('now');
+          if (step) await wait(step);
+          ev.classList.remove('now');
+          if (ev.dataset.flag) {
+            ev.classList.add('hit');
+            hits++;
+            if (step) await wait(300);
+          } else {
+            ev.classList.add('ok');
+          }
         }
-      }
-      requestAnimationFrame(step);
-    });
-
-    const btn2 = document.getElementById('btn2');
-    const moon = document.getElementById('moon');
-
-    btn2.addEventListener('click', () => {
-      moon.hidden = false;
-      requestAnimationFrame(() => moon.classList.add('visible'));
-      btn2.hidden = true;
-    });
-
-    // Sekretna wiadomość jest zaszyfrowana (AES-GCM, klucz z PIN-u przez PBKDF2),
-    // więc nie ma jej w kodzie strony jako zwykłego tekstu.
-    const SECRET = {
-      s: 'F5L/9jBcCUgGT0UinaF/Aw==',
-      i: 'xYFEnjxQufvUMOeG',
-      c: 'Bh0Ws+J+z2ByRjhkcnHy59CyWANh8nipKhDr2bpWdUSqwsa81B928f0vcoPM0swpYwEFC6Ev5fi8nWCd7PwSAV/KLnC8k2I='
-    };
-    const b64 = (s) => Uint8Array.from(atob(s), (ch) => ch.charCodeAt(0));
-
-    async function decryptSecret(pin) {
-      const enc = new TextEncoder();
-      const base = await crypto.subtle.importKey('raw', enc.encode(pin), 'PBKDF2', false, ['deriveKey']);
-      const key = await crypto.subtle.deriveKey(
-        { name: 'PBKDF2', salt: b64(SECRET.s), iterations: 200000, hash: 'SHA-256' },
-        base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']
-      );
-      const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(SECRET.i) }, key, b64(SECRET.c));
-      return new TextDecoder().decode(plain);
-    }
-
-    const btn4 = document.getElementById('btn4');
-    const menu = document.getElementById('menu');
-
-    btn4.addEventListener('click', () => {
-      const open = menu.classList.toggle('open');
-      btn4.setAttribute('aria-expanded', String(open));
-    });
-
-    const btn3 = document.getElementById('btn3');
-    const pinForm = document.getElementById('pin-form');
-    const pinInput = document.getElementById('pin');
-    const secret = document.getElementById('secret');
-
-    btn3.addEventListener('click', () => {
-      pinForm.hidden = false;
-      btn3.hidden = true;
-      pinInput.focus();
-    });
-
-    pinForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      try {
-        secret.textContent = await decryptSecret(pinInput.value);
-        secret.hidden = false;
-        pinForm.hidden = true;
-      } catch (err) {
-        pinInput.classList.remove('error');
-        void pinInput.offsetWidth; // restart animacji
-        pinInput.classList.add('error');
-        pinInput.select();
-      }
-    });
+        sum.textContent = hits + ' z ' + events.length + ' zdarzeń wymaga uwagi. Decyzję o reakcji podejmuje analityk.';
+        run.textContent = 'Wyczyść';
+        run.disabled = false;
+        log.removeAttribute('aria-busy');
+        busy = false;
+        done = true;
+      });
+    })();
   </script>
 </body>
 </html>
