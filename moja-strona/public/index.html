@@ -227,10 +227,21 @@
     .hero-title {
       margin: 0;
       font: 780 clamp(1.9rem, 6.2vw, 5rem) / 1.02 var(--f-display);
-      font-size: min(9.5cqw, 5.2rem); /* najdłuższy wiersz zawsze mieści się w jednej linii */
+      font-size: min(8.6cqw, 5rem); /* najdłuższy wiersz zawsze mieści się w jednej linii */
       font-stretch: 118%;
       letter-spacing: -0.02em;
     }
+    .line-last { display: flex; align-items: flex-end; width: fit-content; max-width: 100%; }
+    .caret {
+      flex: none;
+      width: 0.3em;
+      height: 0.68em;
+      margin: 0 0 0.1em 0.1em;
+      background: var(--ink);
+      opacity: 0;
+      animation: caret 1.1s steps(1, end) 2.4s infinite;
+    }
+    @keyframes caret { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
     .rl {
       display: block;
       position: relative;
@@ -512,7 +523,7 @@
       .hero-side .who { margin-bottom: 0; }
       .moons { flex-direction: row; justify-content: space-between; width: min(100%, 21rem); gap: 0; margin: 1.1rem 0 1.75rem; }
       .moons svg { width: 1.61rem; height: 1.61rem; }
-      .hero-title { font-stretch: 100%; font-size: min(11cqw, 5.2rem); }
+      .hero-title { font-stretch: 100%; font-size: min(10cqw, 5rem); }
       .facts div { grid-template-columns: minmax(0, 1fr); row-gap: 0.1rem; }
       body { font-size: 1.0625rem; }
     }
@@ -563,6 +574,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .rl::after { display: none; }
+      .caret { animation: none; opacity: 1; }
       .after-wipe { animation: none; }
       .js mark.hl:not(.on) { background-size: 100% 64%; }
       *, *::before, *::after { transition-duration: 0.01ms !important; transition-delay: 0s !important; }
@@ -602,7 +614,10 @@
           <h1 class="hero-title">
             <span class="rl" style="--i:0" data-i18n="h0">Programuję.</span>
             <span class="rl" style="--i:1" data-i18n="h1">Zabezpieczam.</span>
-            <span class="rl" style="--i:2" data-i18n="h2">Automatyzuję z AI.</span>
+            <span class="line-last">
+              <span class="rl" style="--i:2" data-i18n="h2">Automatyzuję z AI.</span>
+              <span class="caret" aria-hidden="true"></span>
+            </span>
           </h1>
           <p class="lead after-wipe" data-i18n="lead">Łączę praktykę z pracy w infrastrukturze z modelami językowymi, żeby analiza zagrożeń i rutynowe zadania zajmowały <mark class="hl" data-delay="2500">mniej czasu</mark>, a decyzje zostawały po stronie człowieka.</p>
           <div class="cta after-wipe">
