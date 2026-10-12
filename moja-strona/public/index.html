@@ -196,8 +196,7 @@
       transition: background 0.2s;
     }
     .lang:hover { background: var(--paper-2); }
-    .lang-foot { display: none; height: 2rem; border: 1px solid var(--rule); }
-    @media (max-width: 384px) { .lang-nav { display: none; } .lang-foot { display: inline-block; } }
+    .lang-foot { display: none; }
     .theme:hover { background: var(--paper-2); }
     .theme svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
     .theme .i-sun { display: none; }
@@ -518,36 +517,22 @@
       body { font-size: 1.0625rem; }
     }
     @media (max-width: 560px) {
-      .nav-in { height: 4.5rem; }
-      .sec { scroll-margin-top: 1.75rem; }
-      .mk svg { height: 1.3rem; }
-      .nav-right { gap: 0.4rem; }
-      .nav-links { gap: 0.7rem; }
-      .nav-links a { font-size: 1.02rem; white-space: nowrap; }
-      .theme { width: 2.25rem; height: 2.25rem; }
-      .lang { height: 2.25rem; }
+      /* Dwa rzędy: u góry logo i przyciski, niżej menu z dużą, czytelną czcionką */
+      .nav-in { width: calc(100% - 2rem); height: auto; flex-wrap: wrap; padding-block: 0.35rem 0.2rem; }
+      .nav-right { display: contents; }
+      .mk { order: 1; margin-right: auto; }
+      .mk svg { height: 1.5rem; }
+      .lang { order: 2; height: 2.5rem; min-width: 2.5rem; }
+      .theme { order: 3; width: 2.5rem; height: 2.5rem; }
+      .nav-links { order: 4; flex: 0 0 100%; justify-content: space-between; gap: 0.5rem; margin-top: 0.1rem; }
+      .nav-links a { font-size: 1.22rem; white-space: nowrap; padding: 0.45rem 0 0.55rem; }
+      .sec { scroll-margin-top: 3rem; }
       .ev { grid-template-columns: 4.3rem minmax(0, 1fr); }
       .ev .src { display: none; }
       .why { grid-column: 2; }
     }
-
-    @media (max-width: 400px) {
-      .nav-in { width: calc(100% - 1.8rem); }
-      .nav-right { gap: 0.25rem; }
-      .nav-links { gap: 0.55rem; }
-      .theme { width: 2rem; height: 2rem; }
-      .lang { min-width: 1.75rem; height: 2rem; padding: 0; font-size: 0.78rem; }
-      .nav-links { gap: 0.45rem; }
-    }
-    @media (max-width: 360px) {
-      .nav-links { gap: 0.45rem; }
-      .nav-links a { font-size: 0.96rem; }
-    }
-    @media (max-width: 340px) {
-      .mk { margin-right: 0.75rem; }
-      .mk svg { height: 1.1rem; }
-      .nav-links { gap: 0.4rem; }
-      .nav-links a { font-size: 0.91rem; }
+    @media (max-width: 350px) {
+      .nav-links a { font-size: 1.1rem; }
     }
 
     .to-top {
