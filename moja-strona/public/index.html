@@ -575,6 +575,10 @@
     .to-top:hover { background: var(--hl-solid); color: #12161c; }
     .to-top svg { width: 1.2rem; height: 1.2rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
+    /* Płynne wejście sekcji przy przewijaniu */
+    .js .rv { opacity: 0; transform: translateY(1.6rem); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+    .js .rv.in { opacity: 1; transform: none; }
+
     /* Ograniczony ruch: te same treści, bez animacji */
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -903,6 +907,21 @@
         marks.forEach(function (m) { hlObs.observe(m); });
       } else {
         marks.forEach(function (m) { m.classList.add('on'); });
+      }
+
+      /* Płynne wejście sekcji przy przewijaniu */
+      if ('IntersectionObserver' in window && !reduce) {
+        var rvObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            e.target.classList.add('in');
+            rvObs.unobserve(e.target);
+          });
+        }, { rootMargin: '0px 0px -8% 0px' });
+        document.querySelectorAll('.sec-title, .area, .proj, .about .row > div, .contact .row > :not(.sec-title)').forEach(function (el) {
+          el.classList.add('rv');
+          rvObs.observe(el);
+        });
       }
 
       /* Projekty: rozwijanie szczegółów */
