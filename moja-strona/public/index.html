@@ -488,7 +488,10 @@
     .cb-row .contact-big { flex: 0 1 auto; max-width: 13.5ch; min-width: 0; }
     .cb-row { display: flex; align-items: center; flex-wrap: nowrap; gap: clamp(0.9rem, 4vw, 3rem); }
     @media (max-width: 760px) { .cb-row .contact-big { font-size: clamp(1.7rem, 7.6vw, 2.4rem); max-width: none; flex: 1 1 0; } }
-    .blob { position: relative; flex: none; width: clamp(3.6rem, 9vw, 6.4rem); margin: 1.6rem 0 0; padding: 0; border: 0; background: none; cursor: pointer; color: #12161c; -webkit-tap-highlight-color: transparent; }
+    .cb-do { display: inline-block; transform-origin: 50% 80%; }
+    .cb-do.poked { animation: cb-poke 0.9s ease both; }
+    @keyframes cb-poke { 0% { transform: none; background-color: transparent; } 12% { transform: translateY(-0.12em) rotate(-8deg); background-color: var(--hl-solid); } 30% { transform: translateY(0.05em) rotate(5deg); } 55% { transform: rotate(-3deg); background-color: var(--hl-solid); } 100% { transform: none; background-color: transparent; } }
+    .blob { z-index: 5; transform-origin: 50% 90%; position: relative; flex: none; width: clamp(3.6rem, 9vw, 6.4rem); margin: 1.6rem 0 0; padding: 0; border: 0; background: none; cursor: pointer; color: #12161c; -webkit-tap-highlight-color: transparent; }
     .blob:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; border-radius: 1rem; }
     .blob svg { display: block; width: 100%; height: auto; overflow: visible; }
     .b-shadow { fill: var(--ink); opacity: 0.12; transform-box: fill-box; transform-origin: center; }
@@ -635,6 +638,7 @@
       html { scroll-behavior: auto; }
       .rl::after { display: none; }
       .caret { animation: none; opacity: 1; }
+      .cb-do.poked { animation: none; }
       .blob .b-hop, .blob .b-bre, .blob .b-shadow, .blob .b-eye-r, .blob .b-wink, .blob .b-smile, .blob .b-open { animation: none !important; }
       .after-wipe { animation: none; }
       .js mark.hl:not(.on) { background-size: 100% 64%; }
@@ -832,7 +836,7 @@
         <h2 class="sec-title" data-i18n="t4">Kontakt</h2>
         <div>
           <div class="cb-row">
-            <p class="contact-big" data-i18n="cb">Masz pomysł albo problem do rozwiązania?</p>
+            <p class="contact-big" data-i18n="cb">Masz pomysł albo problem <span class="cb-do" id="cbDo">do</span> rozwiązania?</p>
             <button class="blob" id="blob" type="button" aria-label="Kulka Bąbel. Kliknij, żeby ją rozbawić">
               <span class="blob-say" id="blobSay" aria-hidden="true"></span>
               <svg viewBox="0 0 100 110" aria-hidden="true" focusable="false">
@@ -883,7 +887,7 @@
       var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
 
       /* Języki: PL (treść w HTML) i EN (słownik poniżej) */
-      var EN = {"skip": "Skip to content", "fn": "Name", "fe": "E-mail address", "fm": "Message", "fs": "Send message", "fsending": "Sending…", "fok": "Thanks! Your message has been sent.", "ferr": "Could not send the message. Please try again later.", "finv": "Please fill in your name, a valid e-mail address and a message.", "n1": "Areas", "n2": "Projects", "n3": "About", "n4": "Contact", "who": "<strong>Michał Kalisz<\/strong>GenAI developer and IT administrator", "h0": "I code.", "h1": "I secure.", "h2": "I automate with AI", "lead": "I combine hands-on infrastructure experience with language models, so that threat analysis and routine tasks take <mark class=\"hl on\">less time<\/mark>, while the decisions stay with people.", "btn": "See projects", "gh": "GitHub profile", "t1": "What I do", "a1": "Programming", "a1p": "Tools that solve a specific problem: browser extensions, web apps, macros and scripts. I start with a <mark class=\"hl on\">small, working version<\/mark> and grow it together with its users.", "a2": "AI in cybersecurity", "a2p": "Language models are good at summarising alerts, reading logs and suggesting next steps. I treat them as an <mark class=\"hl on\">analyst's assistant<\/mark>: fast and patient, but always with its conclusions checked by a human.", "ct": "Event log (sample data)", "cn": "A simulation on made-up data: this is what a first-pass review looks like, after which the analyst makes the call.", "a3": "AI in everyday work", "a3p": "Reports, documents, spreadsheets, tickets: anything that repeats every week can be automated. That leaves more time for <mark class=\"hl on\">decisions, not clicking<\/mark>.", "tl1": "Python, JavaScript, VBA, Flask, SQLite", "tl2": "EDR, SIEM, MITRE ATT&amp;CK, language models", "tl3": "Automation, Excel, documentation, prompts", "t2": "Selected projects", "p3s": "A web application for analysing banking data.", "p3p": "My first full-stack project in Python: a Flask backend with SQLite, user roles, a REST API and an admin panel.", "p3l1": "Role-based access control", "p3l2": "REST API for fetching data", "p3l3": "Admin panel for managing users", "p4n": "<span class=\"pn\">Triage</span><span class=\"badge\">concept<\/span>", "p4s": "An AI assistant for first-pass analysis of EDR alerts.", "p4p": "A language model summarises the alert, maps it to MITRE ATT&amp;CK techniques and proposes next steps. The analyst sees the reasoning and approves the decision.", "p4l1": "Input: an alert and context from the EDR console", "p4l2": "Output: a summary, hypotheses and a checklist", "p4l3": "Rule: AI suggests, the human decides", "p4t": "Python, language models, MITRE ATT&amp;CK", "p5n": "<span class=\"pn\">PhishLens</span><span class=\"badge\">concept<\/span>", "p5s": "A classifier for suspicious e-mail messages.", "p5p": "It assesses headers, links and message content, then explains in plain language why something looks suspicious. The user should understand the threat, not just get a warning.", "p5l1": "Checking sender, domain and link address consistency", "p5l2": "A short explanation for the user", "p5l3": "Report to an analyst in one click", "p5t": "Python, natural language processing, e-mail", "p6n": "<span class=\"pn\">Admin's Notebook</span><span class=\"badge\">concept<\/span>", "p6s": "Drafts of documentation and tickets from raw notes.", "p6p": "Turns repair notes into a clear ticket, guide or report. The administrator edits finished text instead of writing it from scratch.", "p6l1": "Templates for typical incidents and changes", "p6l2": "Consistent language and document format", "p6l3": "Version history available", "p6t": "Automation, documentation, language models", "t3": "About me", "o1": "Day to day I administer IT infrastructure in a domain environment: Active Directory, Group Policy, workstation security, printers and file servers. After hours I write extensions, apps and macros that make work easier for me and others.", "o2": "I treat AI as a capable colleague. It is great at analysis and first drafts, but every result needs checking. That is why I build tools in which <mark class=\"hl on\">the human always has the last word<\/mark>.", "f1k": "Day to day", "f1v": "IT administration in a domain environment", "f2k": "After hours", "f2v": "Browser extensions, web apps and macros", "f3k": "Interests", "f3v": "Data encryption methods: Diffie-Hellman key exchange, AES-GCM, ChaCha20, elliptic curves and post-quantum cryptography; plus MITRE ATT&amp;CK, EDR and SIEM", "f5k": "Creative tools", "f5v": "Adobe Photoshop and audio editing software", "f4k": "Technologies", "f4v": "Python, JavaScript, VBA, Flask, SQLite, Active Directory, Claude Code", "t4": "Contact", "cb": "Got an idea or a problem to solve?", "cs": "Write to me using the form below.", "m0": "Login succeeded: svc-backup from 10.0.4.23", "m1": "Query for update.vendor-cdn.example", "m2": "powershell.exe -EncodedCommand JABzAD0ATgBl…", "m3": "Read \\\\nas\\finanse\\2026\\raporty", "m4": "Attachment faktura.iso from a new sender", "m5": "Screen-lock policy applied", "m6": "Outbound connection to 203.0.113.40:4444", "m7": "Login succeeded: j.nowak from 10.0.4.8", "m8": "Query for ntp.example.org", "w0": "An encoded command run right after a service account logged in.", "w1": "A disk image from a sender nobody has seen before. A typical phishing pattern.", "w2": "A rarely used port and a host outside the usual traffic.", "_title": "Michał Kalisz | developer, AI in cybersecurity", "_desc": "Michał Kalisz: programming, using AI in cybersecurity and automating everyday work. Portfolio and selected projects.", "_ogdesc": "Tools in which AI helps with the work and the human has the last word.", "_navlabel": "Page sections", "_mk": "Michał Kalisz, top of the page", "_top": "Back to top", "run": "Analyse logs", "clear": "Clear", "toLight": "Switch to light theme", "toDark": "Switch to dark theme", "sum": "{h} of {n} events need attention. The analyst decides how to respond."};
+      var EN = {"skip": "Skip to content", "fn": "Name", "fe": "E-mail address", "fm": "Message", "fs": "Send message", "fsending": "Sending…", "fok": "Thanks! Your message has been sent.", "ferr": "Could not send the message. Please try again later.", "finv": "Please fill in your name, a valid e-mail address and a message.", "n1": "Areas", "n2": "Projects", "n3": "About", "n4": "Contact", "who": "<strong>Michał Kalisz<\/strong>GenAI developer and IT administrator", "h0": "I code.", "h1": "I secure.", "h2": "I automate with AI", "lead": "I combine hands-on infrastructure experience with language models, so that threat analysis and routine tasks take <mark class=\"hl on\">less time<\/mark>, while the decisions stay with people.", "btn": "See projects", "gh": "GitHub profile", "t1": "What I do", "a1": "Programming", "a1p": "Tools that solve a specific problem: browser extensions, web apps, macros and scripts. I start with a <mark class=\"hl on\">small, working version<\/mark> and grow it together with its users.", "a2": "AI in cybersecurity", "a2p": "Language models are good at summarising alerts, reading logs and suggesting next steps. I treat them as an <mark class=\"hl on\">analyst's assistant<\/mark>: fast and patient, but always with its conclusions checked by a human.", "ct": "Event log (sample data)", "cn": "A simulation on made-up data: this is what a first-pass review looks like, after which the analyst makes the call.", "a3": "AI in everyday work", "a3p": "Reports, documents, spreadsheets, tickets: anything that repeats every week can be automated. That leaves more time for <mark class=\"hl on\">decisions, not clicking<\/mark>.", "tl1": "Python, JavaScript, VBA, Flask, SQLite", "tl2": "EDR, SIEM, MITRE ATT&amp;CK, language models", "tl3": "Automation, Excel, documentation, prompts", "t2": "Selected projects", "p3s": "A web application for analysing banking data.", "p3p": "My first full-stack project in Python: a Flask backend with SQLite, user roles, a REST API and an admin panel.", "p3l1": "Role-based access control", "p3l2": "REST API for fetching data", "p3l3": "Admin panel for managing users", "p4n": "<span class=\"pn\">Triage</span><span class=\"badge\">concept<\/span>", "p4s": "An AI assistant for first-pass analysis of EDR alerts.", "p4p": "A language model summarises the alert, maps it to MITRE ATT&amp;CK techniques and proposes next steps. The analyst sees the reasoning and approves the decision.", "p4l1": "Input: an alert and context from the EDR console", "p4l2": "Output: a summary, hypotheses and a checklist", "p4l3": "Rule: AI suggests, the human decides", "p4t": "Python, language models, MITRE ATT&amp;CK", "p5n": "<span class=\"pn\">PhishLens</span><span class=\"badge\">concept<\/span>", "p5s": "A classifier for suspicious e-mail messages.", "p5p": "It assesses headers, links and message content, then explains in plain language why something looks suspicious. The user should understand the threat, not just get a warning.", "p5l1": "Checking sender, domain and link address consistency", "p5l2": "A short explanation for the user", "p5l3": "Report to an analyst in one click", "p5t": "Python, natural language processing, e-mail", "p6n": "<span class=\"pn\">Admin's Notebook</span><span class=\"badge\">concept<\/span>", "p6s": "Drafts of documentation and tickets from raw notes.", "p6p": "Turns repair notes into a clear ticket, guide or report. The administrator edits finished text instead of writing it from scratch.", "p6l1": "Templates for typical incidents and changes", "p6l2": "Consistent language and document format", "p6l3": "Version history available", "p6t": "Automation, documentation, language models", "t3": "About me", "o1": "Day to day I administer IT infrastructure in a domain environment: Active Directory, Group Policy, workstation security, printers and file servers. After hours I write extensions, apps and macros that make work easier for me and others.", "o2": "I treat AI as a capable colleague. It is great at analysis and first drafts, but every result needs checking. That is why I build tools in which <mark class=\"hl on\">the human always has the last word<\/mark>.", "f1k": "Day to day", "f1v": "IT administration in a domain environment", "f2k": "After hours", "f2v": "Browser extensions, web apps and macros", "f3k": "Interests", "f3v": "Data encryption methods: Diffie-Hellman key exchange, AES-GCM, ChaCha20, elliptic curves and post-quantum cryptography; plus MITRE ATT&amp;CK, EDR and SIEM", "f5k": "Creative tools", "f5v": "Adobe Photoshop and audio editing software", "f4k": "Technologies", "f4v": "Python, JavaScript, VBA, Flask, SQLite, Active Directory, Claude Code", "t4": "Contact", "cb": "Got an idea or a problem <span class=\"cb-do\" id=\"cbDo\">to</span> solve?", "cs": "Write to me using the form below.", "m0": "Login succeeded: svc-backup from 10.0.4.23", "m1": "Query for update.vendor-cdn.example", "m2": "powershell.exe -EncodedCommand JABzAD0ATgBl…", "m3": "Read \\\\nas\\finanse\\2026\\raporty", "m4": "Attachment faktura.iso from a new sender", "m5": "Screen-lock policy applied", "m6": "Outbound connection to 203.0.113.40:4444", "m7": "Login succeeded: j.nowak from 10.0.4.8", "m8": "Query for ntp.example.org", "w0": "An encoded command run right after a service account logged in.", "w1": "A disk image from a sender nobody has seen before. A typical phishing pattern.", "w2": "A rarely used port and a host outside the usual traffic.", "_title": "Michał Kalisz | developer, AI in cybersecurity", "_desc": "Michał Kalisz: programming, using AI in cybersecurity and automating everyday work. Portfolio and selected projects.", "_ogdesc": "Tools in which AI helps with the work and the human has the last word.", "_navlabel": "Page sections", "_mk": "Michał Kalisz, top of the page", "_top": "Back to top", "run": "Analyse logs", "clear": "Clear", "toLight": "Switch to light theme", "toDark": "Switch to dark theme", "sum": "{h} of {n} events need attention. The analyst decides how to respond."};
       var PL = {}, nodes = Array.prototype.slice.call(document.querySelectorAll('[data-i18n]'));
       nodes.forEach(function (n) { PL[n.dataset.i18n] = n.innerHTML; });
       PL._title = document.title;
@@ -1071,16 +1075,49 @@
         if ('IntersectionObserver' in window) {
           new IntersectionObserver(function (en) { vis = en[0].isIntersecting; }).observe(blob);
         }
-        function life(kind) {
-          var delay = kind === 'wink' ? 3500 + Math.random() * 3500 : 7000 + Math.random() * 6000;
+        /* Wizyta: Bąbel skrada się do słowa „do”, dotyka go i szybko ucieka na miejsce */
+        var visiting = false;
+        var vsay = { pl: 'Dotknąłem „do”!', en: 'Touched “to”!' };
+        function visit() {
+          var word = document.getElementById('cbDo');
+          if (!word || !blob.animate || visiting) return;
+          var w = word.getBoundingClientRect(), b = blob.getBoundingClientRect();
+          var dx = (w.left + w.width / 2) - (b.left + b.width / 2);
+          var dy = (w.bottom + 6) - (b.top + b.height * 0.1);
+          if (!isFinite(dx) || !isFinite(dy)) return;
+          visiting = true;
+          var T = 3800;
+          var frames = [
+            [0, 0, 0, 1, 1], [0.05, 0, 0, 1.1, 0.9],
+            [0.12, 0.12, 0.12, 0.92, 1.1, -24], [0.2, 0.25, 0.25, 1.12, 0.88],
+            [0.27, 0.37, 0.37, 0.92, 1.1, -24], [0.35, 0.5, 0.5, 1.12, 0.88],
+            [0.42, 0.62, 0.62, 0.92, 1.1, -24], [0.5, 0.75, 0.75, 1.12, 0.88],
+            [0.57, 0.88, 0.88, 0.92, 1.12, -20], [0.64, 1, 1, 0.9, 1.15],
+            [0.72, 1, 1, 1, 1], [0.8, 0.97, 0.97, 1.12, 0.88],
+            [0.86, 0.6, 0.6, 0.9, 1.1, -22], [0.92, 0.2, 0.2, 0.9, 1.1, -14],
+            [0.97, 0, 0, 1.18, 0.82], [1, 0, 0, 1, 1]
+          ].map(function (f) {
+            return { offset: f[0], transform: 'translate(' + (dx * f[1]).toFixed(1) + 'px,' + (dy * f[2] + (f[5] || 0)).toFixed(1) + 'px) scale(' + f[3] + ',' + f[4] + ')' };
+          });
+          var anim = blob.animate(frames, { duration: T, easing: 'linear' });
           setTimeout(function () {
-            if (vis && !document.hidden && !blob.classList.contains('hop') && !blob.classList.contains('spin')) {
-              play(kind, kind === 'wink' ? 900 : 1150);
+            word.classList.remove('poked'); void word.offsetWidth; word.classList.add('poked');
+            speak(vsay[lang]);
+            setTimeout(function () { word.classList.remove('poked'); }, 950);
+          }, T * 0.7);
+          anim.onfinish = anim.oncancel = function () { visiting = false; };
+        }
+        function life(kind) {
+          var delay = kind === 'wink' ? 3500 + Math.random() * 3500 : kind === 'visit' ? 14000 + Math.random() * 8000 : 7000 + Math.random() * 6000;
+          setTimeout(function () {
+            if (vis && !document.hidden && !visiting && !blob.classList.contains('hop') && !blob.classList.contains('spin')) {
+              if (kind === 'visit') visit(); else play(kind, kind === 'wink' ? 900 : 1150);
             }
             life(kind);
           }, delay);
         }
-        life('wink'); life('hop');
+        life('wink'); life('hop'); life('visit');
+        window.bablaVisit = visit;
       })();
 
       /* Konsola: symulowana analiza logów, w której AI zakreśla podejrzane zdarzenia */
