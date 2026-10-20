@@ -223,7 +223,7 @@
     .moons svg { display: block; width: 2.1rem; height: 2.1rem; overflow: visible; opacity: 0.5; }
     .moons .ring { fill: none; stroke: currentColor; stroke-width: 0.9; }
     .moons .lit { fill: currentColor; fill-opacity: 0.45; stroke: none; }
-    .bits { display: grid; grid-template-columns: repeat(8, 1.1em); grid-auto-rows: 2.2em; width: max-content; margin-top: 1.9rem; font: 400 0.8rem/1 var(--f-log); color: var(--muted); user-select: none; }
+    .bits { display: grid; grid-template-columns: repeat(8, 1.1em); grid-auto-rows: 2.2em; width: max-content; margin-left: 0.25rem; font: 400 0.7rem/1 var(--f-log); color: var(--muted); user-select: none; }
     .bits .d { display: grid; place-items: center; opacity: 0.3; transition: opacity 0.9s ease; }
     .bits .d.f { opacity: 0.75; transition-duration: 0.15s; }
     .hero-main { container-type: inline-size; }
@@ -626,8 +626,8 @@
           <div class="cta after-wipe">
             <a class="btn" href="#projekty" data-i18n="btn">Zobacz projekty</a>
             <a class="link" href="https://github.com/kaliszmichal" target="_blank" rel="noopener noreferrer" data-i18n="gh">Profil na GitHubie</a>
+            <div class="bits" id="bits" aria-hidden="true"></div>
           </div>
-          <div class="bits after-wipe" id="bits" aria-hidden="true"></div>
         </div>
       </div>
     </section>
