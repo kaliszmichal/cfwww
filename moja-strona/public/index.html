@@ -484,6 +484,58 @@
     .facts dt { font: 600 0.95rem/1.6 var(--f-display); color: var(--muted); padding-top: 0.2rem; }
     .facts dd { margin: 0; }
 
+    /* Bąbel: elastyczna kulka z charakterem */
+    .cb-row .contact-big { flex: 0 1 auto; max-width: 15ch; }
+    @media (max-width: 760px) { .cb-row .contact-big { max-width: 22ch; } }
+    .cb-row { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem clamp(1.5rem, 4vw, 3rem); }
+    .blob { position: relative; flex: none; width: clamp(4.6rem, 9vw, 6.4rem); margin: 1.6rem 0 0; padding: 0; border: 0; background: none; cursor: pointer; color: #12161c; -webkit-tap-highlight-color: transparent; }
+    .blob:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; border-radius: 1rem; }
+    .blob svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .b-shadow { fill: var(--ink); opacity: 0.12; transform-box: fill-box; transform-origin: center; }
+    .b-hop, .b-bre { transform-box: view-box; transform-origin: 50% 98%; }
+    .b-body { fill: var(--hl-solid); stroke: #12161c; stroke-width: 2.6; stroke-linejoin: round; }
+    .b-cheek { fill: #f2766b; opacity: 0.4; }
+    .b-eye { fill: #12161c; transform-box: fill-box; transform-origin: center; }
+    .b-eye .shine { fill: #fff; }
+    .b-wink { fill: none; stroke: #12161c; stroke-width: 3; stroke-linecap: round; opacity: 0; }
+    .b-smile { fill: none; stroke: #12161c; stroke-width: 3; stroke-linecap: round; }
+    .b-open { fill: #12161c; opacity: 0; }
+    .b-face { transition: transform 0.18s ease-out; }
+    .blob-say {
+      position: absolute; left: 100%; top: 0.5rem; margin-left: 0.6rem; transform: translate(-6px, 0);
+      padding: 0.35rem 0.7rem; border: 1px solid var(--rule); border-radius: 0.7rem; background: var(--paper); color: var(--ink);
+      font: 500 0.9rem/1.25 var(--f-display); white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s var(--ease);
+    }
+    @media (min-width: 761px) { .blob-say { left: 50%; top: 100%; margin: 1.3rem 0 0; transform: translate(-50%, -6px); } .blob-say.on { transform: translate(-50%, 0); } }
+    .blob-say.on { opacity: 1; transform: none; }
+    .blob.idle .b-bre { animation: b-breathe 3.2s ease-in-out infinite; }
+    .blob.hop .b-hop { animation: b-hop 1.15s cubic-bezier(0.3, 0, 0.3, 1) both; }
+    .blob.hop .b-shadow { animation: b-shadow 1.15s cubic-bezier(0.3, 0, 0.3, 1) both; }
+    .blob.hop .b-open { animation: b-mouth 1.15s steps(1, end) both; }
+    .blob.hop .b-smile { animation: b-smile-off 1.15s steps(1, end) both; }
+    .blob.wink .b-eye-r { animation: b-eye-r 0.9s ease both; }
+    .blob.wink .b-wink { animation: b-wink 0.9s ease both; }
+    .blob.wink .b-smile { animation: b-smirk 0.9s ease both; transform-box: fill-box; transform-origin: center; }
+    .blob.spin .b-hop { animation: b-spin 1.1s ease-in-out both; }
+    @keyframes b-breathe { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.025, 0.965); } }
+    @keyframes b-hop {
+      0% { transform: scale(1, 1); }
+      14% { transform: scale(1.15, 0.8); }
+      36% { transform: translateY(-34px) scale(0.88, 1.16); }
+      50% { transform: translateY(-38px) scale(0.95, 1.05); }
+      68% { transform: translateY(0) scale(1.2, 0.76); }
+      80% { transform: scale(0.95, 1.07); }
+      90% { transform: scale(1.03, 0.98); }
+      100% { transform: scale(1, 1); }
+    }
+    @keyframes b-shadow { 0%, 100% { transform: scale(1); opacity: 0.12; } 14% { transform: scale(1.1); } 45% { transform: scale(0.55); opacity: 0.05; } 68% { transform: scale(1.2); opacity: 0.16; } }
+    @keyframes b-mouth { 0% { opacity: 0; } 20% { opacity: 1; } 66% { opacity: 0; } 100% { opacity: 0; } }
+    @keyframes b-smile-off { 0% { opacity: 1; } 20% { opacity: 0; } 66% { opacity: 1; } 100% { opacity: 1; } }
+    @keyframes b-eye-r { 0%, 100% { transform: scaleY(1); opacity: 1; } 15%, 80% { transform: scaleY(0.1); opacity: 0; } }
+    @keyframes b-wink { 0%, 100% { opacity: 0; } 15%, 80% { opacity: 1; } }
+    @keyframes b-smirk { 0%, 100% { transform: none; } 15%, 80% { transform: translate(2px, -1px) rotate(-6deg) scaleX(1.08); } }
+    @keyframes b-spin { 0% { transform: rotate(0); } 100% { transform: rotate(720deg); } }
+
     /* Kontakt */
     .contact-big {
       margin: 0;
@@ -584,6 +636,7 @@
       html { scroll-behavior: auto; }
       .rl::after { display: none; }
       .caret { animation: none; opacity: 1; }
+      .blob .b-hop, .blob .b-bre, .blob .b-shadow, .blob .b-eye-r, .blob .b-wink, .blob .b-smile, .blob .b-open { animation: none !important; }
       .after-wipe { animation: none; }
       .js mark.hl:not(.on) { background-size: 100% 64%; }
       *, *::before, *::after { transition-duration: 0.01ms !important; transition-delay: 0s !important; }
@@ -779,7 +832,27 @@
       <div class="wrap row">
         <h2 class="sec-title" data-i18n="t4">Kontakt</h2>
         <div>
-          <p class="contact-big" data-i18n="cb">Masz pomysł albo problem do rozwiązania?</p>
+          <div class="cb-row">
+            <p class="contact-big" data-i18n="cb">Masz pomysł albo problem do rozwiązania?</p>
+            <button class="blob" id="blob" type="button" aria-label="Kulka Bąbel. Kliknij, żeby ją rozbawić">
+              <span class="blob-say" id="blobSay" aria-hidden="true"></span>
+              <svg viewBox="0 0 100 110" aria-hidden="true" focusable="false">
+                <ellipse class="b-shadow" cx="50" cy="104" rx="34" ry="5"/>
+                <g class="b-hop"><g class="b-bre">
+                  <path class="b-body" d="M50 10C78 10 94 31 94 57C94 83 76 98 50 98C24 98 6 83 6 57C6 31 22 10 50 10Z"/>
+                  <ellipse class="b-cheek" cx="25" cy="66" rx="7" ry="4.5"/>
+                  <ellipse class="b-cheek" cx="75" cy="66" rx="7" ry="4.5"/>
+                  <g class="b-face" id="bFace">
+                    <g class="b-eye"><ellipse cx="36" cy="48" rx="5.2" ry="6.6"/><circle class="shine" cx="34.2" cy="45.6" r="1.8"/></g>
+                    <g class="b-eye b-eye-r"><ellipse cx="64" cy="48" rx="5.2" ry="6.6"/><circle class="shine" cx="62.2" cy="45.6" r="1.8"/></g>
+                    <path class="b-wink" d="M57.5 49Q64 41.5 70.5 49"/>
+                  </g>
+                  <path class="b-smile" d="M37 67Q50 80 63 67"/>
+                  <path class="b-open" d="M38 67Q50 69 62 67Q60 82 50 82Q40 82 38 67Z"/>
+                </g></g>
+              </svg>
+            </button>
+          </div>
           <p data-i18n="cs">Napisz do mnie</p>
           <form class="cform" id="cform" novalidate>
             <div class="fld"><label for="cf-name" data-i18n="fn">Imię</label><input id="cf-name" name="name" type="text" autocomplete="name" maxlength="100" required></div>
@@ -956,6 +1029,61 @@
           }, 1730);
         }
       }
+
+      /* Bąbel: kulka z osobowością (mruga, podskakuje, patrzy za kursorem) */
+      (function () {
+        var blob = document.getElementById('blob');
+        if (!blob) return;
+        var face = document.getElementById('bFace'), say = document.getElementById('blobSay');
+        var talk = {
+          pl: ['Hej! Miło Cię widzieć.', 'Napisz do mnie ↓', 'Hop!', 'Mam dobry pomysł. Ty też?', 'Bugi się boją, ja nie.', 'Jeszcze raz?'],
+          en: ['Hey! Nice to see you.', 'Write to me ↓', 'Hop!', 'I have a good idea. Do you?', 'Bugs are scared, I am not.', 'Again?']
+        };
+        var dizzy = { pl: 'Dość! Kręci mi się w głowie…', en: 'Enough! I am getting dizzy…' };
+        var label = { pl: 'Kulka Bąbel. Kliknij, żeby ją rozbawić', en: 'Blob Bubble. Click to cheer it up' };
+        var busy = false, clicks = 0, last = 0, say_t = 0, i = 0;
+        function play(cls, ms) {
+          blob.classList.remove(cls); void blob.offsetWidth; blob.classList.add(cls);
+          setTimeout(function () { blob.classList.remove(cls); }, ms);
+        }
+        function speak(txt) {
+          say.textContent = txt; say.classList.add('on');
+          clearTimeout(say_t); say_t = setTimeout(function () { say.classList.remove('on'); }, 2200);
+        }
+        langHooks.push(function () { blob.setAttribute('aria-label', label[lang]); });
+        blob.addEventListener('click', function () {
+          var now = Date.now();
+          clicks = now - last < 1500 ? clicks + 1 : 1; last = now;
+          if (clicks >= 5) { clicks = 0; speak(dizzy[lang]); if (!reduce) play('spin', 1100); return; }
+          speak(talk[lang][i++ % talk[lang].length]);
+          if (!reduce) play('hop', 1150);
+        });
+        if (reduce) return;
+        blob.classList.add('idle');
+        /* Wzrok za kursorem (tylko myszka) */
+        window.addEventListener('pointermove', function (e) {
+          if (e.pointerType !== 'mouse') return;
+          var r = blob.getBoundingClientRect();
+          var dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+          var d = Math.max(1, Math.hypot(dx, dy)), k = Math.min(1, d / 300) * 3;
+          face.style.transform = 'translate(' + (dx / d * k).toFixed(2) + 'px,' + (dy / d * k).toFixed(2) + 'px)';
+        }, { passive: true });
+        /* Samodzielne życie: mrugnięcie okiem i od czasu do czasu podskok */
+        var vis = false;
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (en) { vis = en[0].isIntersecting; }).observe(blob);
+        }
+        function life(kind) {
+          var delay = kind === 'wink' ? 3500 + Math.random() * 3500 : 7000 + Math.random() * 6000;
+          setTimeout(function () {
+            if (vis && !document.hidden && !blob.classList.contains('hop') && !blob.classList.contains('spin')) {
+              play(kind, kind === 'wink' ? 900 : 1150);
+            }
+            life(kind);
+          }, delay);
+        }
+        life('wink'); life('hop');
+      })();
 
       /* Konsola: symulowana analiza logów, w której AI zakreśla podejrzane zdarzenia */
       var run = document.getElementById('run');
