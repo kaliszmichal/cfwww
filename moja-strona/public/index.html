@@ -224,7 +224,7 @@
     .moons .ring { fill: none; stroke: currentColor; stroke-width: 0.9; }
     .moons .lit { fill: currentColor; fill-opacity: 0.45; stroke: none; }
     .brand { display: flex; align-items: center; gap: 0.9rem; }
-    .bits { display: grid; grid-template-columns: repeat(8, 0.55rem); grid-auto-rows: 0.45rem; width: max-content; font: 400 0.4rem/1 var(--f-log); color: var(--muted); user-select: none; }
+    .bits { display: grid; grid-template-columns: repeat(8, 0.55rem); grid-auto-rows: 0.45rem; width: max-content; font: 400 0.4rem/1 var(--f-log); color: var(--muted); user-select: none; -webkit-mask-image: linear-gradient(to right, #000 0%, transparent 100%); mask-image: linear-gradient(to right, #000 0%, transparent 100%); }
     .bits .d { display: grid; place-items: center; opacity: 0.24; transition: opacity 0.9s ease; }
     .bits .d.f { opacity: 0.6; transition-duration: 0.15s; }
     .hero-main { container-type: inline-size; }
