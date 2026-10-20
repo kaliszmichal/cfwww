@@ -485,20 +485,18 @@
     .facts dd { margin: 0; }
 
     /* Bąbel: elastyczna kulka z charakterem */
-    .cb-row .contact-big { flex: 0 1 auto; max-width: 15ch; }
-    @media (max-width: 760px) { .cb-row .contact-big { max-width: 22ch; } }
-    .cb-row { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem clamp(1.5rem, 4vw, 3rem); }
-    .blob { position: relative; flex: none; width: clamp(4.6rem, 9vw, 6.4rem); margin: 1.6rem 0 0; padding: 0; border: 0; background: none; cursor: pointer; color: #12161c; -webkit-tap-highlight-color: transparent; }
+    .cb-row .contact-big { flex: 0 1 auto; max-width: 13.5ch; min-width: 0; }
+    .cb-row { display: flex; align-items: center; flex-wrap: nowrap; gap: clamp(0.9rem, 4vw, 3rem); }
+    @media (max-width: 760px) { .cb-row .contact-big { font-size: clamp(1.7rem, 7.6vw, 2.4rem); max-width: none; flex: 1 1 0; } }
+    .blob { position: relative; flex: none; width: clamp(3.6rem, 9vw, 6.4rem); margin: 1.6rem 0 0; padding: 0; border: 0; background: none; cursor: pointer; color: #12161c; -webkit-tap-highlight-color: transparent; }
     .blob:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; border-radius: 1rem; }
     .blob svg { display: block; width: 100%; height: auto; overflow: visible; }
     .b-shadow { fill: var(--ink); opacity: 0.12; transform-box: fill-box; transform-origin: center; }
     .b-hop, .b-bre { transform-box: view-box; transform-origin: 50% 98%; }
-    .b-body { fill: var(--hl-solid); stroke: #12161c; stroke-width: 2.6; stroke-linejoin: round; }
-    .b-cheek { fill: #f2766b; opacity: 0.4; }
+    .b-body { fill: url(#bGrad); stroke: #12161c; stroke-opacity: 0.55; stroke-width: 1.6; }
     .b-eye { fill: #12161c; transform-box: fill-box; transform-origin: center; }
-    .b-eye .shine { fill: #fff; }
-    .b-wink { fill: none; stroke: #12161c; stroke-width: 3; stroke-linecap: round; opacity: 0; }
-    .b-smile { fill: none; stroke: #12161c; stroke-width: 3; stroke-linecap: round; }
+        .b-wink { fill: none; stroke: #12161c; stroke-width: 8; stroke-linecap: round; opacity: 0; }
+    .b-smile { fill: none; stroke: #12161c; stroke-width: 2.6; stroke-linecap: round; }
     .b-open { fill: #12161c; opacity: 0; }
     .b-face { transition: transform 0.18s ease-out; }
     .blob-say {
@@ -506,6 +504,7 @@
       padding: 0.35rem 0.7rem; border: 1px solid var(--rule); border-radius: 0.7rem; background: var(--paper); color: var(--ink);
       font: 500 0.9rem/1.25 var(--f-display); white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s var(--ease);
     }
+    @media (max-width: 760px) { .blob-say { left: auto; right: 0; top: auto; bottom: 100%; margin: 0 0 0.5rem; transform: translateY(6px); } .blob-say.on { transform: none; } }
     @media (min-width: 761px) { .blob-say { left: 50%; top: 100%; margin: 1.3rem 0 0; transform: translate(-50%, -6px); } .blob-say.on { transform: translate(-50%, 0); } }
     .blob-say.on { opacity: 1; transform: none; }
     .blob.idle .b-bre { animation: b-breathe 3.2s ease-in-out infinite; }
@@ -837,15 +836,14 @@
             <button class="blob" id="blob" type="button" aria-label="Kulka Bąbel. Kliknij, żeby ją rozbawić">
               <span class="blob-say" id="blobSay" aria-hidden="true"></span>
               <svg viewBox="0 0 100 110" aria-hidden="true" focusable="false">
+                <defs><radialGradient id="bGrad" cx="46%" cy="40%" r="68%"><stop offset="0" stop-color="#fff"/><stop offset="0.55" stop-color="#ececec"/><stop offset="1" stop-color="#b9b9b9"/></radialGradient></defs>
                 <ellipse class="b-shadow" cx="50" cy="104" rx="34" ry="5"/>
                 <g class="b-hop"><g class="b-bre">
                   <path class="b-body" d="M50 10C78 10 94 31 94 57C94 83 76 98 50 98C24 98 6 83 6 57C6 31 22 10 50 10Z"/>
-                  <ellipse class="b-cheek" cx="25" cy="66" rx="7" ry="4.5"/>
-                  <ellipse class="b-cheek" cx="75" cy="66" rx="7" ry="4.5"/>
                   <g class="b-face" id="bFace">
-                    <g class="b-eye"><ellipse cx="36" cy="48" rx="5.2" ry="6.6"/><circle class="shine" cx="34.2" cy="45.6" r="1.8"/></g>
-                    <g class="b-eye b-eye-r"><ellipse cx="64" cy="48" rx="5.2" ry="6.6"/><circle class="shine" cx="62.2" cy="45.6" r="1.8"/></g>
-                    <path class="b-wink" d="M57.5 49Q64 41.5 70.5 49"/>
+                    <g class="b-eye"><rect x="31.5" y="38" width="9" height="20" rx="4.5" transform="rotate(14 36 48)"/></g>
+                    <g class="b-eye b-eye-r"><rect x="59.5" y="38" width="9" height="20" rx="4.5" transform="rotate(14 64 48)"/></g>
+                    <path class="b-wink" d="M57.5 50L70.5 46"/>
                   </g>
                   <path class="b-smile" d="M37 67Q50 80 63 67"/>
                   <path class="b-open" d="M38 67Q50 69 62 67Q60 82 50 82Q40 82 38 67Z"/>
