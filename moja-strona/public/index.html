@@ -223,6 +223,10 @@
     .moons svg { display: block; width: 2.1rem; height: 2.1rem; overflow: visible; opacity: 0.5; }
     .moons .ring { fill: none; stroke: currentColor; stroke-width: 0.9; }
     .moons .lit { fill: currentColor; fill-opacity: 0.45; stroke: none; }
+    .bits { display: flex; gap: 0.7em; margin-top: 1.9rem; font: 400 0.8rem/1 var(--f-log); letter-spacing: 0.04em; color: var(--muted); user-select: none; }
+    .bits .g { display: inline-flex; }
+    .bits .d { display: inline-block; width: 0.62em; text-align: center; opacity: 0.3; transition: opacity 0.9s ease; }
+    .bits .d.f { opacity: 0.75; transition-duration: 0.15s; }
     .hero-main { container-type: inline-size; }
     .hero-title {
       margin: 0;
@@ -624,6 +628,7 @@
             <a class="btn" href="#projekty" data-i18n="btn">Zobacz projekty</a>
             <a class="link" href="https://github.com/kaliszmichal" target="_blank" rel="noopener noreferrer" data-i18n="gh">Profil na GitHubie</a>
           </div>
+          <div class="bits after-wipe" id="bits" aria-hidden="true"></div>
         </div>
       </div>
     </section>
@@ -907,6 +912,35 @@
           btn.setAttribute('aria-expanded', String(open));
         });
       });
+
+      /* Delikatny strumień zer i jedynek pod przyciskami */
+      var bitsEl = document.getElementById('bits');
+      if (bitsEl) {
+        var digits = [];
+        for (var g = 0; g < 4; g++) {
+          var grp = document.createElement('span');
+          grp.className = 'g';
+          for (var k = 0; k < 8; k++) {
+            var d = document.createElement('span');
+            d.className = 'd';
+            d.textContent = Math.random() < 0.5 ? '0' : '1';
+            grp.appendChild(d);
+            digits.push(d);
+          }
+          bitsEl.appendChild(grp);
+        }
+        if (!reduce) {
+          setInterval(function () {
+            if (document.hidden) return;
+            for (var n = 0; n < 2; n++) {
+              var el = digits[Math.floor(Math.random() * digits.length)];
+              el.textContent = el.textContent === '0' ? '1' : '0';
+              el.classList.add('f');
+              setTimeout(function (e) { e.classList.remove('f'); }.bind(null, el), 260);
+            }
+          }, 520);
+        }
+      }
 
       /* Konsola: symulowana analiza logów, w której AI zakreśla podejrzane zdarzenia */
       var run = document.getElementById('run');
