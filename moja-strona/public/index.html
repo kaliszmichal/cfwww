@@ -488,16 +488,16 @@
     .cb-row .contact-big { flex: 0 1 auto; max-width: 13.5ch; min-width: 0; }
     .cb-row { display: flex; align-items: center; flex-wrap: nowrap; gap: clamp(0.9rem, 4vw, 3rem); }
     @media (max-width: 760px) { .cb-row .contact-big { font-size: clamp(1.7rem, 7.6vw, 2.4rem); max-width: none; flex: 1 1 0; } }
-    .blob { position: relative; flex: none; width: clamp(3.6rem, 9vw, 6.4rem); margin: 1.6rem 0 0; padding: 0; border: 0; background: none; cursor: pointer; color: #12161c; -webkit-tap-highlight-color: transparent; }
+    .blob { position: relative; flex: none; width: clamp(3.6rem, 9vw, 6.4rem); margin: 1.6rem 0 0; padding: 0; border: 0; background: none; cursor: pointer; color: var(--ink); -webkit-tap-highlight-color: transparent; }
     .blob:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; border-radius: 1rem; }
     .blob svg { display: block; width: 100%; height: auto; overflow: visible; }
     .b-shadow { fill: var(--ink); opacity: 0.12; transform-box: fill-box; transform-origin: center; }
-    .b-hop, .b-bre { transform-box: view-box; transform-origin: 50% 98%; }
-    .b-body { fill: url(#bGrad); stroke: #12161c; stroke-opacity: 0.55; stroke-width: 1.6; }
-    .b-eye { fill: #12161c; transform-box: fill-box; transform-origin: center; }
-        .b-wink { fill: none; stroke: #12161c; stroke-width: 3.2; stroke-linecap: round; opacity: 0; }
-    .b-smile { fill: none; stroke: #12161c; stroke-width: 2.6; stroke-linecap: round; }
-    .b-open { fill: #12161c; opacity: 0; }
+    .b-hop, .b-bre { transform-box: view-box; transform-origin: 50% 98px; }
+    .b-body { fill: var(--paper); stroke: currentColor; stroke-width: 2.4; }
+    .b-eye { fill: currentColor; transform-box: fill-box; transform-origin: center; }
+        .b-wink { fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; opacity: 0; }
+    .b-smile { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+    .b-open { fill: currentColor; opacity: 0; }
     .b-face { transition: transform 0.18s ease-out; }
     .blob-say {
       position: absolute; left: 100%; top: 0.5rem; margin-left: 0.6rem; transform: translate(-6px, 0);
@@ -835,18 +835,16 @@
             <p class="contact-big" data-i18n="cb">Masz pomysł albo problem do rozwiązania?</p>
             <button class="blob" id="blob" type="button" aria-label="Kulka Bąbel. Kliknij, żeby ją rozbawić">
               <span class="blob-say" id="blobSay" aria-hidden="true"></span>
-              <svg viewBox="0 0 100 110" aria-hidden="true" focusable="false">
-                <defs><radialGradient id="bGrad" cx="46%" cy="40%" r="68%"><stop offset="0" stop-color="#fff"/><stop offset="0.55" stop-color="#ececec"/><stop offset="1" stop-color="#b9b9b9"/></radialGradient></defs>
-                <ellipse class="b-shadow" cx="50" cy="104" rx="34" ry="5"/>
+              <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
                 <g class="b-hop"><g class="b-bre">
-                  <path class="b-body" d="M50 10C78 10 94 31 94 57C94 83 76 98 50 98C24 98 6 83 6 57C6 31 22 10 50 10Z"/>
+                  <circle class="b-body" cx="50" cy="56" r="42"/>
                   <g class="b-face" id="bFace">
-                    <g class="b-eye"><circle cx="36" cy="48" r="6"/></g>
-                    <g class="b-eye b-eye-r"><circle cx="64" cy="48" r="6"/></g>
-                    <path class="b-wink" d="M57.5 50Q64 42 70.5 50"/>
+                    <g class="b-eye"><circle cx="36" cy="50" r="4.6"/></g>
+                    <g class="b-eye b-eye-r"><circle cx="64" cy="50" r="4.6"/></g>
+                    <path class="b-wink" d="M58.5 51Q64 45 69.5 51"/>
                   </g>
-                  <path class="b-smile" d="M37 67Q50 80 63 67"/>
-                  <path class="b-open" d="M38 67Q50 69 62 67Q60 82 50 82Q40 82 38 67Z"/>
+                  <path class="b-smile" d="M38 66Q50 77 62 66"/>
+                  <path class="b-open" d="M39 65Q50 67 61 65Q59 77 50 77Q41 77 39 65Z"/>
                 </g></g>
               </svg>
             </button>
